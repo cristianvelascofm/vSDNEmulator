@@ -242,7 +242,7 @@ function totalElementTree(depth, fanout) {
 
 
 //Creador de Topologías
-function topolyMaker(numHost, topologyType, depth, fanout) {
+function topologyMaker(numHost, topologyType, depth, fanout) {
 
   var posX = [];
   var image = "";
@@ -556,7 +556,7 @@ function option(x) {
         numHost = 2;
         topologyType = "single";
         tagGenerator(numHost, topologyType, 0, 0);
-        topolyMaker(numHost, topologyType, 0, 0);
+        topologyMaker(numHost, topologyType, 0, 0);
 
       }
       else if (topologyType == "tree") {
@@ -565,13 +565,13 @@ function option(x) {
         var depth = parseInt(d);
         var fanout = parseInt(f);
         tagGenerator(0, topologyType, depth, fanout);
-        topolyMaker(0, topologyType, depth, fanout);
+        topologyMaker(0, topologyType, depth, fanout);
       }
       else {
         var nH = prompt("Número de Host: ");
         numHost = parseInt(nH);
         tagGenerator(numHost, topologyType, 0, 0);
-        topolyMaker(numHost, topologyType, 0, 0);
+        topologyMaker(numHost, topologyType, 0, 0);
       }
 
 
