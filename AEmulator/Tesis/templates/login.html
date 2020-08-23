@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="{% static 'js/jQuery.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+
+    <title>Inicio</title>
+
+
+</head>
+
+<body>
+
+
+    <div class='box'>
+        <div class='box-form'>
+            <div class='box-login-tab'></div>
+            <div class='box-login-title'>
+                <div class='i i-login'></div>
+                <h2>Login</h2>
+            </div>
+            <div class='box-login'>
+                <div class='fieldset-body' id='login_form'>
+                    <button onclick="openLoginInfo();" class='b b-form i i-more' title='Más Información'></button>
+                    <p class='field'>
+                        <label for='user'>Correo</label>
+                        <input type='text' id='user' name='user' title='Usuario' />
+                        <span id='valida' class='i i-warning'></span>
+                    </p>
+                    <p class='field'>
+                        <label for='pass'>Contraseña</label>
+                        <input type='password' id='pass' name='pass' title='Contraseña' />
+                        <span id='valida' class='i i-close'></span>
+                    </p>
+
+                    <label class='checkbox'>
+                        <input type='checkbox' value='TRUE' title='Mantenerse Conectado' />
+                        <!--onclick="location.href='inicio.html';"-->
+                        Mantenerse Conectado
+                    </label>
+                    <!--El form lo uso para dar enlace al submit-->
+                    <form action="{% url 'home' %}">
+                        <input type='submit' id='do_login' value='INICIAR' title='Iniciar'/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class='box-info'>
+            <p><button onclick="closeLoginInfo();" class='b b-info i i-left' title='Cerrar - Ayuda'></button>
+            <h3>¿Necesita Ayuda?</h3>
+            </p>
+            <div class='line-wh'></div>
+            <button onclick="" class='b-support' title='Recuperar Contraseña'> ¿Olvidó su Contraseña?</button>
+            <button onclick="" class='b-support' title='Contactar a Soporte'> Contactar a Soporte</button>
+            <div class='line-wh'></div>
+            <button onclick="" class='b-cta' title='Cree una Cuenta'> CREE UNA CUENTA</button>
+        </div>
+    </div>
+
+
+    <div class='icon-credits'>Los íconos son tomados de <a href="http://www.freepik.com" title="Freepik">Freepik</a>, <a
+            href="http://www.flaticon.com/authors/budi-tanrim" title="Budi Tanrim">Budi Tanrim</a> & <a
+            href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from
+        <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a
+            href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0
+            BY</a>
+    </div>
+
+
+</body>
+
+</html>

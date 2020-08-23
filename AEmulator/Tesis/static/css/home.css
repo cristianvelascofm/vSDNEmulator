@@ -1,0 +1,78 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans|Quicksand:400,700';
+body {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    line-height: 1.56;
+    /*color: #f0f0f0;*/
+    background-color: white;
+    height: 90%;
+    position: relative;
+    margin-top: 0;
+}
+
+body, html {
+    
+    margin: 0;
+    height: 95.5%;
+    font-family: 'Quicksand', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.container {
+    padding-top: 2px;
+    height: 93%;
+}
+
+.tablecontainer {
+    /*background-color: #08080854;*/    
+    height: 99.7%;
+    display: flex;
+}
+
+.tableHome {
+    width: 99.5%;
+    margin-top: 12px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+table, th, td {
+    border-spacing: 2px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    font-family: 'Quicksand', sans-serif;
+    padding: 15px;
+    text-align: left;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#emulationtable tr:nth-child(even) {
+    background-color: rgba(238, 238, 238, 0.459);
+}
+
+#emulationtable tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.472);
+}
+
+#emulationtable th {
+    background-color: white;
+    color: #112979;
+}
+
+footer {
+    padding-top: 6px;
+    background-color: #000000a8;
+    padding-left: 1%;
+    padding-right: 20px;
+    color: rgb(252, 249, 249);
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+}

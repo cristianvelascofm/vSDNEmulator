@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="description" content="">
+    {% block link_css %} <link rel="stylesheet" href=""> {% endblock link_css %}
+    <!--- {% block script_jQ %} <script src=""></script> {% endblock script_jQ %} --->
+    <script src="{% static 'js/jQuery.js' %}"></script>
+    {% block script_js %} <script src=""></script> {% endblock script_js %}
+    <title> {% block title %} template {% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="menuHeader">
+            <div id="menu-container">
+                <div id="menu-wrapper">
+                    <div id="hamburger-menu"><span></span><span></span><span></span></div>
+                    <!-- hamburger-menu -->
+                </div>
+                <!-- menu-wrapper -->
+                <ul class="menu-list accordion">
+                    <li id="nav1" class="toggle accordion-toggle">
+                        <span class="icon-plus"></span>
+                        <a class="menu-link" href="#">EMULACIONES</a>
+                    </li>
+                    <!-- accordion-toggle -->
+                    <ul class="menu-submenu accordion-content">
+                        <li><a class="head" href="{% url 'alambric_emulator' %}">Todas las Emulaciones</a></li>
+                        <li><a class="head" href="#">Emulaciones Activas</a></li>
+                        <li><a class="head" href="#">Emulaciones Finalizadas</a></li>
+                    </ul>
+                    <!-- menu-submenu accordon-content-->
+                    <li id="nav3" class="toggle accordion-toggle">
+                        <span class="icon-plus"></span>
+                        <a class="menu-link" href="#">Herramientas</a>
+                    </li>
+                    <!-- accordion-toggle -->
+                    <ul class="menu-submenu accordion-content">
+                        <li><a class="head" href="#">Configuración</a></li>
+                        <li><a class="head" href="#">Soporte</a></li>
+                        <li><a class="head" href="#">Ayuda</a></li>
+                    </ul>
+                    <!-- menu-submenu accordon-content-->
+                    <li id="nav2" class="toggle accordion-toggle">
+                        <span class="icon-plus"></span>
+                        <a class="menu-link" href="#">CUENTA</a>
+                    </li>
+                    <!-- accordion-toggle -->
+                    <ul class="menu-submenu accordion-content">
+                        <li><a class="head" href="#">Cambiar Contraseña</a></li>
+
+                    </ul>
+                    <!-- menu-submenu accordon-content-->
+                    <li id="nav3" class="accordion-normal">
+                        <span class="icon-plus"></span>
+                        <a class="menu-link" href="#">CERRAR SESIÓN</a>
+                    </li>
+                </ul>
+                <!-- menu-list accordion-->
+            </div>
+        </div>
+        <h1 id="headtittle">Integral - Entorno de Emulación vSDN</h1>
+    </nav>
+    {% block content %} {% endblock content %}
+
+    <footer>
+        2020 | División de Telecomunicaciones - Facultad de Ingeniería en Electrónica y Telecomunicaciones |
+        Universidad del Cauca | Laboratorio Telco 2.0
+
+    </footer>
+    
+</body>
+
+</html>

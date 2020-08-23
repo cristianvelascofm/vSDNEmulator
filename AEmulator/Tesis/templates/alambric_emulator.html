@@ -1,0 +1,70 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{% static 'css/emulator.css' %}">
+<link rel="stylesheet" href="{% static 'css/header.css' %}">{% endblock link_css %}
+{% block script_js %}
+<script src="{% static 'js/fabric.js' %}"></script>
+<script src="{% static 'js/hamburguer_menu.js' %}"></script>{% endblock script_js %}
+{% block title %}SDN - Emulator{% endblock title %}
+
+{% block content %}
+<div class="menu_bar">
+        <ul id="menu_option_bar">
+                <li id="archivo" href="#"> <a>Archivo</a> </li>
+                <li id="option_bar" href="#"> <a>Edición</a> </li>
+                <li id="option_bar" href="#"> <a>Emulación</a> </li>
+                <li id="option_bar" href="#"> <a>Ayuda</a> </li>
+        </ul>
+</div>
+
+<div class="tool_bar">
+        <ul id="menu_option__tool_bar">
+                <li title="Nuevo" id="option_tool_bar" href="#"> <img src="{% static 'img/new_document.png' %}" alt=""
+                                width="18px" height="18px"></li>
+                <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt="" width="18px"
+                                height="18px"> </li>
+                <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt="" width="18x"
+                                height="18px"></li>
+                <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt="" width="18px"
+                                height="18px"></li>
+                <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt="" width="18px"
+                                height="18px"></li>
+                <li title="Rehacer" id="option_tool_bar"> <img src="{% static 'img/redo.png' %}" alt="" width="18px"
+                                height="18px"></li>
+                <li title="Modo: Emulación" id="option_tool_bar"> <img src="{% static 'img/play.png' %}" alt=""
+                                width="18px" height="18px"></li>
+                <li title="Stop" id="option_tool_bar"> <img src="{% static 'img/stop.png' %}" alt="" width="18px"
+                                height="18px"></li>
+
+        </ul>
+</div>
+
+<aside class="tool_panel">
+
+        <button title="Modo: Seleccionar" type="button" href="#" id="cursor" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/cursor.png' %}" id="panel_img" alt="" width="40%" height="40%"></button>
+        <button title="Controlador" type="button" href="#" id="controller" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/controller.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
+        <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn"
+                onclick="option(this);"><img src="{% static 'img/openflow_switch.png' %}" id="panel_img" alt=""
+                        width="75%" height="75%"></button>
+        <button title="Host" type="button" href="#" id="host" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/host.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
+        <button title="Modo: Enlace" type="button" href="#" id="link" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/link.png' %}" id="panel_img" alt="" width="50%" height="50%"></button>
+        <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/delete.png' %}" id="panel_img" alt="" width="50%" height="50%">
+
+</aside>
+
+<div class="canvas_panel">
+        <canvas id="canvas" width="5000" , height="5000"></canvas>
+</div>
+
+<aside class="propieties_panel">
+
+</aside>
+<script src="{% static 'js/alambric_emulator.js' %}"></script>
+{% endblock content %}

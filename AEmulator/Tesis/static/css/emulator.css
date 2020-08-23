@@ -1,0 +1,181 @@
+#logo {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+#head{
+    display: inline;
+    padding-left: 30%;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-family: Arial;
+    font-size: 12px;
+    text-align: center;
+}
+
+body, html {
+    
+    margin: 0;
+    height: 93%;
+    width: 99.5%;
+    font-family: 'Quicksand', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.menu_bar {
+    background-color: #2f3133;
+    height: 35px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 100%;
+    border: 1px solid;
+}
+
+.menu_bar ul {
+    list-style: none;
+    float: left;
+    margin-top: 5px;
+    padding-left: 3px;
+    width: 100%;
+    height: 10px;
+}
+
+.menu_bar ul li {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 15%;
+}
+
+.menu_bar ul li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.menu_bar ul li a:hover {
+    background-color: #2350e6;
+    cursor: pointer;
+}
+
+.tool_bar {
+    background-color: #818385;
+    height: 43px;
+    margin-bottom: 3px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 100%;
+    border: 1px solid;
+}
+
+.tool_bar ul {
+    list-style: none;
+    float: left;
+    margin-top: 4px;
+    padding-left: 7px;
+    width: 100%;
+    height: 10px;
+}
+
+.tool_bar ul li {
+    background-color:  #656566;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1.5px solid;
+    padding: 5px;
+    border-radius: 25%;
+}
+
+.tool_bar ul li:hover {
+    border: 2px solid #a4e7a4ad;
+    background-color: #5a0e1075;
+}
+
+.tool_bar ul li:active {
+    border: 2px solid #a4e7a4ad;
+    background-color: #8a4d4f75;
+}
+
+.tool_bar ul li::after {
+    border: 2px solid #1c911cad;
+    background-color: #350a0b75;
+}
+
+.tool_panel {
+    float: left;
+    background-color: #2f3133;
+    height: 428px;
+    width: 80px;
+    border: 1px solid;
+    padding-top: 20px;    
+}
+
+.btn {
+    background-color: #717477;
+   /* padding: 2px 2px 2px 2px;*/
+    height: 45px;
+    width: 45px;
+    margin-top: 12px;
+    margin-left: 15px;
+    margin-bottom: 7px;
+    border: 2px solid;
+    border-radius: 12px;
+}
+
+.btn:hover {
+    background-color: #6895f7b2;
+    border: solid 2px #2e42f7;
+}
+
+#cursor {
+    margin-top: 17px;
+}
+
+#cursor:active {
+    background-color: #acfc93;
+}
+
+
+
+.canvas_panel {
+    margin-left: 85px;
+    /*padding-left: 85px;*/
+    /*width="1050" , height="600"*/
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height:  449px;
+    width: 73.5%;
+}
+
+#canvas {
+    display: block;
+    border: solid 2px;
+    
+}
+.propieties_panel {
+    float: right;
+    background-color: #2f3133;
+    height: 447px;
+    width: 19%;
+    border: 1px solid;
+    margin-top: -450px;
+    margin-left: 1113px;
+    overflow: auto;
+}
+
+footer {
+    padding-top: 6px;
+    background-color: #000000a8;
+    padding-left: 1%;
+    padding-right: 20px;
+    color: rgb(252, 249, 249);
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+}
