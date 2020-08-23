@@ -2,9 +2,11 @@
 {% load static %}
 
 {% block link_css %}
+
 <link rel="stylesheet" href="{% static 'css/emulator.css' %}">
 <link rel="stylesheet" href="{% static 'css/header.css' %}">{% endblock link_css %}
 {% block script_js %}
+
 <script src="{% static 'js/fabric.js' %}"></script>
 <script src="{% static 'js/hamburguer_menu.js' %}"></script>{% endblock script_js %}
 {% block title %}SDN - Emulator{% endblock title %}
@@ -66,5 +68,7 @@
 <aside class="propieties_panel">
 
 </aside>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
+
 {% endblock content %}

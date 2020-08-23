@@ -300,21 +300,43 @@ function topolyMaker(numHost, topologyType, depth, fanout) {
 
       // Variables JSON
       console.log(netInfo);
-      var json = JSON.stringify(netInfo);
-     /* console.log('esto es un json: ' + json);*/
+      var json = JSON.stringify(netInfo[0]);
+      console.log('esto es un json: ' + json);
+      const csrftoken = getCookie('csrftoken');
 
-/*
+      /*
+            const res = axios.post('http://127.0.0.1:3000/alambric_emulator/', json, {
+              headers: {
+                // Overwrite Axios's automatically set Content-Type
+                'Content-Type': 'application/json'
+              }
+            });
+      
+      
+      /*
+            axios({
+              method: 'post',
+              url: 'http://127.0.0.1:3000/alambric_emulator/',
+              data: json,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              }
+            });*/
+
       $.ajax({
-        type: "POST",//get- consutla post- se actualiza
-         url: "http://127.0.0.1:3000/alambric_emulator/",
-        url: "../static/py/algo.py",
+        type: "post",//get- consutla post- se actualiza
+        url: "http://127.0.0.1:3000/alambric_emulator/",
+        /* url: "../static/py/algo.py",*/
         dataType: "json",
-        data: { "network": JSON.stringify(netInfo) },
+        contentType: 'application/json; charset=utf-8',
+        data: json,
+        headers: {'X-CSRFToken': csrftoken},
 
-        success: function (data) {
+        /*success: function (data) {
           alert(JSON.stringify(data));
-        }
-      });*/
+        }*/
+      });
 
 
 
@@ -611,3 +633,18 @@ function option(x) {
   }
 }
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
