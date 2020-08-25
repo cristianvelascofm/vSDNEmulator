@@ -51,23 +51,23 @@
                         src="{% static 'img/controller.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
         <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn"
                 onclick="option(this);"><img src="{% static 'img/openflow_switch.png' %}" id="panel_img" alt=""
-                        width="75%" height="75%"></button>
+                        width="85%" height="95%"></button>
         <button title="Host" type="button" href="#" id="host" class="btn" onclick="option(this);"><img
                         src="{% static 'img/host.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
+        <button title="Port" type="button" href="#" id="port" class="btn" onclick="option(this);"><img
+                        src="{% static 'img/port.png' %}" id="panel_img" alt="" width="70%" height="55%"></button>
         <button title="Modo: Enlace" type="button" href="#" id="link" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/link.png' %}" id="panel_img" alt="" width="50%" height="50%"></button>
+                        src="{% static 'img/link.png' %}" id="panel_img" alt="" width="65%" height="65%"></button>
         <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="option(this);"><img
                         src="{% static 'img/delete.png' %}" id="panel_img" alt="" width="50%" height="50%">
 
 </aside>
 
 <div class="canvas_panel">
-        <canvas id="canvas" width="5000" , height="5000"></canvas>
+        <canvas id="canvas" width="4500" , height="4500"></canvas>
 </div>
 
-<aside class="propieties_panel">
 
-</aside>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
 

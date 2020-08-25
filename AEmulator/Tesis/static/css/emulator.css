@@ -24,13 +24,13 @@ body, html {
 }
 
 .menu_bar {
-    background-color: #2f3133;
+    background-color: #E1F3F1;
     height: 35px;
     margin-bottom: 0px;
     padding-top: 0px;
     margin-top: 0px;
     width: 100%;
-    border: 1px solid;
+    border: 1px solid #E1F3F1;
 }
 
 .menu_bar ul {
@@ -44,6 +44,7 @@ body, html {
 
 .menu_bar ul li {
     float: left;
+    margin-top: -3px;
     margin-right: 20px;
     margin-bottom: 10px;
     padding: 5px;
@@ -51,25 +52,27 @@ body, html {
 }
 
 .menu_bar ul li a {
-    color: #FFFFFF;
+    color: #009688;
     text-decoration: none;
     font-family: Arial;
+    font-weight: bold;
     font-size: 14px;
 }
 
 .menu_bar ul li a:hover {
-    background-color: #2350e6;
+    background-color: #b4fbf3;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .tool_bar {
-    background-color: #818385;
+    background-color: #ffffff;
     height: 43px;
     margin-bottom: 3px;
     padding-top: 0px;
     margin-top: 0px;
     width: 100%;
-    border: 1px solid;
+    border: 1px solid #009688;
 }
 
 .tool_bar ul {
@@ -82,23 +85,23 @@ body, html {
 }
 
 .tool_bar ul li {
-    background-color:  #656566;
+    background-color:  #E1F3F1;
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
-    border: 1.5px solid;
+    border: 1.5px solid #009688;
     padding: 5px;
     border-radius: 25%;
 }
 
 .tool_bar ul li:hover {
-    border: 2px solid #a4e7a4ad;
-    background-color: #5a0e1075;
+    border: 2px solid #2e42f7;
+    background-color: #b4fbf3;
 }
 
 .tool_bar ul li:active {
-    border: 2px solid #a4e7a4ad;
-    background-color: #8a4d4f75;
+    border: 2px solid #2e42f7;
+    background-color: #009688;
 }
 
 .tool_bar ul li::after {
@@ -108,27 +111,27 @@ body, html {
 
 .tool_panel {
     float: left;
-    background-color: #2f3133;
-    height: 428px;
+    background-color: #ffffff;
+    height: 83.9%;
     width: 80px;
-    border: 1px solid;
-    padding-top: 20px;    
+    border: 1px solid #009688;
+    padding-top: 35px;    
 }
 
 .btn {
-    background-color: #717477;
+    background-color: #E1F3F1;
    /* padding: 2px 2px 2px 2px;*/
     height: 45px;
     width: 45px;
     margin-top: 12px;
     margin-left: 15px;
     margin-bottom: 7px;
-    border: 2px solid;
+    border: 2px solid #009688;
     border-radius: 12px;
 }
 
 .btn:hover {
-    background-color: #6895f7b2;
+    background-color: #b4fbf3;;
     border: solid 2px #2e42f7;
 }
 
@@ -138,6 +141,8 @@ body, html {
 
 #cursor:active {
     background-color: #acfc93;
+    border: solid 2px #009688;
+    
 }
 
 
@@ -148,29 +153,20 @@ body, html {
     /*width="1050" , height="600"*/
     overflow-x: scroll;
     overflow-y: scroll;
-    height:  449px;
-    width: 73.5%;
+    height:  89.3%;
+    width: 93.5%;
 }
 
 #canvas {
     display: block;
-    border: solid 2px;
+    border: solid 2px #009688 ;
     
 }
-.propieties_panel {
-    float: right;
-    background-color: #2f3133;
-    height: 447px;
-    width: 19%;
-    border: 1px solid;
-    margin-top: -450px;
-    margin-left: 1113px;
-    overflow: auto;
-}
+
 
 footer {
     padding-top: 6px;
-    background-color: #000000a8;
+    background-color: #009688;
     padding-left: 1%;
     padding-right: 20px;
     color: rgb(252, 249, 249);

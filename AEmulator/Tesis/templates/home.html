@@ -1,121 +1,46 @@
+{% extends 'template.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
+{% block link_css %}<link rel="stylesheet" href="{% static 'css/home.css' %}"> <link rel="stylesheet" href="{% static 'css/header.css' %}">{% endblock link_css %}
+{% block script_js %}<script src="{% static 'js/hamburguer_menu.js' %}"></script>{% endblock script_js %}
+{% block title %} Home {% endblock title %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="description" content="">
-    <meta name="author" content="vemol">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <script src="{% static 'js/jQuery.js' %}"></script>
-    <script src="{% static 'js/home.js' %}"></script>
-    <title>Home</title>
-</head>
-
-<body>
-    <nav class="navbar">
-        <div class="menuHeader">
-            <div id="menu-container">
-                <div id="menu-wrapper">
-                    <div id="hamburger-menu"><span></span><span></span><span></span></div>
-                    <!-- hamburger-menu -->
-                </div>
-                <!-- menu-wrapper -->
-                <ul class="menu-list accordion">
-                    <li id="nav1" class="toggle accordion-toggle">
-                        <span class="icon-plus"></span>
-                        <a class="menu-link" href="#">EMULACIONES</a>
-                    </li>
-                    <!-- accordion-toggle -->
-                    <ul class="menu-submenu accordion-content">
-                        <li><a class="head" href="#">Todas las Emulaciones</a></li>
-                        <li><a class="head" href="#">Emulaciones Activas</a></li>
-                        <li><a class="head" href="#">Emulaciones Finalizadas</a></li>
-                    </ul>
-                    <!-- menu-submenu accordon-content-->
-                    <li id="nav3" class="toggle accordion-toggle">
-                        <span class="icon-plus"></span>
-                        <a class="menu-link" href="#">Herramientas</a>
-                    </li>
-                    <!-- accordion-toggle -->
-                    <ul class="menu-submenu accordion-content">
-                        <li><a class="head" href="#">Configuración</a></li>
-                        <li><a class="head" href="#">Soporte</a></li>
-                        <li><a class="head" href="#">Ayuda</a></li>
-                    </ul>
-                    <!-- menu-submenu accordon-content-->
-                    <li id="nav2" class="toggle accordion-toggle">
-                        <span class="icon-plus"></span>
-                        <a class="menu-link" href="#">CUENTA</a>
-                    </li>
-                    <!-- accordion-toggle -->
-                    <ul class="menu-submenu accordion-content">
-                        <li><a class="head" href="#">Cambiar Contraseña</a></li>
-
-                    </ul>
-                    <!-- menu-submenu accordon-content-->
-                    <li id="nav3" class="accordion-normal">
-                        <span class="icon-plus"></span>
-                        <a class="menu-link" href="#">CERRAR SESIÓN</a>
-                    </li>
-                </ul>
-                <!-- menu-list accordion-->
-            </div>
-        </div>
-        <h1 id="headtittle">Integral - Entorno de Emulación vSDN</h1>
-    </nav>
-    <div class="container">
-
-        <aside class="lateralpanel">
-            <ul id="optionmenu">
-                <li id="archivo" href="#"> <a>Nuevo Emulación</a> </li>
-                <li id="option_bar" href="#"> <a>Todos las Emulaciones</a> </li>
-                <li id="option_bar" href="#"> <a>Emulaciones Terminadas</a> </li>
-                <li id="option_bar" href="#"> <a>Emulaciones en Ejecución</a> </li>
-            </ul>
-        </aside>
-
-        <section class="tablecontainer">
-            <table class="tableHome" id="emulationtable">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Tipo de Emulación</th>
-                    <th>Estado</th>
-                    <th>Última Modificación</th>
-                    <th>Acciones</th>
-                </tr>
-                <tr>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
-                    <td>Smith</td>
-                    <td>Smith</td>
-                </tr>
-                <tr>
-                    <td>Eve</td>
-                    <td>Jackson</td>
-                    <td>94</td>
-                    <td>Smith</td>
-                    <td>Smith</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>80</td>
-                    <td>Smith</td>
-                    <td>Smith</td>
-                </tr>
-            </table>
-        </section>
+{% block content %}
+<div class="container">
+    <div class="seeker">
+        <input type="search" id="searcher" name="q" placeholder="Realizar una Búsqueda" />
+      
     </div>
-    <footer>
-        2020 | División de Telecomunicaciones - Facultad de Ingeniería en Electrónica y Telecomunicaciones |
-        Universidad del Cauca | Laboratorio Telco 2.0
-
-    </footer>
-</body>
-
-
-</html>
+    <section class="tablecontainer">
+        <table class="tableHome" id="emulationtable">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo de Emulación</th>
+                <th>Estado</th>
+                <th>Última Modificación</th>
+                <th>Acciones</th>
+            </tr>
+            <tr>
+                <td>Jill</td>
+                <td>Smith</td>
+                <td>50</td>
+                <td>Smith</td>
+                <td>Smith</td>
+            </tr>
+            <tr>
+                <td>Eve</td>
+                <td>Jackson</td>
+                <td>94</td>
+                <td>Smith</td>
+                <td>Smith</td>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>80</td>
+                <td>Smith</td>
+                <td>Smith</td>
+            </tr>
+        </table>
+    </section>
+</div>
+{% endblock content %}
