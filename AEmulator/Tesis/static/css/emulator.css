@@ -112,10 +112,10 @@ body, html {
 .tool_panel {
     float: left;
     background-color: #ffffff;
-    height: 83.9%;
+    height: 88.5%;
     width: 80px;
     border: 1px solid #009688;
-    padding-top: 35px;    
+    padding-top: 5px;    
 }
 
 .btn {
@@ -148,13 +148,13 @@ body, html {
 
 
 .canvas_panel {
-    margin-left: 85px;
+    margin-left: 5.9%;
     /*padding-left: 85px;*/
     /*width="1050" , height="600"*/
     overflow-x: scroll;
     overflow-y: scroll;
     height:  89.3%;
-    width: 93.5%;
+    width: 93%;
 }
 
 #canvas {
@@ -174,4 +174,5 @@ footer {
     font-size: 15px;
     text-align: center;
     letter-spacing: 1px;
+    width: 98.6%;
 }

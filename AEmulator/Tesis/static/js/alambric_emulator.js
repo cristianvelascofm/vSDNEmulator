@@ -3,8 +3,8 @@
 var canvas = this._canvas = new fabric.Canvas('canvas');
 canvas.backgroundColor = '#EDFAFA';
 canvas.renderAll();
-
-
+var insertOp = false;
+var imgUrl = '';
 // Declaración de Variables
 var netInfo = []; //Contiene todos los Elementos(SwitchOF- Hosts) de la Red, con su PosX, PosY y su Etiqueta
 var tagHost = []; //Contiente las Etiquetas(H1,H2,...)de los Hosts de la Red
@@ -42,14 +42,23 @@ function insertElement(posX, posY, image, tagId, line) {
     id: tagId,
   });
 
+
   var text = new fabric.Textbox(tagId, {
-    top: 0,
-    left: -15,
+    top: 62,
+    left: 22,
     fontFamily: 'arial',
-    fill: '#0D6BA0',
+    fill: '#15435d',
     fontSize: 15
   });
 
+
+  if (tagId.charAt(0) == "s") {
+    text.top = 47;
+  }
+
+  if (tagId.charAt(0) == "c") {
+    text.top = 68;
+  }
   var group = new fabric.Group([element, text], {
 
     left: posX,
@@ -73,7 +82,7 @@ function tagGenerator(numHost, topologyType, depth, fanout) {
   if (topologyType == "single") {
     for (var i = 1; i <= numHost; i++) {
 
-      tagHost[i - 1] = "H" + i;
+      tagHost[i - 1] = "h" + i;
 
     }
   }
@@ -81,8 +90,8 @@ function tagGenerator(numHost, topologyType, depth, fanout) {
   else if (topologyType == "linear" || topologyType == "ring") {
     for (var i = 1; i <= numHost; i++) {
 
-      tagHost[i - 1] = "H" + i;
-      tagSwitchOF[i - 1] = "S" + i;
+      tagHost[i - 1] = "h" + i;
+      tagSwitchOF[i - 1] = "s" + i;
 
     }
   }
@@ -97,12 +106,12 @@ function tagGenerator(numHost, topologyType, depth, fanout) {
 
     for (var i = 1; i <= total[0]; i++) {
 
-      tagHost[i - 1] = "H" + i;
+      tagHost[i - 1] = "h" + i;
 
     }
 
     for (var a = 1; a <= total[1]; a++) {
-      tagSwitchOF[a - 1] = "S" + a;
+      tagSwitchOF[a - 1] = "s" + a;
     }
   }
 }
@@ -180,7 +189,7 @@ function linkMaker(topologyType) {
     // Creador de Pares de Conexión según la Red
     for (var temp = 1; temp <= tagHost.length; temp++) {
 
-      pareja = "(S1," + tagHost[temp - 1] + ")";
+      pareja = "(s1," + tagHost[temp - 1] + ")";
       k[temp - 1] = pareja;
 
     }
@@ -276,7 +285,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       //Insert SwitchOF de la Red Single
       var objt = {
-        value: "S1",
+        value: "s1",
         rX: pSX + 20,
         rY: pSY + 20
       };
@@ -294,9 +303,9 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       }
       //Inserta el SwithcOF de la Red Single
-      canvas.add(insertElement(pSX, pSY, '../static/img/openflow_switch.png', 'S1', 0));
+      canvas.add(insertElement(pSX, pSY, '../static/img/openflow_switch.png', 's1', 0));
       //Inserta el Controller de la Red Single
-      canvas.add(insertElement(pCX, pCY, '../static/img/controller.png', '', 0));
+      canvas.add(insertElement(pCX, pCY, '../static/img/controller.png', 'c1', 0));
 
       // Variables JSON
       console.log(netInfo);
@@ -331,7 +340,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
         data: json,
-        headers: {'X-CSRFToken': csrftoken},
+        headers: { 'X-CSRFToken': csrftoken },
 
         /*success: function (data) {
           alert(JSON.stringify(data));
@@ -396,7 +405,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       }
 
       //Inserta el Controller de la Topología Linear
-      canvas.add(insertElement(pCX1, pCY, '../static/img/controller.png', '', 0));
+      canvas.add(insertElement(pCX1, pCY, '../static/img/controller.png', 'c1', 0));
     }
   }
   //Creador Topología Ring - N Host conectados a N Conmutadores (conectados entre sí)
@@ -479,7 +488,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       }
 
       //Inserta el Controller  Topología Ring
-      canvas.add(insertElement(pCX, pCY, '../static/img/controller.png', '', 0));
+      canvas.add(insertElement(pCX, pCY, '../static/img/controller.png', 'c1', 0));
 
     }
 
@@ -534,7 +543,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
 
     //Inserta el Controller  Topología Tree
-    canvas.add(insertElement(100, pCY, '../static/img/controller.png', '', 0));
+    canvas.add(insertElement(100, pCY, '../static/img/controller.png', 'c1', 0));
 
   }
 
@@ -578,49 +587,29 @@ function option(x) {
       break;
 
     case "host":
-      var o = {} // empty Object
-      var key = 'Orientation Sensor';
-      o[key] = []; // empty Array, which you can push() values into
+      selector = false;
+      imgUrl = "../static/img/host.png";
+      insertElementClick();
 
-
-      var data = {
-        sampleTime: '1450632410296',
-        data: '76.36731:3.4651554:0.5665419'
-      };
-      var data2 = {
-        sampleTime: '1450632410296',
-        data: '78.15431:0.5247617:-0.20050584'
-      };
-      o[key].push(data);
-      o[key].push(data2);
-
-      var json = JSON.stringify(o);
-
-      var fs = require('fs');
-
-      fs.writeFile('myjsonfile.json', json, 'utf8', function (err) {
-        if (err) {
-          console.log(err);
-        }
-        console.log('Archivo creado ');
-      });
 
       break;
 
     case "switch_openflow":
-
-      break;
-
-    case "switch_legacy":
-
-      break;
-
-    case "router_legacy":
-
+      imgUrl = "../static/img/openflow_switch.png";
+      insertElementClick();
       break;
 
     case "controller":
+      imgUrl = "../static/img/controller.png";
+      insertElementClick();
+      break;
 
+    case "port":
+      imgUrl = "../static/img/port.png";
+      insertElementClick();
+      break;
+
+    case "label":
       break;
 
     case "link":
@@ -628,10 +617,17 @@ function option(x) {
       break;
 
     case "delete":
+      insertOp = false;
+      selector = true;
+      activeTool(selector);
+      var object = canvas.getActiveObject();
+      click();
 
       break;
   }
 }
+
+var selector = false;
 
 function getCookie(name) {
   let cookieValue = null;
@@ -648,3 +644,81 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
+var btnCursor = document.getElementById('cursor');
+function click() {
+
+  canvas.on('mouse:down', function (evt) {
+
+    console.log("click");
+    var select = true;
+    btnCursor.focus;
+    var obj = canvas.getActiveObject();
+    if (!obj) {
+      var pos = this.getPointer();
+      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
+      console.log(massage);
+    } else {
+      //lockImageControl(obj, select);
+    }
+  })
+}
+
+
+function activeTool(val) {
+
+  if (val == true) {
+    btnCursor.style.backgroundColor = "#a4e7a4ad";
+    imgUrl = '';
+
+  } else {
+    btnCursor.style.backgroundColor = "#c9e0f7";
+  }
+  btnCursor.focus();
+}
+
+function insertElementClick() {
+
+  var select = false;
+  insertOp = true;
+
+  if (insertOp == true) {
+    canvas.on('mouse:down', function (evt) {
+
+      console.log("insert");
+      var pos = this.getPointer();
+      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
+      console.log(massage);
+
+
+
+      //Se inserta la imagen correspondiente a la herramienta y se bloquea el control de imagen de Fabric
+      fabric.Image.fromURL(imgUrl, function (oImg) {
+
+        oImg.scale(0.125);
+        oImg.set({ 'left': pos.x + 5 });
+        oImg.set({ 'top': pos.y - 9 });
+        oImg.transparentCorners = false;
+        canvas.add(oImg).setActiveObject(oImg);
+        //canvas.getActiveObject().id = "host1";
+        /*lockImageControl(oImg, select);*/
+
+
+        canvas.renderAll();
+
+      });
+
+    })
+  } else {
+    canvas.on('mouse:down', function (evt) {
+
+      console.log("insert");
+      var pos = this.getPointer();
+      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
+      console.log(massage);
+    });
+
+  }
+
+}
+

@@ -21,7 +21,7 @@ body {
   width: 80%;
   background: rgba(30, 29, 31, 1);
   background: -moz-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgb(225, 243, 241) 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(30, 29, 31, 1)), color-stop(100%, rgb(64, 93, 223, 1)));
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgb(50, 79, 87)), color-stop(100%, rgb(64, 93, 223, 1)));
   background: -webkit-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgb(0, 150, 136, 1) 100%);
   background: -o-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgb(0, 150, 136, 1) 100%);
   background: -ms-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgb(0, 150, 136, 1) 100%);
