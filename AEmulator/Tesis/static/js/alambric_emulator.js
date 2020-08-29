@@ -11,6 +11,7 @@ var tagHost = []; //Contiente las Etiquetas(H1,H2,...)de los Hosts de la Red
 var tagSwitchOF = []; //Contiente las Etiquetas(S1,S2,...)de los SwitchsOF de la Red
 var link = []; //Contiene el Arreglo de Links de la Red
 var flag = true; //Control de Uso del Zoom
+var topologyType = "";
 
 
 // Zoom Lienzo Mediante el Moviemiento del Scroll del Mouse
@@ -556,34 +557,11 @@ function option(x) {
   switch (x.id) {
 
     case "cursor":
-      var topologyType = prompt("Tipo de Topología:");
-      var numHost;
-
-
-      // Topología Minimal - Caso Particular de Topología Single N=2
-      if (topologyType == "minimal") {
-        numHost = 2;
-        topologyType = "single";
-        tagGenerator(numHost, topologyType, 0, 0);
-        topologyMaker(numHost, topologyType, 0, 0);
-
-      }
-      else if (topologyType == "tree") {
-        var d = prompt("Niveles de la topología: "); // Número de Niveles
-        var f = prompt("Aperturas por nodo: ");  // Apertura
-        var depth = parseInt(d);
-        var fanout = parseInt(f);
-        tagGenerator(0, topologyType, depth, fanout);
-        topologyMaker(0, topologyType, depth, fanout);
-      }
-      else {
-        var nH = prompt("Número de Host: ");
-        numHost = parseInt(nH);
-        tagGenerator(numHost, topologyType, 0, 0);
-        topologyMaker(numHost, topologyType, 0, 0);
-      }
-
-
+      insertOp = false;
+      selector = true;
+      activeTool(selector);
+      var object = canvas.getActiveObject();
+      click();
       break;
 
     case "host":
@@ -617,11 +595,7 @@ function option(x) {
       break;
 
     case "delete":
-      insertOp = false;
-      selector = true;
-      activeTool(selector);
-      var object = canvas.getActiveObject();
-      click();
+
 
       break;
   }
@@ -722,3 +696,76 @@ function insertElementClick() {
 
 }
 
+function topologyTemplate(topology, num) {
+  switch (topology) {
+
+    case "minimalTopo":
+
+      numHost = 2;
+      topologyType = "single";
+      tagGenerator(numHost, topologyType, 0, 0);
+      topologyMaker(numHost, topologyType, 0, 0);
+
+      break;
+    case "singleTopo":
+      
+      topologyType = "single";
+      numHost = num;
+      tagGenerator(numHost, topologyType, 0, 0);
+      topologyMaker(numHost, topologyType, 0, 0);
+
+      break;
+
+    case "linearTopo":
+
+      topologyType = "linear";
+      var nH = prompt("Número de Host: ");
+      numHost = parseInt(nH);
+      tagGenerator(numHost, topologyType, 0, 0);
+      topologyMaker(numHost, topologyType, 0, 0);
+
+      break;
+
+    case "anilloTopo":
+
+      topologyType = "ring";
+      var nH = prompt("Número de Host: ");
+      numHost = parseInt(nH);
+      tagGenerator(numHost, topologyType, 0, 0);
+      topologyMaker(numHost, topologyType, 0, 0);
+
+      break;
+
+    case "treeTopo":
+
+      topologyType = "tree";
+      var d = prompt("Niveles de la topología: "); // Número de Niveles
+      var f = prompt("Aperturas por nodo: ");  // Apertura
+      var depth = parseInt(d);
+      var fanout = parseInt(f);
+      tagGenerator(0, topologyType, depth, fanout);
+      topologyMaker(0, topologyType, depth, fanout);
+
+      break;
+  }
+}
+var topo = "";
+
+
+$("#singleTopo").on('click', function () {
+ 
+  topo = $(this).attr("id");
+  $.fancybox.open($('.div_form'), {
+    touch: false,
+    infobar: false
+  });
+
+});
+/* Fornulario parametros de la Red */
+$('#boton_form').on('click', function () {
+
+  var formulario = document.forms['formulario'];
+  var campo = formulario['fname'].value;
+  topologyTemplate(topo, parseInt(campo));
+  parent.jQuery.fancybox.close();
+});

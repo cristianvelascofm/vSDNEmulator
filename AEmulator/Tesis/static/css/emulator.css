@@ -52,11 +52,13 @@ ul {
 
 #menu_option_bar li>a:hover {
     color: #009688;
+    
 }
 
 #menu_option_bar>li {
     float: left;
     text-align: left;
+    cursor: pointer;
 }
 
 #menu_option_bar>li>ul {
@@ -332,49 +334,11 @@ ul {
     background-repeat: no-repeat;
     padding-left: 30px;
 }
-/*
-.menu_bar {
-    background-color: #E1F3F1;
-    height: 35px;
-    margin-bottom: 0px;
-    padding-top: 0px;
-    margin-top: 0px;
-    width: 100%;
-    border: 1px solid #E1F3F1;
-}
 
-.menu_bar ul {
-    list-style: none;
-    float: left;
-    margin-top: 5px;
-    padding-left: 3px;
-    width: 100%;
-    height: 10px;
+.emulator{
+   width: 100%;
+   height: 94.8%;
 }
-
-.menu_bar ul li {
-    float: left;
-    margin-top: -3px;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    padding: 5px;
-    border-radius: 15%;
-}
-
-.menu_bar ul li a {
-    color: #009688;
-    text-decoration: none;
-    font-family: Arial;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.menu_bar ul li a:hover {
-    background-color: #b4fbf3;
-    cursor: pointer;
-    text-decoration: underline;
-}
-*/
 
 .tool_bar {
     background-color: #ffffff;

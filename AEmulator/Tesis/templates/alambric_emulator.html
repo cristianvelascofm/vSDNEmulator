@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" href="{% static 'css/emulator.css' %}">
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
 {% endblock link_css %}
 {% block script_js %}
 
@@ -16,24 +17,24 @@
 {% block content %}
 <div id="menu_bar">
         <ul id="menu_option_bar">
-                <li id="menu_archivo_bar" href="#"> <a>Archivo</a>
+                <li id="menu_archivo_bar"> <a>Archivo</a>
                         <ul id="menu_archivo">
                                 <li id="nuevo"><a href="#">Nuevo</a></li>
                                 <li id="abrir"><a href="#">Abrir</a></li>
                                 <li id="menu_plantilla"><a href="#">Abrir Plantilla</a>
                                         <ul id="sub_menu_plantilla">
-                                                <li id="minimal">
-                                                        <a href="#"> Minimal</a>
+                                                <li id="minimal" onclick="proob(this)">
+                                                        <a href="#" class="iframe"> Minimal</a>
                                                 </li>
-                                                <li id="anillo">
-                                                        <a href="#"> Anillo</a>
+                                                <li id="anillo" onclick="proob(this)">
+                                                        <a> Anillo</a>
                                                 <li id="single">
-                                                        <a href="#">Single</a>
+                                                        <a id="singleTopo" href="javascript:;">Single</a>
                                                 </li>
-                                                <li id="tree">
+                                                <li id="tree" onclick="proob(this)">
                                                         <a href="#">Tree</a>
                                                 </li>
-                                                <li>
+                                                <li id="linear" onclick="proob(this)">
                                                         <a href="#">Linear</a>
                                                 </li>
                                         </ul>
@@ -138,7 +139,22 @@
         </div>
 </div>
 
+<div style="display: none;">
+        <div class="div_form">
+                <h2> Parámetros de la Red</h2>
+
+                <form id="formulario">
+                        <label >Número de Host:</label><br>
+                        <input type="text" id="fname" name="fname"><br>
+                        <input type="button" id="boton_form" value="Crear">
+                </form>
+                
+        </div>
+
+</div>
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js'%}"></script>
 
 {% endblock content %}
