@@ -3,7 +3,8 @@
     width: 20px;
     height: 20px;
 }
-#head{
+
+#head {
     display: inline;
     padding-left: 30%;
     color: rgb(0, 0, 0);
@@ -14,7 +15,6 @@
 }
 
 body, html {
-    
     margin: 0;
     height: 93%;
     width: 99.5%;
@@ -23,6 +23,316 @@ body, html {
     -moz-osx-font-smoothing: grayscale;
 }
 
+#menu_bar {
+    font-family: 'Quicksand', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-top: -18px;
+    height: 50px;
+    width: 99.9%;
+    margin-left: 0x;
+    background-color: #E1F3F1;
+    float: top;
+}
+
+ul {
+    list-style: none;
+    text-align: left;
+}
+
+#menu_option_bar {
+    margin-left: -37px;
+}
+
+#menu_option_bar li>a {
+    text-decoration: none;
+    padding: 10px 10px 10px 0px;
+    display: block;
+}
+
+#menu_option_bar li>a:hover {
+    color: #009688;
+}
+
+#menu_option_bar>li {
+    float: left;
+    text-align: left;
+}
+
+#menu_option_bar>li>ul {
+    display: none;
+    padding-left: 1px;
+    position: absolute;
+    z-index: 10;
+}
+
+#menu_option_bar>li:hover>ul {
+    display: block;
+    background-color: #b9d8d4;
+    text-decoration: none;
+}
+
+#menu_plantilla>ul {
+    display: none;
+}
+
+#menu_plantilla {
+    background-image: url(../img/rigth_arrow.png);
+    background-size: 15px;
+    background-position: 135px 16px;
+    background-repeat: no-repeat;
+    border-bottom: dashed 1px black;
+}
+
+#menu_plantilla:hover {
+    background-image: url(../img/rigth_arrow_blue.png);
+    background-size: 15px;
+    background-position: 135px 16px;
+    background-repeat: no-repeat;
+}
+
+#menu_plantilla:hover>ul {
+    margin-left: 155px;
+    position: absolute;
+    display: block;
+    height: 225px;
+    width: 125px;
+    background-color: #9fd6d6;
+    padding-left: 8px;
+    margin-top: -45px;
+}
+
+#minimal {
+    border-bottom: dashed 1px black;
+}
+
+#anillo {
+    border-bottom: dashed 1px black;
+}
+
+#single {
+    border-bottom: dashed 1px black;
+}
+
+#tree {
+    border-bottom: dashed 1px black;
+}
+
+#menu_exportar>ul {
+    display: none;
+}
+
+#menu_exportar {
+    background-image: url(../img/rigth_arrow.png);
+    background-size: 15px;
+    background-position: 135px 16px;
+    background-repeat: no-repeat;
+    border-bottom: dashed 1px black;
+}
+
+#menu_exportar:hover {
+    background-image: url(../img/rigth_arrow_blue.png);
+    background-size: 15px;
+    background-position: 135px 16px;
+    background-repeat: no-repeat;
+}
+
+#menu_exportar:hover>ul {
+    margin-left: 155px;
+    position: absolute;
+    display: block;
+    height: 135px;
+    width: 100px;
+    background-color: #9fd6d6;
+    padding-left: 8px;
+    margin-top: -45px;
+}
+
+#python {
+    border-bottom: dashed 1px black;
+}
+
+#json {
+    border-bottom: dashed 1px black;
+}
+
+#archivo {
+    width: 90px;
+    z-index: 10;
+}
+
+#menu_archivo {
+    width: 155px;
+    padding-left: -150px;
+    text-align: left;
+}
+
+#nuevo {
+    background-image: url(../img/new_document.png);
+    background-size: 25px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#guardar {
+    background-image: url(../img/save.png);
+    background-size: 20px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#abrir {
+    background-image: url(../img/open.png);
+    background-size: 20px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#salir {
+    background-image: url(../img/out.png);
+    background-size: 25px;
+    background-position: 3px 9px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+#edicion {
+    width: 80px;
+    padding-left: 1px;
+    z-index: 10;
+}
+
+#menu_edicion {
+    width: 200px;
+}
+
+#seleccion {
+    background-image: url(../img/selection.png);
+    background-size: 25px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#deshacer {
+    background-image: url(../img/undo.png);
+    background-size: 20px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#rehacer {
+    background-image: url(../img/redo.png);
+    background-size: 20px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#copiar {
+    background-image: url(../img/copy.png);
+    background-size: 20px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#pegar {
+    background-image: url(../img/paste.png);
+    background-size: 23px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+#cortar {
+    background-image: url(../img/cut.png);
+    background-size: 23px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#emulacion {
+    width: 110px;
+}
+
+#menu_emulacion {
+    width: 250px;
+}
+
+#iniciarE {
+    background-image: url(../img/play.png);
+    background-size: 23px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#detenerE {
+    background-image: url(../img/stop.png);
+    background-size: 25px;
+    background-position: 3px 10px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#preferenciasE {
+    background-image: url(../img/preferencias.png);
+    background-size: 25px;
+    background-position: 3px 10px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+#ayuda {
+    width: 100px;
+}
+
+#menu_ayuda {
+    width: 200px;
+    text-align: left;
+}
+#doc {
+    background-image: url(../img/book.png);
+    background-size: 23px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#guie {
+    background-image: url(../img/guie.png);
+    background-size: 25px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    border-bottom: dashed 1px black;
+}
+
+#about {
+    background-image: url(../img/about.png);
+    background-size: 22px;
+    background-position: 3px 12px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+/*
 .menu_bar {
     background-color: #E1F3F1;
     height: 35px;
@@ -64,6 +374,7 @@ body, html {
     cursor: pointer;
     text-decoration: underline;
 }
+*/
 
 .tool_bar {
     background-color: #ffffff;
@@ -85,7 +396,7 @@ body, html {
 }
 
 .tool_bar ul li {
-    background-color:  #E1F3F1;
+    background-color: #E1F3F1;
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -115,12 +426,12 @@ body, html {
     height: 88.5%;
     width: 80px;
     border: 1px solid #009688;
-    padding-top: 5px;    
+    padding-top: 5px;
 }
 
 .btn {
     background-color: #E1F3F1;
-   /* padding: 2px 2px 2px 2px;*/
+    /* padding: 2px 2px 2px 2px;*/
     height: 45px;
     width: 45px;
     margin-top: 12px;
@@ -131,7 +442,8 @@ body, html {
 }
 
 .btn:hover {
-    background-color: #b4fbf3;;
+    background-color: #b4fbf3;
+    ;
     border: solid 2px #2e42f7;
 }
 
@@ -142,10 +454,7 @@ body, html {
 #cursor:active {
     background-color: #acfc93;
     border: solid 2px #009688;
-    
 }
-
-
 
 .canvas_panel {
     margin-left: 5.9%;
@@ -153,16 +462,14 @@ body, html {
     /*width="1050" , height="600"*/
     overflow-x: scroll;
     overflow-y: scroll;
-    height:  89.3%;
+    height: 89.3%;
     width: 93%;
 }
 
 #canvas {
     display: block;
-    border: solid 2px #009688 ;
-    
+    border: solid 2px #009688;
 }
-
 
 footer {
     padding-top: 6px;

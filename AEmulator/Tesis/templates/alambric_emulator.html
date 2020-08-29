@@ -4,71 +4,139 @@
 {% block link_css %}
 
 <link rel="stylesheet" href="{% static 'css/emulator.css' %}">
-<link rel="stylesheet" href="{% static 'css/header.css' %}">{% endblock link_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+{% endblock link_css %}
 {% block script_js %}
 
 <script src="{% static 'js/fabric.js' %}"></script>
-<script src="{% static 'js/hamburguer_menu.js' %}"></script>{% endblock script_js %}
+<script src="{% static 'js/hamburguer_menu.js' %}"></script>
+{% endblock script_js %}
 {% block title %}SDN - Emulator{% endblock title %}
 
 {% block content %}
-<div class="menu_bar">
+<div id="menu_bar">
         <ul id="menu_option_bar">
-                <li id="archivo" href="#"> <a>Archivo</a> </li>
-                <li id="option_bar" href="#"> <a>Edición</a> </li>
-                <li id="option_bar" href="#"> <a>Emulación</a> </li>
-                <li id="option_bar" href="#"> <a>Ayuda</a> </li>
+                <li id="menu_archivo_bar" href="#"> <a>Archivo</a>
+                        <ul id="menu_archivo">
+                                <li id="nuevo"><a href="#">Nuevo</a></li>
+                                <li id="abrir"><a href="#">Abrir</a></li>
+                                <li id="menu_plantilla"><a href="#">Abrir Plantilla</a>
+                                        <ul id="sub_menu_plantilla">
+                                                <li id="minimal">
+                                                        <a href="#"> Minimal</a>
+                                                </li>
+                                                <li id="anillo">
+                                                        <a href="#"> Anillo</a>
+                                                <li id="single">
+                                                        <a href="#">Single</a>
+                                                </li>
+                                                <li id="tree">
+                                                        <a href="#">Tree</a>
+                                                </li>
+                                                <li>
+                                                        <a href="#">Linear</a>
+                                                </li>
+                                        </ul>
+                                </li>
+                                <li id="guardar"><a href="#">Guardar</a></li>
+                                <li id="menu_exportar"><a href="#">Exportar</a>
+                                        <ul id="sub_menu_exportar">
+                                                <li id="python">
+                                                        <a href="#">Python</a>
+                                                </li>
+                                                <li id="json">
+                                                        <a href="#">JSON</a>
+                                                </li>
+                                                <li id="png">
+                                                        <a href="#">PNG</a>
+                                                </li>
+                                        </ul>
+                                </li>
+                                <li id="salir"><a href="#">Salir</a></li>
+                        </ul>
+                </li>
+                <li id="menu_edicion_bar" href="#"> <a>Edición</a>
+                        <ul id="menu_edicion">
+                                <li id="deshacer"><a href=" ">Deshacer</a></li>
+                                <li id="rehacer"><a href=" ">Rehacer</a></li>
+                                <li id="copiar"><a href=" ">Copiar</a></li>
+                                <li id="cortar"><a href=" ">Cortar</a></li>
+                                <li id="pegar"><a href=" ">Pegar</a></li>
+                                <li id="seleccion"><a href=" ">Seleccionar Todo</a></li>
+                        </ul>
+                </li>
+                <li id="menu_emulacion_bar" href="#"> <a>Emulación</a>
+                        <ul id="menu_emulacion">
+                                <li id="iniciarE"><a href=" ">Iniciar Emulación</a></li>
+                                <li id="detenerE"><a href=" ">Detener Emulación</a></li>
+                                <li id="preferenciasE"><a href=" ">Preferencias</a></li>
+                        </ul>
+                </li>
+                <li id="menu_ayuda_bar" href="#"> <a>Ayuda</a>
+                        <ul id="menu_ayuda">
+                                <li id="doc"><a href=" ">Documentación</a></li>
+                                <li id="guie"><a href=" ">Guias de Usuario</a></li>
+                                <li id="about"><a href=" ">Acerca de ...</a></li>
+                        </ul>
+                </li>
         </ul>
 </div>
 
-<div class="tool_bar">
-        <ul id="menu_option__tool_bar">
-                <li title="Nuevo" id="option_tool_bar" href="#"> <img src="{% static 'img/new_document.png' %}" alt=""
-                                width="18px" height="18px"></li>
-                <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt="" width="18px"
-                                height="18px"> </li>
-                <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt="" width="18x"
-                                height="18px"></li>
-                <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt="" width="18px"
-                                height="18px"></li>
-                <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt="" width="18px"
-                                height="18px"></li>
-                <li title="Rehacer" id="option_tool_bar"> <img src="{% static 'img/redo.png' %}" alt="" width="18px"
-                                height="18px"></li>
-                <li title="Modo: Emulación" id="option_tool_bar"> <img src="{% static 'img/play.png' %}" alt=""
-                                width="18px" height="18px"></li>
-                <li title="Stop" id="option_tool_bar"> <img src="{% static 'img/stop.png' %}" alt="" width="18px"
-                                height="18px"></li>
+<div class="emulator">
+        <div class="tool_bar">
+                <ul id="menu_option__tool_bar">
+                        <li title="Nuevo" id="option_tool_bar" href="#"> <img src="{% static 'img/new_document.png' %}"
+                                        alt="" width="18px" height="18px"></li>
+                        <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
+                                        width="18px" height="18px"> </li>
+                        <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt=""
+                                        width="18x" height="18px"></li>
+                        <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt=""
+                                        width="18px" height="18px"></li>
+                        <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt=""
+                                        width="18px" height="18px"></li>
+                        <li title="Rehacer" id="option_tool_bar"> <img src="{% static 'img/redo.png' %}" alt=""
+                                        width="18px" height="18px"></li>
+                        <li title="Modo: Emulación" id="option_tool_bar"> <img src="{% static 'img/play.png' %}" alt=""
+                                        width="18px" height="18px"></li>
+                        <li title="Stop" id="option_tool_bar"> <img src="{% static 'img/stop.png' %}" alt=""
+                                        width="18px" height="18px"></li>
 
-        </ul>
+                </ul>
+        </div>
+
+        <aside class="tool_panel">
+
+                <button title="Modo: Seleccionar" type="button" href="#" id="cursor" class="btn"
+                        onclick="option(this);"><img src="{% static 'img/cursor.png' %}" id="panel_img" alt=""
+                                width="45%" height="45%"></button>
+                <button title="Controlador" type="button" href="#" id="controller" class="btn"
+                        onclick="option(this);"><img src="{% static 'img/controller.png' %}" id="panel_img" alt=""
+                                width="70%" height="70%"></button>
+                <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn"
+                        onclick="option(this);"><img src="{% static 'img/openflow_switch.png' %}" id="panel_img" alt=""
+                                width="85%" height="95%"></button>
+                <button title="Host" type="button" href="#" id="host" class="btn" onclick="option(this);"><img
+                                src="{% static 'img/host.png' %}" id="panel_img" alt="" width="70%"
+                                height="70%"></button>
+                <button title="Port" type="button" href="#" id="port" class="btn" onclick="option(this);"><img
+                                src="{% static 'img/port.png' %}" id="panel_img" alt="" width="70%"
+                                height="55%"></button>
+                <button title="Label" type="button" href="#" id="label" class="btn" onclick="option(this);"><img
+                                src="{% static 'img/label.png' %}" id="panel_img" alt="" width="70%"
+                                height="55%"></button>
+                <button title="Modo: Enlace" type="button" href="#" id="link" class="btn" onclick="option(this);"><img
+                                src="{% static 'img/link.png' %}" id="panel_img" alt="" width="65%"
+                                height="65%"></button>
+                <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="option(this);"><img
+                                src="{% static 'img/delete.png' %}" id="panel_img" alt="" width="45%" height="45%">
+
+        </aside>
+
+        <div class="canvas_panel">
+                <canvas id="canvas" width="4500" , height="4500"></canvas>
+        </div>
 </div>
-
-<aside class="tool_panel">
-
-        <button title="Modo: Seleccionar" type="button" href="#" id="cursor" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/cursor.png' %}" id="panel_img" alt="" width="45%" height="45%"></button>
-        <button title="Controlador" type="button" href="#" id="controller" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/controller.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
-        <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn"
-                onclick="option(this);"><img src="{% static 'img/openflow_switch.png' %}" id="panel_img" alt=""
-                        width="85%" height="95%"></button>
-        <button title="Host" type="button" href="#" id="host" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/host.png' %}" id="panel_img" alt="" width="70%" height="70%"></button>
-        <button title="Port" type="button" href="#" id="port" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/port.png' %}" id="panel_img" alt="" width="70%" height="55%"></button>
-        <button title="Label" type="button" href="#" id="label" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/label.png' %}" id="panel_img" alt="" width="70%" height="55%"></button>
-        <button title="Modo: Enlace" type="button" href="#" id="link" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/link.png' %}" id="panel_img" alt="" width="65%" height="65%"></button>
-        <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="option(this);"><img
-                        src="{% static 'img/delete.png' %}" id="panel_img" alt="" width="45%" height="45%">
-
-</aside>
-
-<div class="canvas_panel">
-        <canvas id="canvas" width="4500" , height="4500"></canvas>
-</div>
-
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
