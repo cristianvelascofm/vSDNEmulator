@@ -13,6 +13,11 @@ var link = []; //Contiene el Arreglo de Links de la Red
 var flag = true; //Control de Uso del Zoom
 var topologyType = "";
 
+//Variables para la ejecucion de las Topologías desde Templates
+
+var numHostTemplate = 0;
+var numLevelsTemplate = 0;
+var numDepthTemplate = 0;
 
 // Zoom Lienzo Mediante el Moviemiento del Scroll del Mouse
 canvas.on('mouse:wheel', function (opt) {
@@ -696,8 +701,8 @@ function insertElementClick() {
 
 }
 
-function topologyTemplate(topology, num) {
-  switch (topology) {
+function topologyTemplate(x) {
+  switch (x.id) {
 
     case "minimalTopo":
 
@@ -708,31 +713,25 @@ function topologyTemplate(topology, num) {
 
       break;
     case "singleTopo":
-      
+
       topologyType = "single";
-      numHost = num;
-      tagGenerator(numHost, topologyType, 0, 0);
-      topologyMaker(numHost, topologyType, 0, 0);
+      frameFancyBox(topologyType);
+
 
       break;
 
     case "linearTopo":
 
       topologyType = "linear";
-      var nH = prompt("Número de Host: ");
-      numHost = parseInt(nH);
-      tagGenerator(numHost, topologyType, 0, 0);
-      topologyMaker(numHost, topologyType, 0, 0);
+      frameFancyBox(topologyType);
 
       break;
 
     case "anilloTopo":
 
       topologyType = "ring";
-      var nH = prompt("Número de Host: ");
-      numHost = parseInt(nH);
-      tagGenerator(numHost, topologyType, 0, 0);
-      topologyMaker(numHost, topologyType, 0, 0);
+      frameFancyBox(topologyType);
+
 
       break;
 
@@ -749,23 +748,71 @@ function topologyTemplate(topology, num) {
       break;
   }
 }
-var topo = "";
 
+/*
 
 $("#singleTopo").on('click', function () {
- 
+
   topo = $(this).attr("id");
   $.fancybox.open($('.div_form'), {
     touch: false,
     infobar: false
   });
 
-});
+});*/
 /* Fornulario parametros de la Red */
-$('#boton_form').on('click', function () {
 
-  var formulario = document.forms['formulario'];
-  var campo = formulario['fname'].value;
-  topologyTemplate(topo, parseInt(campo));
+
+
+
+function frameFancyBox(id) {
+
+  if (id != 'tree') {
+    $.fancybox.open($('.div_form'), {
+      touch: false,
+      modal: false,
+      infobar: false,
+      keys :{
+        13: 'none',
+      }
+
+    });
+  } else {
+    alert("es tree");
+  }
+
+
+}
+
+$('#boton_form').on('click', function () {
+  console.log('enter');
+  var templateForm = document.forms['formulario'];
+  var value = templateForm['fname'].value;
+  numHostTemplate = parseInt(value);
+
+  tagGenerator(numHostTemplate, topologyType, 0, 0);
+  topologyMaker(numHostTemplate, topologyType, 0, 0);
+
   parent.jQuery.fancybox.close();
+
 });
+/*
+$("#fname").keypress(function (e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+  
+  if (code == 13) {
+    
+    /*var templateForm = document.forms['formulario'];
+    var value = templateForm['fname'].value;
+    numHostTemplate = parseInt(value);
+
+    tagGenerator(numHostTemplate, topologyType, 0, 0);
+    topologyMaker(numHostTemplate, topologyType, 0, 0);
+
+    parent.jQuery.fancybox.close();
+
+    $('#boton_form').trigger('click');
+    
+    
+  }
+});*/

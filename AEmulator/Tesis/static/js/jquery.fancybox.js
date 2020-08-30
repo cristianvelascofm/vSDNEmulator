@@ -369,19 +369,19 @@
     // Internationalization
     // ====================
 
-    lang: "en",
+    lang: "es",
     i18n: {
       en: {
-        CLOSE: "Close",
-        NEXT: "Next",
-        PREV: "Previous",
-        ERROR: "The requested content cannot be loaded. <br/> Please try again later.",
-        PLAY_START: "Start slideshow",
-        PLAY_STOP: "Pause slideshow",
-        FULL_SCREEN: "Full screen",
-        THUMBS: "Thumbnails",
-        DOWNLOAD: "Download",
-        SHARE: "Share",
+        CLOSE: "Cerrar",
+        NEXT: "Siguiente",
+        PREV: "Anterior",
+        ERROR: "El contenido solicitado no puede ser cargado.<br/> Por favor, intente nuevamente.",
+        PLAY_START: "Iniciar Presentación",
+        PLAY_STOP: "Pausar Presentación",
+        FULL_SCREEN: "Pantalla Completa",
+        THUMBS: "Miniaturas",
+        DOWNLOAD: "Descargar",
+        SHARE: "Compartir",
         ZOOM: "Zoom"
       },
       de: {

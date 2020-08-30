@@ -23,19 +23,19 @@
                                 <li id="abrir"><a href="#">Abrir</a></li>
                                 <li id="menu_plantilla"><a href="#">Abrir Plantilla</a>
                                         <ul id="sub_menu_plantilla">
-                                                <li id="minimal" onclick="proob(this)">
-                                                        <a href="#" class="iframe"> Minimal</a>
+                                                <li id="minimal" >
+                                                        <a id="minimalTopo" onclick="topologyTemplate(this)"> Minimal</a>
                                                 </li>
-                                                <li id="anillo" onclick="proob(this)">
-                                                        <a> Anillo</a>
+                                                <li id="anillo">
+                                                        <a id="anilloTopo" onclick="topologyTemplate(this)"> Anillo</a>
                                                 <li id="single">
-                                                        <a id="singleTopo" href="javascript:;">Single</a>
+                                                        <a id="singleTopo" onclick="topologyTemplate(this)">Single</a>
                                                 </li>
-                                                <li id="tree" onclick="proob(this)">
-                                                        <a href="#">Tree</a>
+                                                <li id="tree" >
+                                                        <a id="treeTopo" onclick="topologyTemplate(this)">Tree</a>
                                                 </li>
-                                                <li id="linear" onclick="proob(this)">
-                                                        <a href="#">Linear</a>
+                                                <li id="linear">
+                                                        <a id="linearTopo" onclick="topologyTemplate(this)">Linear</a>
                                                 </li>
                                         </ul>
                                 </li>
@@ -144,8 +144,8 @@
                 <h2> Parámetros de la Red</h2>
 
                 <form id="formulario">
-                        <label >Número de Host:</label><br>
-                        <input type="text" id="fname" name="fname"><br>
+                        <label >Número de Host:</label><br><br>
+                        <input type="text" id="fname" name="fname"><br><br>
                         <input type="button" id="boton_form" value="Crear">
                 </form>
                 
