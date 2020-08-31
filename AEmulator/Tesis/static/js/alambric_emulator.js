@@ -16,8 +16,7 @@ var topologyType = "";
 //Variables para la ejecucion de las Topologías desde Templates
 
 var numHostTemplate = 0;
-var numLevelsTemplate = 0;
-var numDepthTemplate = 0;
+
 
 // Zoom Lienzo Mediante el Moviemiento del Scroll del Mouse
 canvas.on('mouse:wheel', function (opt) {
@@ -606,6 +605,7 @@ function option(x) {
   }
 }
 
+// Obtener Cockie Djando
 var selector = false;
 
 function getCookie(name) {
@@ -624,6 +624,7 @@ function getCookie(name) {
   return cookieValue;
 }
 
+// Función Modo Seleccionar
 var btnCursor = document.getElementById('cursor');
 function click() {
 
@@ -643,6 +644,7 @@ function click() {
   })
 }
 
+/* Cambio Valores Herramienta Activa*/
 
 function activeTool(val) {
 
@@ -656,6 +658,7 @@ function activeTool(val) {
   btnCursor.focus();
 }
 
+/* Insertar Elemento Selecionado en la Paleta */
 function insertElementClick() {
 
   var select = false;
@@ -701,6 +704,8 @@ function insertElementClick() {
 
 }
 
+/* Menú Topologías Template */
+
 function topologyTemplate(x) {
   switch (x.id) {
 
@@ -738,39 +743,25 @@ function topologyTemplate(x) {
     case "treeTopo":
 
       topologyType = "tree";
-      var d = prompt("Niveles de la topología: "); // Número de Niveles
-      var f = prompt("Aperturas por nodo: ");  // Apertura
-      var depth = parseInt(d);
-      var fanout = parseInt(f);
-      tagGenerator(0, topologyType, depth, fanout);
-      topologyMaker(0, topologyType, depth, fanout);
+      frameFancyBox(topologyType);
+      
 
       break;
   }
 }
 
-/*
+/* Variables para Formulario Template FancyBox */
+var inputHostTemplate= $('#inputHostTemplate');
+var inputFanoutT= $('#inputFanoutTemplate'); 
+var inputDepthT= $('#inputDepthTemplate');
 
-$("#singleTopo").on('click', function () {
-
-  topo = $(this).attr("id");
-  $.fancybox.open($('.div_form'), {
-    touch: false,
-    infobar: false
-  });
-
-});*/
-/* Fornulario parametros de la Red */
-
-
-var inputHostTemplate= $('#fname');
-
+/* Envio parametros (FancyBox) para crear Topologia Tree */
 function frameFancyBox(id) {
 
   if (id != 'tree') {
     inputHostTemplate.val(2);
     inputHostTemplate.select();
-    $.fancybox.open($('.div_form'), {
+    $.fancybox.open($('.divFormTemplate'), {
       touch: false,
       modal: false,
       infobar: false,
@@ -778,16 +769,25 @@ function frameFancyBox(id) {
       clickOutside: false,
     });
   } else {
-    alert("es tree");
+    inputDepthT.val(1);
+    inputDepthT.select();
+    inputFanoutT.val(2);
+    $.fancybox.open($('.divFormTree'), {
+      touch: false,
+      modal: false,
+      infobar: false,
+      clickSlide: false,
+      clickOutside: false,
+    });
   }
 
 
 }
-
-$('#boton_form').on('click', function () {
+/* Envio parametros (FancyBox) para crear Topologia */
+$('#createButtonTemplate').on('click', function () {
   console.log('enter');
   var templateForm = document.forms['formulario'];
-  var value = templateForm['fname'].value;
+  var value = templateForm['inputHostTemplate'].value;
   numHostTemplate = parseInt(value);
 
   tagGenerator(numHostTemplate, topologyType, 0, 0);
@@ -796,28 +796,56 @@ $('#boton_form').on('click', function () {
   
 
 });
-
-$(".div_form").keypress(function (e) {
-  var code = (e.keyCode ? e.keyCode : e.which);
-
-  if (code == 13) {
-    e.preventDefault();
-
-    $('#boton_form').trigger('click');
-
-
-  }
-});
-
-$("#fname").keypress(function (e) {
+/* Opciones de enter en el Formulario (FancyBox) para parametros Topologia */     
+$("#inputHostTemplate").keypress(function (e) {
   var code = (e.keyCode ? e.keyCode : e.which);
 
   if (code == 13) {
 
       e.preventDefault();
 
-    $('#boton_form').trigger('click');
+    $('#createButtonTemplate').trigger('click');
 
 
+  }
+});
+
+
+/* Envio parametros (FancyBox) para crear Topologia Tree */
+$('#createButtonTree').on('click', function () {
+  
+  var templateForm = document.forms['formularioTree'];
+  var dp = templateForm['inputDepthTemplate'].value;
+  var fn = templateForm['inputFanoutTemplate'].value;
+  var numDepthTemplate = parseInt(dp);
+  var numFanoutTemplate = parseInt(fn);
+  tagGenerator(0, topologyType, numDepthTemplate, numFanoutTemplate);
+  topologyMaker(0, topologyType, numDepthTemplate, numFanoutTemplate);
+ 
+  parent.jQuery.fancybox.close();
+  
+
+});
+/* Opciones de enter en el Formulario (FancyBox) para parametros Topologia Tree */
+$("#inputDepthTemplate").keypress(function (e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+
+  if (code == 13) {
+
+      e.preventDefault();
+      $('#inputFanoutTemplate').focus();
+      $('#inputFanoutTemplate').select();
+    
+  }
+});
+
+$("#inputFanoutTemplate").keypress(function (e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+
+  if (code == 13) {
+
+      e.preventDefault();
+      $('#createButtonTree').trigger('click');
+    
   }
 });

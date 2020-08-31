@@ -140,13 +140,29 @@
 </div>
 
 <div style="display: none;">
-        <div class="div_form">
+        <div class="divFormTemplate">
                 <h2> Parámetros de la Red</h2>
 
                 <form id="formulario">
                         <label >Número de Host:</label><br><br>
-                        <input type="text" id="fname" name="fname"><br><br>
-                        <input type="button" id="boton_form" value="Crear">
+                        <input type="text" id="inputHostTemplate" name="fname"><br><br>
+                        <input type="button" id="createButtonTemplate" value="Crear">
+                </form>
+                
+        </div>
+
+</div>
+
+<div style="display: none;">
+        <div class="divFormTree">
+                <h2> Parámetros de la Red</h2>
+
+                <form id="formularioTree">
+                        <label >Niveles de la Red:</label><br>
+                        <input type="text" id="inputDepthTemplate" name="fname"><br><br>
+                        <label >Apertura por Nodo:</label><br>
+                        <input type="text" id="inputFanoutTemplate" name="fname"><br><br>
+                        <input type="button" id="createButtonTree" value="Crear">
                 </form>
                 
         </div>
