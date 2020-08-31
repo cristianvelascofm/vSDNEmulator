@@ -763,19 +763,19 @@ $("#singleTopo").on('click', function () {
 /* Fornulario parametros de la Red */
 
 
-
+var inputHostTemplate= $('#fname');
 
 function frameFancyBox(id) {
 
   if (id != 'tree') {
+    inputHostTemplate.val(2);
+    inputHostTemplate.select();
     $.fancybox.open($('.div_form'), {
       touch: false,
       modal: false,
       infobar: false,
-      keys :{
-        13: 'none',
-      }
-
+      clickSlide: false,
+      clickOutside: false,
     });
   } else {
     alert("es tree");
@@ -792,27 +792,32 @@ $('#boton_form').on('click', function () {
 
   tagGenerator(numHostTemplate, topologyType, 0, 0);
   topologyMaker(numHostTemplate, topologyType, 0, 0);
-
   parent.jQuery.fancybox.close();
+  
 
 });
-/*
-$("#fname").keypress(function (e) {
+
+$(".div_form").keypress(function (e) {
   var code = (e.keyCode ? e.keyCode : e.which);
-  
+
   if (code == 13) {
-    
-    /*var templateForm = document.forms['formulario'];
-    var value = templateForm['fname'].value;
-    numHostTemplate = parseInt(value);
-
-    tagGenerator(numHostTemplate, topologyType, 0, 0);
-    topologyMaker(numHostTemplate, topologyType, 0, 0);
-
-    parent.jQuery.fancybox.close();
+    e.preventDefault();
 
     $('#boton_form').trigger('click');
-    
-    
+
+
   }
-});*/
+});
+
+$("#fname").keypress(function (e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+
+  if (code == 13) {
+
+      e.preventDefault();
+
+    $('#boton_form').trigger('click');
+
+
+  }
+});
