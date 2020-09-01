@@ -9,6 +9,7 @@ var imgUrl = '';
 var netInfo = []; //Contiene todos los Elementos(SwitchOF- Hosts) de la Red, con su PosX, PosY y su Etiqueta
 var tagHost = []; //Contiente las Etiquetas(H1,H2,...)de los Hosts de la Red
 var tagSwitchOF = []; //Contiente las Etiquetas(S1,S2,...)de los SwitchsOF de la Red
+var tagController = [];  // Contiene las Etiquetas(C1, C2, C3..) de los Controladores de Red 
 var link = []; //Contiene el Arreglo de Links de la Red
 var flag = true; //Control de Uso del Zoom
 var topologyType = "";
@@ -134,7 +135,26 @@ function makeLink(coords, linkType) {
       selectable: false,
       evented: false,
     });
-  } else {
+  } else if (linkType == "portHost") {
+
+    return new fabric.Line(coords, {
+      fill: 'yellow',
+      stroke: '#E1B13C',
+      strokeWidth: 2,
+      selectable: false,
+      evented: false,
+    });
+  }else if(linkType == "portSwitch"){
+    
+    return new fabric.Line(coords, {
+      fill: 'yellow',
+      stroke: '#57E3EC',
+      strokeWidth: 2,
+      selectable: false,
+      evented: false,
+    });
+    
+  }else {
 
     return new fabric.Line(coords, {
       strokeDashArray: [5, 5],
@@ -574,30 +594,40 @@ canvas.observe('mouse:down', function (options) {
   x0 = pointer.x; //get initial starting point of x
   y0 = pointer.y; //get initial starting point of y
   var img = '';
+  var tag = "";
   switch (tool) {
     case 'cursor':
-      cursor();
       break;
     case 'host':
       img = '../static/img/host.png';
-      element(img);
+      tag = "h" + (tagHost.length + 1);
+      tagHost.push(tag);
+
+      console.log(tag);
+      element(img, tag, x0, y0);
 
       break;
     case 'controller':
       img = '../static/img/controller.png';
-      element(img)
+      tag = "c" + (tagController.length + 1);
+      tagController.push(tag);
+      console.log(tag);
+      element(img, tag, x0, y0);
 
       break;
     case 'switch_openflow':
       img = '../static/img/openflow_switch.png';
-      element(img);
+      tag = "s" + (tagSwitchOF.length + 1);
+      tagSwitchOF.push(tag);
+
+      element(img, tag, x0, y0);
 
 
   }
 });
 
 function deleteElement() {
-  selector = false;
+
   var object = canvas.getActiveObject();
   if (!object) {
     $.fancybox.open('<div class="message"><h2>Mensaje</h2><p>Selecciona un Elemento Primero</p></div>');
@@ -607,75 +637,156 @@ function deleteElement() {
   insertOp = false;
   activeTool(selector);
 
-
 }
 
-function element(imagen) {
+function element(imagen, tag, x, y) {
+
   console.log(imagen);
-  fabric.Image.fromURL(imagen, function (oImg) {
-
-    oImg.scale(0.125);
-    oImg.set({ 'left': x0 + 5 });
-    oImg.set({ 'top': y0 - 9 });
-    oImg.transparentCorners = false;
-    canvas.add(oImg).setActiveObject(oImg);
-    canvas.getActiveObject().id = "host1";
-    lockImageControl(oImg, true);
-
-
-    canvas.renderAll();
-
-  });
-
-}
-
-function clearAll() {
-  canvas.clear();
-}
-function insertElementP(image) {
 
   var img = new Image();
-  img.src = image;
-  var select = false;
-  insertOp = true;
-  if (insertOp == true) {
-    canvas.on('mouse:down', function (evt) {
-      var element = new fabric.Image(img);
-      element.set({
-        scaleX: 0.125,
-        scaleY: 0.125,
-        padding: 0,
-        //id: tagId,
-      });
-      var newTag = tagHost.length + 1;
+  img.src = imagen;
 
-      var text = new fabric.Textbox(newTag.toString(), {
-        top: 62,
-        left: 22,
+  var element = new fabric.Image(img);
+  element.set({
+    scaleX: 0.125,
+    scaleY: 0.125,
+    padding: 0,
+    id: tag,
+  });
+
+  var text = new fabric.Textbox(tag, {
+    top: 62,
+    left: 22,
+    fontFamily: 'arial',
+    fill: '#15435d',
+    fontSize: 15
+  });
+
+  if (tag.charAt(0) == "s") {
+    text.top = 47;
+  }
+
+  if (tag.charAt(0) == "c") {
+    text.top = 68;
+  }
+
+  var group = new fabric.Group([element, text], {
+
+    left: x,
+    top: y,
+    hasControls: false,
+    transparentCorners: false,
+    selectable: true
+  });
+  //canvas.add(group);
+
+  var port = new Image();
+  port.src = "../static/img/port.png";
+
+  var elem = new fabric.Image(port);
+  elem.set({
+    scaleX: 0.035,
+    scaleY: 0.035,
+    padding: 0,
+    id: tag,
+  });
+
+  var e = new fabric.Image(port);
+  e.set({
+    scaleX: 0.035,
+    scaleY: 0.035,
+    padding: 0,
+    id: tag,
+  });
+
+  if (tag.charAt(0) == "h") {
+
+    canvas.add(makeLink([x + 30, y + 35, x + 70, y + 99], "portHost"));
+    canvas.add(makeLink([x + 30, y + 35, x - 9, y + 99], "portHost"));
+
+    var pt1 = new fabric.Textbox("eth0", {
+      top: 22,
+      left: -5,
+      fontFamily: 'arial',
+      fill: '#15435d',
+      fontSize: 15
+    });
+
+    var pt2 = new fabric.Textbox("eth1", {
+      top: 22,
+      left: -5,
+      fontFamily: 'arial',
+      fill: '#15435d',
+      fontSize: 15
+    });
+
+
+    var gp1 = new fabric.Group([e, pt2], {
+
+      left: x + 57,
+      top: y + 90,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true
+    });
+    canvas.add(group);
+    canvas.add(gp1);
+
+    var grp2 = new fabric.Group([elem, pt1], {
+      left: x - 18,
+      top: y + 90,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true
+    });
+
+    canvas.add(grp2);
+
+  } else if (tag.charAt(0) == "s") {
+
+    console.log(" Aqui esta el SW ");
+    var pt = [];
+    for (var i = 0; i < 6; i++) {
+
+      pt[i] = new fabric.Textbox("eth" + i, {
+        top: 22,
+        left: -5,
         fontFamily: 'arial',
         fill: '#15435d',
         fontSize: 15
       });
 
-      var pos = this.getPointer();
-      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
-      console.log(massage);
-      var group = new fabric.Group([element, text], {
+      var ele = new fabric.Image(port);
+      ele.set({
+        scaleX: 0.035,
+        scaleY: 0.035,
+        padding: 0,
+        id: tag,
+      });
 
-        left: pos.x + 5,
-        top: pos.y - 9,
+      var grp = new fabric.Group([ele, pt[i]], {
+        left: (i * 48) + x - 108,
+        top: y + 90,
         hasControls: false,
         transparentCorners: false,
         selectable: true
       });
+      canvas.add(makeLink([x + 30, y + 35, ((i * 48) + x - 108)+15, y + 99], "portSwitch"));
+      canvas.add(grp);
+      
+    }
+    canvas.add(group);
+  }else if(tag.charAt(0)=="c"){
 
+    canvas.add(group);
 
+  } 
 
-      canvas.add(group);
-    })
-  }
 }
-
+//Borrar Todo el Lienzo Canvas
+function clearAll() {
+  canvas.clear();
+}
 
 
 // Obtener Cockie Djando
@@ -811,6 +922,7 @@ function frameFancyBox(id) {
       infobar: false,
       clickSlide: false,
       clickOutside: false,
+
     });
   } else {
     inputDepthT.val(1);
