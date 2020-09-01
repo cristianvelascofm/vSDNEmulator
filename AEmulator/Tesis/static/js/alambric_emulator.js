@@ -554,56 +554,129 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
 
 }
+var insertOP = false;
+var imgUrl = "";
 
-// Menú del Panel de Herramientas
-function option(x) {
+var x0, y0;
+var tool = 'cursor';
+var action = 'none';
 
-  switch (x.id) {
+$(".mode").click(function () {
+  tool = $(this).attr('id');
+  console.log(tool);
+  // var currentTool = document.getElementById("currentTool");
+  //currentTool.textContent = "Current Mode: " + tool;
+  canvas.isDrawingMode = false; //don't draw until "Freeline" is clicked
+});
 
-    case "cursor":
-      insertOp = false;
-      selector = true;
-      activeTool(selector);
-      var object = canvas.getActiveObject();
-      click();
+canvas.observe('mouse:down', function (options) {
+  var pointer = canvas.getPointer(options.e);
+  x0 = pointer.x; //get initial starting point of x
+  y0 = pointer.y; //get initial starting point of y
+  var img = '';
+  switch (tool) {
+    case 'cursor':
+      cursor();
       break;
-
-    case "host":
-      selector = false;
-      imgUrl = "../static/img/host.png";
-      insertElementClick();
-
-
-      break;
-
-    case "switch_openflow":
-      imgUrl = "../static/img/openflow_switch.png";
-      insertElementClick();
-      break;
-
-    case "controller":
-      imgUrl = "../static/img/controller.png";
-      insertElementClick();
-      break;
-
-    case "port":
-      imgUrl = "../static/img/port.png";
-      insertElementClick();
-      break;
-
-    case "label":
-      break;
-
-    case "link":
+    case 'host':
+      img = '../static/img/host.png';
+      element(img);
 
       break;
-
-    case "delete":
-
+    case 'controller':
+      img = '../static/img/controller.png';
+      element(img)
 
       break;
+    case 'switch_openflow':
+      img = '../static/img/openflow_switch.png';
+      element(img);
+
+
+  }
+});
+
+function deleteElement() {
+  selector = false;
+  var object = canvas.getActiveObject();
+  if (!object) {
+    $.fancybox.open('<div class="message"><h2>Mensaje</h2><p>Selecciona un Elemento Primero</p></div>');
+    return "";
+  }
+  canvas.remove(object);
+  insertOp = false;
+  activeTool(selector);
+
+
+}
+
+function element(imagen) {
+  console.log(imagen);
+  fabric.Image.fromURL(imagen, function (oImg) {
+
+    oImg.scale(0.125);
+    oImg.set({ 'left': x0 + 5 });
+    oImg.set({ 'top': y0 - 9 });
+    oImg.transparentCorners = false;
+    canvas.add(oImg).setActiveObject(oImg);
+    canvas.getActiveObject().id = "host1";
+    lockImageControl(oImg, true);
+
+
+    canvas.renderAll();
+
+  });
+
+}
+
+function clearAll() {
+  canvas.clear();
+}
+function insertElementP(image) {
+
+  var img = new Image();
+  img.src = image;
+  var select = false;
+  insertOp = true;
+  if (insertOp == true) {
+    canvas.on('mouse:down', function (evt) {
+      var element = new fabric.Image(img);
+      element.set({
+        scaleX: 0.125,
+        scaleY: 0.125,
+        padding: 0,
+        //id: tagId,
+      });
+      var newTag = tagHost.length + 1;
+
+      var text = new fabric.Textbox(newTag.toString(), {
+        top: 62,
+        left: 22,
+        fontFamily: 'arial',
+        fill: '#15435d',
+        fontSize: 15
+      });
+
+      var pos = this.getPointer();
+      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
+      console.log(massage);
+      var group = new fabric.Group([element, text], {
+
+        left: pos.x + 5,
+        top: pos.y - 9,
+        hasControls: false,
+        transparentCorners: false,
+        selectable: true
+      });
+
+
+
+      canvas.add(group);
+    })
   }
 }
+
+
 
 // Obtener Cockie Djando
 var selector = false;
@@ -624,25 +697,12 @@ function getCookie(name) {
   return cookieValue;
 }
 
+
+
 // Función Modo Seleccionar
 var btnCursor = document.getElementById('cursor');
-function click() {
+//btnCursor.focus;
 
-  canvas.on('mouse:down', function (evt) {
-
-    console.log("click");
-    var select = true;
-    btnCursor.focus;
-    var obj = canvas.getActiveObject();
-    if (!obj) {
-      var pos = this.getPointer();
-      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
-      console.log(massage);
-    } else {
-      //lockImageControl(obj, select);
-    }
-  })
-}
 
 /* Cambio Valores Herramienta Activa*/
 
@@ -658,47 +718,31 @@ function activeTool(val) {
   btnCursor.focus();
 }
 
-/* Insertar Elemento Selecionado en la Paleta */
-function insertElementClick() {
-
-  var select = false;
-  insertOp = true;
-
-  if (insertOp == true) {
-    canvas.on('mouse:down', function (evt) {
-
-      console.log("insert");
-      var pos = this.getPointer();
-      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
-      console.log(massage);
 
 
 
-      //Se inserta la imagen correspondiente a la herramienta y se bloquea el control de imagen de Fabric
-      fabric.Image.fromURL(imgUrl, function (oImg) {
 
-        oImg.scale(0.125);
-        oImg.set({ 'left': pos.x + 5 });
-        oImg.set({ 'top': pos.y - 9 });
-        oImg.transparentCorners = false;
-        canvas.add(oImg).setActiveObject(oImg);
-        //canvas.getActiveObject().id = "host1";
-        /*lockImageControl(oImg, select);*/
+function lockImageControl(elmt, select) {
 
 
-        canvas.renderAll();
+  if (select == true) {
 
-      });
+    elmt.selectable = true;
+    elmt.hasControls = false;
+    elmt.hasRotatingPoint = false;
+    elmt.borderColor = "#5a0e1075";
+    elmt.cornerColor = "#5a0e1075";
+    elmt.transparentCorners = true;
+    elmt.cornerStyle = "circle";
+    elmt.setControlsVisibility({ 'ml': false, 'mb': false, 'mr': false, 'mt': false });
 
-    })
-  } else {
-    canvas.on('mouse:down', function (evt) {
+  }
+  else {
 
-      console.log("insert");
-      var pos = this.getPointer();
-      var massage = "Mouse Position: " + pos.x + ", " + pos.y;
-      console.log(massage);
-    });
+    elmt.selectable = true;
+    elmt.hasControls = false;
+    elmt.hasRotatingPoint = false;
+
 
   }
 
@@ -744,16 +788,16 @@ function topologyTemplate(x) {
 
       topologyType = "tree";
       frameFancyBox(topologyType);
-      
+
 
       break;
   }
 }
 
 /* Variables para Formulario Template FancyBox */
-var inputHostTemplate= $('#inputHostTemplate');
-var inputFanoutT= $('#inputFanoutTemplate'); 
-var inputDepthT= $('#inputDepthTemplate');
+var inputHostTemplate = $('#inputHostTemplate');
+var inputFanoutT = $('#inputFanoutTemplate');
+var inputDepthT = $('#inputDepthTemplate');
 
 /* Envio parametros (FancyBox) para crear Topologia Tree */
 function frameFancyBox(id) {
@@ -793,16 +837,16 @@ $('#createButtonTemplate').on('click', function () {
   tagGenerator(numHostTemplate, topologyType, 0, 0);
   topologyMaker(numHostTemplate, topologyType, 0, 0);
   parent.jQuery.fancybox.close();
-  
+
 
 });
-/* Opciones de enter en el Formulario (FancyBox) para parametros Topologia */     
+/* Opciones de enter en el Formulario (FancyBox) para parametros Topologia */
 $("#inputHostTemplate").keypress(function (e) {
   var code = (e.keyCode ? e.keyCode : e.which);
 
   if (code == 13) {
 
-      e.preventDefault();
+    e.preventDefault();
 
     $('#createButtonTemplate').trigger('click');
 
@@ -813,7 +857,7 @@ $("#inputHostTemplate").keypress(function (e) {
 
 /* Envio parametros (FancyBox) para crear Topologia Tree */
 $('#createButtonTree').on('click', function () {
-  
+
   var templateForm = document.forms['formularioTree'];
   var dp = templateForm['inputDepthTemplate'].value;
   var fn = templateForm['inputFanoutTemplate'].value;
@@ -821,9 +865,9 @@ $('#createButtonTree').on('click', function () {
   var numFanoutTemplate = parseInt(fn);
   tagGenerator(0, topologyType, numDepthTemplate, numFanoutTemplate);
   topologyMaker(0, topologyType, numDepthTemplate, numFanoutTemplate);
- 
+
   parent.jQuery.fancybox.close();
-  
+
 
 });
 /* Opciones de enter en el Formulario (FancyBox) para parametros Topologia Tree */
@@ -832,10 +876,10 @@ $("#inputDepthTemplate").keypress(function (e) {
 
   if (code == 13) {
 
-      e.preventDefault();
-      $('#inputFanoutTemplate').focus();
-      $('#inputFanoutTemplate').select();
-    
+    e.preventDefault();
+    $('#inputFanoutTemplate').focus();
+    $('#inputFanoutTemplate').select();
+
   }
 });
 
@@ -844,8 +888,8 @@ $("#inputFanoutTemplate").keypress(function (e) {
 
   if (code == 13) {
 
-      e.preventDefault();
-      $('#createButtonTree').trigger('click');
-    
+    e.preventDefault();
+    $('#createButtonTree').trigger('click');
+
   }
 });

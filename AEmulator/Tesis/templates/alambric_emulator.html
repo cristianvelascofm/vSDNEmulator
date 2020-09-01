@@ -63,7 +63,7 @@
                                 <li id="copiar"><a href=" ">Copiar</a></li>
                                 <li id="cortar"><a href=" ">Cortar</a></li>
                                 <li id="pegar"><a href=" ">Pegar</a></li>
-                                <li id="seleccion"><a href=" ">Seleccionar Todo</a></li>
+                                <li id="seleccion"><a  onclick="clearAll()">Seleccionar Todo</a></li>
                         </ul>
                 </li>
                 <li id="menu_emulacion_bar" href="#"> <a>Emulación</a>
@@ -108,28 +108,28 @@
 
         <aside class="tool_panel">
 
-                <button title="Modo: Seleccionar" type="button" href="#" id="cursor" class="btn"
+                <button title="Modo: Seleccionar" type="button" href="#" id="cursor" class="btn mode"
                         onclick="option(this);"><img src="{% static 'img/cursor.png' %}" id="panel_img" alt=""
                                 width="45%" height="45%"></button>
-                <button title="Controlador" type="button" href="#" id="controller" class="btn"
+                <button title="Controlador" type="button" href="#" id="controller" class="btn mode"
                         onclick="option(this);"><img src="{% static 'img/controller.png' %}" id="panel_img" alt=""
                                 width="70%" height="70%"></button>
-                <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn"
+                <button title="Switch OpenFlow" type="button" href="#" id="switch_openflow" class="btn mode"
                         onclick="option(this);"><img src="{% static 'img/openflow_switch.png' %}" id="panel_img" alt=""
                                 width="85%" height="95%"></button>
-                <button title="Host" type="button" href="#" id="host" class="btn" onclick="option(this);"><img
+                <button title="Host" type="button" href="#" id="host" class="btn mode" onclick="option(this);"><img
                                 src="{% static 'img/host.png' %}" id="panel_img" alt="" width="70%"
                                 height="70%"></button>
-                <button title="Port" type="button" href="#" id="port" class="btn" onclick="option(this);"><img
+                <button title="Port" type="button" href="#" id="port" class="btn mode" onclick="option(this);"><img
                                 src="{% static 'img/port.png' %}" id="panel_img" alt="" width="70%"
                                 height="55%"></button>
-                <button title="Label" type="button" href="#" id="label" class="btn" onclick="option(this);"><img
+                <button title="Label" type="button" href="#" id="label" class="btn mode" onclick="option(this);"><img
                                 src="{% static 'img/label.png' %}" id="panel_img" alt="" width="70%"
                                 height="55%"></button>
-                <button title="Modo: Enlace" type="button" href="#" id="link" class="btn" onclick="option(this);"><img
+                <button title="Modo: Enlace" type="button" href="#" id="link" class="btn mode" onclick="option(this);"><img
                                 src="{% static 'img/link.png' %}" id="panel_img" alt="" width="65%"
                                 height="65%"></button>
-                <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="option(this);"><img
+                <button title="Eliminar" type="button" href="#" id="delete" class="btn" onclick="deleteElement()"><img
                                 src="{% static 'img/delete.png' %}" id="panel_img" alt="" width="45%" height="45%">
 
         </aside>
