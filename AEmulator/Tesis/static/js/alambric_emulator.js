@@ -17,6 +17,8 @@ var topologyType = "";
 //Variables para la ejecucion de las Topologías desde Templates
 
 var numHostTemplate = 0;
+var numDepthTemplate = 0;
+var numFanoutTemplate = 0;
 
 
 // Zoom Lienzo Mediante el Moviemiento del Scroll del Mouse
@@ -35,50 +37,230 @@ canvas.on('mouse:wheel', function (opt) {
 })
 
 // Crea un Grupo con el Elemento y su Etiqueta Respectíva
-function insertElement(posX, posY, image, tagId, line) {
-
+function insertElement(x, y, image, tag, numHost) {
   var img = new Image();
   img.src = image;
 
-  var element = new fabric.Image(img);
-  element.set({
+  var connection = {
+
+    type: "",
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 0,
+    id: "",
+    elementOrigin: "",
+    elementFinal: "",
+
+  };
+
+
+  var elemento = new fabric.Image(img);
+  elemento.set({
     scaleX: 0.125,
     scaleY: 0.125,
     padding: 0,
-    id: tagId,
+    id: tag,
+    elementConnection: [], // Contiene las conexiones pertenecientes al elmento
+    connectionLine: [], // Contiene todos los enlaces (lineas (makeLine())) del elemento
   });
 
-
-  var text = new fabric.Textbox(tagId, {
+  var text = new fabric.Textbox(tag, {
     top: 62,
     left: 22,
     fontFamily: 'arial',
     fill: '#15435d',
     fontSize: 15
   });
+  if (tag.charAt(0) == 'h') {
+
+    var groupHost = new fabric.Group([elemento, text], {
+
+      left: x,
+      top: y + 160,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true,
+      id: tag,
+      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+
+    });
+
+    connection.type = "association";
+    connection.elementOrigin = tag;
+    connection.x1 = x + 30;
+    connection.y1 = y + 195;
+    connection.x2 = (x + (1 * 65)) - 35;
+    connection.y2 = y + 107;
+    connection.id = "a" + 0;
+    elemento.elementConnection.push(connection);
+
+    var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portHost");
+
+    elemento.connectionLine.push(link);
+    groupHost.connection.push(link);
 
 
-  if (tagId.charAt(0) == "s") {
-    text.top = 47;
+    var line = elemento.connectionLine[0];
+    console.log("conectionLIne: " + line);
+    groupHost.line = line;
+    var port = new Image();
+    port.src = "../static/img/port.png";
+
+    var pt = new fabric.Image(port);
+    pt.set({
+      scaleX: 0.035,
+      scaleY: 0.035,
+      padding: 0,
+      id: tag,
+      connectionLine: [], // Contenedor de las lineas de conexión.
+    });
+    // Asignación de lineas por cada puerto  
+    pt.connectionLine.push(elemento.connectionLine[0]);
+
+    var label = new fabric.Textbox("eth" + 0, {
+      top: 22,
+      left: -5,
+      fontFamily: 'arial',
+      fill: '#15435d',
+      fontSize: 15
+    });
+
+    var groupHostPort = new fabric.Group([pt, label], {
+
+      left: (x + (1 * 65)) - 48,
+      top: y + 100,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true,
+      id: "eth" + 0,
+      connection: [], // Contenedor de lineas de conexión del grupo.
+
+    });
+    var li = elemento.connectionLine[0];
+    //console.log(li);
+    groupHostPort.connection.push(elemento.connectionLine[0]);
+    groupHost.li = li;
+    console.log(groupHost.connection[0]);
+    canvas.add(groupHost.connection[0]);
+    canvas.add(groupHostPort);
+    canvas.add(groupHost);
+
+  } else if (tag.charAt(0) == 's') {
+
+    var groupSwitch = new fabric.Group([elemento, text], {
+
+      left: ((numHost*100)/2)+35,
+      top: y,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true,
+      id: tag,
+      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+
+    });
+
+    // Creación de lineas por cada enlace
+    for (var i = 0; i < numHost; i++) {
+
+      connection.type = "association";
+      connection.elementOrigin = tag;
+      connection.x1 = ((numHost*100)/2)+65;
+      connection.y1 = y + 35;
+      connection.x2 = (x + (i * 100)) + 26;
+      connection.y2 = y + 107;
+      connection.id = "a" + i;
+      elemento.elementConnection.push(connection);
+
+      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portSwitch");
+
+      elemento.connectionLine.push(link);
+      groupSwitch.connection.push(link);
+
+    }
+
+    // Asociamos el grupo con cada enlace
+    for (var i = 0; i < numHost; i++) {
+
+      var line = elemento.connectionLine[i];
+      groupSwitch.line = line;
+      console.log(groupSwitch.line = line);
+
+    }
+
+    var port = new Image();
+    port.src = "../static/img/port.png";
+    for (var i = 0; i < numHost; i++) {
+
+      var asociate = elemento.elementConnection[i].elementOrigin;
+
+      if (asociate.charAt(0) == "s") {
+
+        var pt = new fabric.Image(port);
+        pt.set({
+          scaleX: 0.035,
+          scaleY: 0.035,
+          padding: 0,
+          id: tag,
+          connectionLine: [], // Contenedor de las lineas de conexión.
+        });
+
+        // Asignación de lineas por cada puerto  
+        pt.connectionLine.push(elemento.connectionLine[i]);
+
+        var label = new fabric.Textbox("eth" + i, {
+          top: 22,
+          left: -5,
+          fontFamily: 'arial',
+          fill: '#15435d',
+          fontSize: 15
+        });
+
+        var groupSwitchPort = new fabric.Group([pt, label], {
+
+          //left: (x + (i * 100)) - 19,
+          left: (x + (i * 100)) + 15,
+          top: y + 100,
+          hasControls: false,
+          transparentCorners: false,
+          selectable: true,
+          id: "eth" + i,
+          connection: [], // Contenedor de lineas de conexión del grupo.
+
+        });
+
+        groupSwitchPort.connection.push(elemento.connectionLine[i]);
+
+        var li = elemento.connectionLine[i];
+
+        // Asignación de lineas por cada puerto en el grupo
+        groupSwitch.li = li;
+        console.log(groupSwitch.li = li);
+
+        canvas.add(groupSwitch.connection[i]);
+        canvas.add(groupSwitchPort);
+      }
+
+    }
+    canvas.add(groupSwitch);
+  } else if (tag.charAt(0) == 'c') {
+
+    var groupController = new fabric.Group([elemento, text], {
+
+      left: ((numHost*100)/2)+35,
+      top: y,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true,
+      id: tag,
+      connection: [],// Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+    });
+    canvas.add(groupController);
+
   }
-
-  if (tagId.charAt(0) == "c") {
-    text.top = 68;
-  }
-  var group = new fabric.Group([element, text], {
-
-    left: posX,
-    top: posY,
-    hasControls: false,
-    transparentCorners: false,
-    selectable: true
-  });
-
-  group.line = line;
-
-  return group;
 
 }
+
 
 
 //Generador de Etiquetas para tagHost[] y tagSwitchOF[]
@@ -86,11 +268,15 @@ function tagGenerator(numHost, topologyType, depth, fanout) {
 
   // Generadoor de Etiquetas para Host  Topo Single
   if (topologyType == "single") {
-    for (var i = 1; i <= numHost; i++) {
+    if (tagHost.length == 0) {
 
-      tagHost[i - 1] = "h" + i;
+      for (var i = 1; i <= numHost; i++) {
 
+        tagHost[i - 1] = "h" + i;
+
+      }
     }
+
   }
   // Generador de Etiquetas para Host y SwitchOF Topo Linear 
   else if (topologyType == "linear" || topologyType == "ring") {
@@ -231,7 +417,7 @@ function linkMaker(topologyType) {
       var line = makeLink([xInicial + 25, yInicial, xFinal + 28, yFinal + 25], "normal");
       link[y] = line;
 
-      canvas.add(line);
+      //canvas.add(line);
 
     }
   }
@@ -280,7 +466,8 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
   var posX = [];
   var image = "";
-  var pSX = (tagHost.length * 68);
+  //var pSX = (tagHost.length * 68);
+  var pSX = 800;
   var pSY = (2 * 58);
   var pCX = tagHost.length * 68;
   var pCY = 20;
@@ -294,13 +481,13 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       alert("No es Posible Realizar la Red");
 
     } else {
-      for (var r = 0; r < tagHost.length; r++) {
+      for (var r = 0; r < numHost; r++) {
 
         var pY = 3 * 60;
-        posX[r] = (r + 1) * 100;
+        posX[r] = (r + 1) * 100; // Separación entre Host
         image = 'img/host.png';
         var obj = {
-          value: tagHost[r],
+          value: tagHost[r + 1],
           rX: posX[r],
           rY: pY
         };
@@ -312,25 +499,26 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       var objt = {
         value: "s1",
         rX: pSX + 20,
-        rY: pSY + 20
+        rY: pSY + 20 //Valor de distanciamiento en Y del Host
       };
       netInfo.push(objt);
 
       linkMaker(topologyType);
 
       // Agrega el Link del Controller
-      canvas.add(makeLink([pSX + 33, pSY + 20, pCX + 35, pCY + 20], "cont"));
+      //canvas.add(makeLink([pSX + 33, pSY + 20, pCX + 35, pCY + 20], "cont"));
 
       // Insertar Elementos de Red
       for (var a = 0; a < h.length; a++) {
 
-        canvas.add(insertElement(h[a].rX, h[a].rY, "../static/img/host.png", tagHost[a], 0));
-
+        insertElement(h[a].rX, h[a].rY, "../static/img/host.png", tagHost[a],numHost);
       }
+
       //Inserta el SwithcOF de la Red Single
-      canvas.add(insertElement(pSX, pSY, '../static/img/openflow_switch.png', 's1', 0));
+      insertElement(101, pSY, '../static/img/openflow_switch.png', 's1',numHost);
+
       //Inserta el Controller de la Red Single
-      canvas.add(insertElement(pCX, pCY, '../static/img/controller.png', 'c1', 0));
+      insertElement(pCX, pCY, '../static/img/controller.png', 'c1',numHost);
 
       // Variables JSON
       console.log(netInfo);
@@ -684,7 +872,9 @@ function deleteElement() {
 
 }
 
-function insertElementClick(x, y, image, tag) {
+
+
+function insertElementClick(x, y, image, tag,) {
 
   var img = new Image();
   img.src = image;
@@ -963,7 +1153,7 @@ var btnCursor = document.getElementById('cursor');
 //btnCursor.focus;
 
 
-/* Cambio Valores Herramienta Activa*/    
+/* Cambio Valores Herramienta Activa*/
 
 function activeTool(id) {
   var activeTool = $("#" + id);
@@ -1119,8 +1309,8 @@ $('#createButtonTree').on('click', function () {
   var templateForm = document.forms['formularioTree'];
   var dp = templateForm['inputDepthTemplate'].value;
   var fn = templateForm['inputFanoutTemplate'].value;
-  var numDepthTemplate = parseInt(dp);
-  var numFanoutTemplate = parseInt(fn);
+  numDepthTemplate = parseInt(dp);
+  numFanoutTemplate = parseInt(fn);
   tagGenerator(0, topologyType, numDepthTemplate, numFanoutTemplate);
   topologyMaker(0, topologyType, numDepthTemplate, numFanoutTemplate);
 
