@@ -144,8 +144,8 @@ function makeLink(coords, linkType) {
       selectable: false,
       evented: false,
     });
-  }else if(linkType == "portSwitch"){
-    
+  } else if (linkType == "portSwitch") {
+
     return new fabric.Line(coords, {
       fill: 'yellow',
       stroke: '#57E3EC',
@@ -153,8 +153,8 @@ function makeLink(coords, linkType) {
       selectable: false,
       evented: false,
     });
-    
-  }else {
+
+  } else {
 
     return new fabric.Line(coords, {
       strokeDashArray: [5, 5],
@@ -584,10 +584,10 @@ var action = 'none';
 $(".mode").click(function () {
   tool = $(this).attr('id');
   console.log(tool);
-  // var currentTool = document.getElementById("currentTool");
-  //currentTool.textContent = "Current Mode: " + tool;
+  activeTool(tool);
   canvas.isDrawingMode = false; //don't draw until "Freeline" is clicked
 });
+
 
 canvas.observe('mouse:down', function (options) {
   var pointer = canvas.getPointer(options.e);
@@ -597,35 +597,60 @@ canvas.observe('mouse:down', function (options) {
   var tag = "";
   switch (tool) {
     case 'cursor':
+
+      canvas.on('object:moving', function (e) {
+        var p = e.target;
+        console.log(p.connection.length);
+
+        if (p.id.charAt(0) != "e") {
+          for (var i = 0; i < p.connection.length; i++) {
+
+            p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+          }
+        } else {
+          for (var i = 0; i < p.connection.length; i++) {
+
+            p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+          }
+        }
+
+
+      });
       break;
     case 'host':
       img = '../static/img/host.png';
       tag = "h" + (tagHost.length + 1);
+      insertElement(x0, y0, img, tag);
       tagHost.push(tag);
-
-      console.log(tag);
-      element(img, tag, x0, y0);
+      tool = "cursor";
+      desactiveTool('host');
+      activeTool(tool);
 
       break;
     case 'controller':
       img = '../static/img/controller.png';
       tag = "c" + (tagController.length + 1);
+      insertElement(x0, y0, img, tag);
       tagController.push(tag);
-      console.log(tag);
-      element(img, tag, x0, y0);
+      tool = "cursor";
+      desactiveTool('controller');
+      activeTool(tool);
 
       break;
     case 'switch_openflow':
       img = '../static/img/openflow_switch.png';
       tag = "s" + (tagSwitchOF.length + 1);
+      insertElement(x0, y0, img, tag);
       tagSwitchOF.push(tag);
-
-      element(img, tag, x0, y0);
+      tool = "cursor";
+      desactiveTool('switch_openflow');
+      activeTool(tool);
 
 
   }
 });
 
+//funcion Elimina el elmento seleccionado 
 function deleteElement() {
 
   var object = canvas.getActiveObject();
@@ -639,19 +664,32 @@ function deleteElement() {
 
 }
 
-function element(imagen, tag, x, y) {
-
-  console.log(imagen);
+function insertElement(x, y, image, tag) {
 
   var img = new Image();
-  img.src = imagen;
+  img.src = image;
 
-  var element = new fabric.Image(img);
-  element.set({
+  var connection = {
+
+    type: "",
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 0,
+    id: "",
+    elementOrigin: "",
+    elementFinal: "",
+
+  };
+
+  var elemento = new fabric.Image(img);
+  elemento.set({
     scaleX: 0.125,
     scaleY: 0.125,
     padding: 0,
     id: tag,
+    elementConnection: [], // Contiene las conexiones pertenecientes al elmento
+    connectionLine: [], // Contiene todos los enlaces (lineas (makeLine())) del elemento
   });
 
   var text = new fabric.Textbox(tag, {
@@ -662,127 +700,217 @@ function element(imagen, tag, x, y) {
     fontSize: 15
   });
 
-  if (tag.charAt(0) == "s") {
-    text.top = 47;
-  }
+  if (tag.charAt(0) == 'h') {
 
-  if (tag.charAt(0) == "c") {
-    text.top = 68;
-  }
+    var groupHost = new fabric.Group([elemento, text], {
 
-  var group = new fabric.Group([element, text], {
-
-    left: x,
-    top: y,
-    hasControls: false,
-    transparentCorners: false,
-    selectable: true
-  });
-  //canvas.add(group);
-
-  var port = new Image();
-  port.src = "../static/img/port.png";
-
-  var elem = new fabric.Image(port);
-  elem.set({
-    scaleX: 0.035,
-    scaleY: 0.035,
-    padding: 0,
-    id: tag,
-  });
-
-  var e = new fabric.Image(port);
-  e.set({
-    scaleX: 0.035,
-    scaleY: 0.035,
-    padding: 0,
-    id: tag,
-  });
-
-  if (tag.charAt(0) == "h") {
-
-    canvas.add(makeLink([x + 30, y + 35, x + 70, y + 99], "portHost"));
-    canvas.add(makeLink([x + 30, y + 35, x - 9, y + 99], "portHost"));
-
-    var pt1 = new fabric.Textbox("eth0", {
-      top: 22,
-      left: -5,
-      fontFamily: 'arial',
-      fill: '#15435d',
-      fontSize: 15
-    });
-
-    var pt2 = new fabric.Textbox("eth1", {
-      top: 22,
-      left: -5,
-      fontFamily: 'arial',
-      fill: '#15435d',
-      fontSize: 15
-    });
-
-
-    var gp1 = new fabric.Group([e, pt2], {
-
-      left: x + 57,
-      top: y + 90,
+      left: x,
+      top: y,
       hasControls: false,
       transparentCorners: false,
-      selectable: true
-    });
-    canvas.add(group);
-    canvas.add(gp1);
+      selectable: true,
+      id: tag,
+      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
 
-    var grp2 = new fabric.Group([elem, pt1], {
-      left: x - 18,
-      top: y + 90,
+    });
+
+    for (var i = 0; i < 2; i++) {
+
+      connection.type = "association";
+      connection.elementOrigin = tag;
+      connection.x1 = x + 30;
+      connection.y1 = y + 35;
+      connection.x2 = (x + (i * 65)) - 5;
+      connection.y2 = y + 107;
+      connection.id = "a" + i;
+      elemento.elementConnection.push(connection);
+
+      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portHost");
+
+      elemento.connectionLine.push(link);
+      groupHost.connection.push(link);
+
+    }
+
+    // Asociamos el grupo con cada enlace
+    for (var i = 0; i < 2; i++) {
+
+      var line = elemento.connectionLine[i];
+      groupHost.line = line;
+
+    }
+
+    var port = new Image();
+    port.src = "../static/img/port.png";
+
+    for (var i = 0; i < 2; i++) {
+
+      var asociate = elemento.elementConnection[i].elementOrigin;
+
+      if (asociate.charAt(0) == "h") {
+
+        var pt = new fabric.Image(port);
+        pt.set({
+          scaleX: 0.035,
+          scaleY: 0.035,
+          padding: 0,
+          id: tag,
+          connectionLine: [], // Contenedor de las lineas de conexión.
+        });
+        // Asignación de lineas por cada puerto  
+        pt.connectionLine.push(elemento.connectionLine[i]);
+
+        var label = new fabric.Textbox("eth" + i, {
+          top: 22,
+          left: -5,
+          fontFamily: 'arial',
+          fill: '#15435d',
+          fontSize: 15
+        });
+
+        var groupHostPort = new fabric.Group([pt, label], {
+
+          left: (x + (i * 65)) - 15,
+          top: y + 100,
+          hasControls: false,
+          transparentCorners: false,
+          selectable: true,
+          id: "eth" + i,
+          connection: [], // Contenedor de lineas de conexión del grupo.
+
+        });
+
+        groupHostPort.connection.push(elemento.connectionLine[i]);
+
+        var li = elemento.connectionLine[i];
+
+        // Asignación de lineas por cada puerto en el grupo
+        groupHost.li = li;
+        canvas.add(groupHost.connection[i]);
+        canvas.add(groupHostPort);
+
+      }
+
+    }
+    canvas.add(groupHost);
+
+  } else if (tag.charAt(0) == 's') {
+
+    var groupSwitch = new fabric.Group([elemento, text], {
+
+      left: x,
+      top: y,
       hasControls: false,
       transparentCorners: false,
-      selectable: true
+      selectable: true,
+      id: tag,
+      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+
     });
 
-    canvas.add(grp2);
-
-  } else if (tag.charAt(0) == "s") {
-
-    console.log(" Aqui esta el SW ");
-    var pt = [];
+    // Creación de lineas por cada enlace
     for (var i = 0; i < 6; i++) {
 
-      pt[i] = new fabric.Textbox("eth" + i, {
-        top: 22,
-        left: -5,
-        fontFamily: 'arial',
-        fill: '#15435d',
-        fontSize: 15
-      });
+      connection.type = "association";
+      connection.elementOrigin = tag;
+      connection.x1 = x + 30;
+      connection.y1 = y + 35;
+      connection.x2 = (x + (i * 65)) - 130;
+      connection.y2 = y + 107;
+      connection.id = "a" + i;
+      elemento.elementConnection.push(connection);
 
-      var ele = new fabric.Image(port);
-      ele.set({
-        scaleX: 0.035,
-        scaleY: 0.035,
-        padding: 0,
-        id: tag,
-      });
+      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portSwitch");
 
-      var grp = new fabric.Group([ele, pt[i]], {
-        left: (i * 48) + x - 108,
-        top: y + 90,
-        hasControls: false,
-        transparentCorners: false,
-        selectable: true
-      });
-      canvas.add(makeLink([x + 30, y + 35, ((i * 48) + x - 108)+15, y + 99], "portSwitch"));
-      canvas.add(grp);
-      
+      elemento.connectionLine.push(link);
+      groupSwitch.connection.push(link);
+
     }
-    canvas.add(group);
-  }else if(tag.charAt(0)=="c"){
 
-    canvas.add(group);
+    // Asociamos el grupo con cada enlace
+    for (var i = 0; i < 6; i++) {
 
-  } 
+      var line = elemento.connectionLine[i];
+      groupSwitch.line = line;
+      console.log(groupSwitch.line = line);
+
+    }
+
+    var port = new Image();
+    port.src = "../static/img/port.png";
+
+    // Creación de puertos por cada enlace.
+    for (var i = 0; i < 6; i++) {
+
+      var asociate = elemento.elementConnection[i].elementOrigin;
+
+      if (asociate.charAt(0) == "s") {
+
+        var pt = new fabric.Image(port);
+        pt.set({
+          scaleX: 0.035,
+          scaleY: 0.035,
+          padding: 0,
+          id: tag,
+          connectionLine: [], // Contenedor de las lineas de conexión.
+        });
+        // Asignación de lineas por cada puerto  
+        pt.connectionLine.push(elemento.connectionLine[i]);
+
+        var label = new fabric.Textbox("eth" + i, {
+          top: 22,
+          left: -5,
+          fontFamily: 'arial',
+          fill: '#15435d',
+          fontSize: 15
+        });
+
+        var groupSwitchPort = new fabric.Group([pt, label], {
+
+          left: (x + (i * 65)) - 143,
+          top: y + 100,
+          hasControls: false,
+          transparentCorners: false,
+          selectable: true,
+          id: "eth" + i,
+          connection: [], // Contenedor de lineas de conexión del grupo.
+
+        });
+
+        groupSwitchPort.connection.push(elemento.connectionLine[i]);
+
+        var li = elemento.connectionLine[i];
+
+        // Asignación de lineas por cada puerto en el grupo
+        groupSwitch.li = li;
+        console.log(groupSwitch.li = li);
+
+        canvas.add(groupSwitch.connection[i]);
+        canvas.add(groupSwitchPort);
+      }
+
+    }
+
+    canvas.add(groupSwitch);
+
+  } else if (tag.charAt(0) == 'c') {
+
+    var groupController = new fabric.Group([elemento, text], {
+
+      left: x,
+      top: y,
+      hasControls: false,
+      transparentCorners: false,
+      selectable: true,
+      id: tag,
+      connection: [],// Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+    });
+    canvas.add(groupController);
+  }
+
 
 }
+
 //Borrar Todo el Lienzo Canvas
 function clearAll() {
   canvas.clear();
@@ -817,21 +945,17 @@ var btnCursor = document.getElementById('cursor');
 
 /* Cambio Valores Herramienta Activa*/
 
-function activeTool(val) {
+function activeTool(id) {
+  var activeTool =$("#"+id);
 
-  if (val == true) {
-    btnCursor.style.backgroundColor = "#a4e7a4ad";
-    imgUrl = '';
+    activeTool.css("backgroundColor", "#a4e7a4ad");
 
-  } else {
-    btnCursor.style.backgroundColor = "#c9e0f7";
-  }
-  btnCursor.focus();
 }
+function desactiveTool(id){
+  var activeTool =$("#"+id);
 
-
-
-
+    activeTool.css("backgroundColor", "#E1F3F1");
+}
 
 function lockImageControl(elmt, select) {
 
@@ -965,6 +1089,8 @@ $("#inputHostTemplate").keypress(function (e) {
 
   }
 });
+
+
 
 
 /* Envio parametros (FancyBox) para crear Topologia Tree */

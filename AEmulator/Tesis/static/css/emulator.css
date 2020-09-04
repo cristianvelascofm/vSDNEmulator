@@ -514,6 +514,7 @@ ul {
     margin-bottom: 7px;
     border: 2px solid #009688;
     border-radius: 12px;
+    outline: none;
 }
 
 .btn:hover {
