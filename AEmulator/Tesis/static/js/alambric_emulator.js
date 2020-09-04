@@ -620,7 +620,7 @@ canvas.observe('mouse:down', function (options) {
     case 'host':
       img = '../static/img/host.png';
       tag = "h" + (tagHost.length + 1);
-      insertElement(x0, y0, img, tag);
+      insertElementClick(x0, y0, img, tag);
       tagHost.push(tag);
       tool = "cursor";
       desactiveTool('host');
@@ -630,7 +630,7 @@ canvas.observe('mouse:down', function (options) {
     case 'controller':
       img = '../static/img/controller.png';
       tag = "c" + (tagController.length + 1);
-      insertElement(x0, y0, img, tag);
+      insertElementClick(x0, y0, img, tag);
       tagController.push(tag);
       tool = "cursor";
       desactiveTool('controller');
@@ -640,13 +640,33 @@ canvas.observe('mouse:down', function (options) {
     case 'switch_openflow':
       img = '../static/img/openflow_switch.png';
       tag = "s" + (tagSwitchOF.length + 1);
-      insertElement(x0, y0, img, tag);
+      insertElementClick(x0, y0, img, tag);
       tagSwitchOF.push(tag);
       tool = "cursor";
       desactiveTool('switch_openflow');
       activeTool(tool);
+      break;
 
+    case 'port':
+      tool = "cursor";
+      desactiveTool('port');
+      activeTool(tool);
 
+      break;
+
+    case 'label':
+      tool = "cursor";
+      desactiveTool('label');
+      activeTool(tool);
+
+      break;
+
+    case 'link':
+      tool = "cursor";
+      desactiveTool('link');
+      activeTool(tool);
+
+      break;
   }
 });
 
@@ -664,7 +684,7 @@ function deleteElement() {
 
 }
 
-function insertElement(x, y, image, tag) {
+function insertElementClick(x, y, image, tag) {
 
   var img = new Image();
   img.src = image;
@@ -943,18 +963,18 @@ var btnCursor = document.getElementById('cursor');
 //btnCursor.focus;
 
 
-/* Cambio Valores Herramienta Activa*/
+/* Cambio Valores Herramienta Activa*/    
 
 function activeTool(id) {
-  var activeTool =$("#"+id);
+  var activeTool = $("#" + id);
 
-    activeTool.css("backgroundColor", "#a4e7a4ad");
+  activeTool.css("backgroundColor", "#a4e7a4ad");
 
 }
-function desactiveTool(id){
-  var activeTool =$("#"+id);
+function desactiveTool(id) {
+  var activeTool = $("#" + id);
 
-    activeTool.css("backgroundColor", "#E1F3F1");
+  activeTool.css("backgroundColor", "#E1F3F1");
 }
 
 function lockImageControl(elmt, select) {
