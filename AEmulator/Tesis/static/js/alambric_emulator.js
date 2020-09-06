@@ -1,4 +1,3 @@
-
 // Lienzo canvas
 var canvas = this._canvas = new fabric.Canvas('canvas');
 canvas.backgroundColor = '#EDFAFA';
@@ -72,6 +71,7 @@ function insertElement(x, y, image, tag, numHost) {
     fill: '#15435d',
     fontSize: 15
   });
+
   if (tag.charAt(0) == 'h') {
 
     var groupHost = new fabric.Group([elemento, text], {
@@ -102,7 +102,6 @@ function insertElement(x, y, image, tag, numHost) {
 
 
     var line = elemento.connectionLine[0];
-    console.log("conectionLIne: " + line);
     groupHost.line = line;
     var port = new Image();
     port.src = "../static/img/port.png";
@@ -115,6 +114,7 @@ function insertElement(x, y, image, tag, numHost) {
       id: tag,
       connectionLine: [], // Contenedor de las lineas de conexión.
     });
+
     // Asignación de lineas por cada puerto  
     pt.connectionLine.push(elemento.connectionLine[0]);
 
@@ -133,24 +133,24 @@ function insertElement(x, y, image, tag, numHost) {
       hasControls: false,
       transparentCorners: false,
       selectable: true,
+      elementContainer: tag,
       id: "eth" + 0,
       connection: [], // Contenedor de lineas de conexión del grupo.
 
     });
     var li = elemento.connectionLine[0];
-    //console.log(li);
     groupHostPort.connection.push(elemento.connectionLine[0]);
     groupHost.li = li;
-    console.log(groupHost.connection[0]);
     canvas.add(groupHost.connection[0]);
     canvas.add(groupHostPort);
     canvas.add(groupHost);
+    tagHost.push(tag);
 
   } else if (tag.charAt(0) == 's') {
 
     var groupSwitch = new fabric.Group([elemento, text], {
 
-      left: ((numHost*100)/2)+35,
+      left: ((numHost * 100) / 2) + 35,
       top: y,
       hasControls: false,
       transparentCorners: false,
@@ -165,7 +165,7 @@ function insertElement(x, y, image, tag, numHost) {
 
       connection.type = "association";
       connection.elementOrigin = tag;
-      connection.x1 = ((numHost*100)/2)+65;
+      connection.x1 = ((numHost * 100) / 2) + 65;
       connection.y1 = y + 35;
       connection.x2 = (x + (i * 100)) + 26;
       connection.y2 = y + 107;
@@ -184,7 +184,6 @@ function insertElement(x, y, image, tag, numHost) {
 
       var line = elemento.connectionLine[i];
       groupSwitch.line = line;
-      console.log(groupSwitch.line = line);
 
     }
 
@@ -224,6 +223,7 @@ function insertElement(x, y, image, tag, numHost) {
           hasControls: false,
           transparentCorners: false,
           selectable: true,
+          elementContainer: tag,
           id: "eth" + i,
           connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -235,19 +235,19 @@ function insertElement(x, y, image, tag, numHost) {
 
         // Asignación de lineas por cada puerto en el grupo
         groupSwitch.li = li;
-        console.log(groupSwitch.li = li);
-
         canvas.add(groupSwitch.connection[i]);
         canvas.add(groupSwitchPort);
       }
 
     }
     canvas.add(groupSwitch);
+    tagSwitchOF.push("s" + (tagSwitchOF.length + 1));
+
   } else if (tag.charAt(0) == 'c') {
 
     var groupController = new fabric.Group([elemento, text], {
 
-      left: ((numHost*100)/2)+35,
+      left: ((numHost * 100) / 2) + 35,
       top: y,
       hasControls: false,
       transparentCorners: false,
@@ -255,59 +255,78 @@ function insertElement(x, y, image, tag, numHost) {
       id: tag,
       connection: [],// Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
     });
+
+    connection.type = "association";
+    connection.elementOrigin = tag;
+    connection.x2 = ((numHost * 100) / 2) + 65;
+    connection.y2 = y + 35;
+    connection.x1 = ((numHost * 100) / 2) + 65;
+    connection.y1 = y + 125;
+    connection.id = "a" + 0;
+    elemento.elementConnection.push(connection);
+
+    var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "normal");
+
+    elemento.connectionLine.push(link);
+    groupController.connection.push(link);
+
+    var line = elemento.connectionLine[0];
+    groupController.line = line;
+
     canvas.add(groupController);
+    
+    //groupController.
+    
+    tagController.push(tag);
+    canvas.add(link);
+    canvas.sendToBack(link);
 
-  }
+    canvas.forEachObject(function (obj) {
 
-}
+      var id1 = "s" + tagSwitchOF.length;
 
-
-
-//Generador de Etiquetas para tagHost[] y tagSwitchOF[]
-function tagGenerator(numHost, topologyType, depth, fanout) {
-
-  // Generadoor de Etiquetas para Host  Topo Single
-  if (topologyType == "single") {
-    if (tagHost.length == 0) {
-
-      for (var i = 1; i <= numHost; i++) {
-
-        tagHost[i - 1] = "h" + i;
-
+      if (obj.id == id1) {
+        obj.link = link;
+        console.log(obj.id);
+        obj.connection.push(link);
       }
-    }
+
+    });
+
+    
 
   }
-  // Generador de Etiquetas para Host y SwitchOF Topo Linear 
-  else if (topologyType == "linear" || topologyType == "ring") {
-    for (var i = 1; i <= numHost; i++) {
 
-      tagHost[i - 1] = "h" + i;
-      tagSwitchOF[i - 1] = "s" + i;
-
-    }
-  }
-  // Generador de Etiquetas para Host y SwitchOF Topo Anillo 
-  else if (topologyType == "ring") {
-
-  }
-  // Generador de Etiquetas para Host y SwitchOF Topo Árbol 
-  else if (topologyType == "tree") {
-    console.log("tag");
-    var total = totalElementTree(depth, fanout);
-
-    for (var i = 1; i <= total[0]; i++) {
-
-      tagHost[i - 1] = "h" + i;
-
-    }
-
-    for (var a = 1; a <= total[1]; a++) {
-      tagSwitchOF[a - 1] = "s" + a;
-    }
-  }
 }
 
+function linker(id0, id1) {
+
+  var posX1 = 0;
+  var posY1 = 0;
+  var posX2 = 0;
+  var posY2 = 0;
+
+  //if (element0.id.charAt("e") && element1.id.charAt("e")) {
+  if (id0.charAt("e") && id1.charAt("e")) {
+    //var link = makeLink([element0.connection[0].connection.x1]);
+    canvas.forEachObject(function (obj) {
+
+      if (obj.id && obj.id == id0) {
+
+        posX1 = obj.connection[0].x2;
+        posY1 = obj.connection[0].y2;
+
+      };
+
+      if (obj.id && obj.id === id1) {
+
+        posX2 = obj.connection[0].x2;
+        posY2 = obj.connection[0].y2;
+
+      };
+    });
+  }
+}
 
 // Identificador y Creador de la Linea del Link
 function makeLink(coords, linkType) {
@@ -320,6 +339,7 @@ function makeLink(coords, linkType) {
       strokeWidth: 2,
       selectable: false,
       evented: false,
+      id: "normal",
     });
   } else if (linkType == "portHost") {
 
@@ -329,7 +349,19 @@ function makeLink(coords, linkType) {
       strokeWidth: 2,
       selectable: false,
       evented: false,
+      id: "portHost",
     });
+  } else if (linkType == "link") {
+
+    return new fabric.Line(coords, {
+      fill: 'green',
+      stroke: '#2AFE00',
+      strokeWidth: 2,
+      selectable: false,
+      evented: false,
+      id: "link",
+    });
+
   } else if (linkType == "portSwitch") {
 
     return new fabric.Line(coords, {
@@ -338,6 +370,7 @@ function makeLink(coords, linkType) {
       strokeWidth: 2,
       selectable: false,
       evented: false,
+      id: "portSwitch",
     });
 
   } else {
@@ -348,6 +381,7 @@ function makeLink(coords, linkType) {
       strokeWidth: 2,
       selectable: false,
       evented: false,
+      id: "normal",
     });
   }
 
@@ -511,14 +545,71 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       // Insertar Elementos de Red
       for (var a = 0; a < h.length; a++) {
 
-        insertElement(h[a].rX, h[a].rY, "../static/img/host.png", tagHost[a],numHost);
+        insertElement(h[a].rX, h[a].rY, "../static/img/host.png", "h" + (tagHost.length + 1), numHost);
       }
 
       //Inserta el SwithcOF de la Red Single
-      insertElement(101, pSY, '../static/img/openflow_switch.png', 's1',numHost);
+      insertElement(101, pSY, '../static/img/openflow_switch.png', "s" + (tagSwitchOF.length + 1), numHost);
 
       //Inserta el Controller de la Red Single
-      insertElement(pCX, pCY, '../static/img/controller.png', 'c1',numHost);
+      insertElement(pCX, pCY, '../static/img/controller.png', 'c' + (tagController.length + 1), numHost);
+
+      // 
+      var id0 = [];
+      var id1 = "";
+      var posX1 = [];
+      var posY1 = [];
+      var posX2 = [];
+      var posY2 = [];
+      var objHost = [];
+      var objSwitch = [];
+      var objController = [];
+
+      for (var i = (tagHost.length + 1) - numHost; i <= tagHost.length; i++) {
+
+        id0.push("h" + i);
+        canvas.forEachObject(function (obj) {
+
+          if (obj.elementContainer && obj.elementContainer == id0[i - 1]) {
+
+            posX2.push(obj.connection[0].x2);
+            posY2.push(obj.connection[0].y2);
+            objHost.push(obj);
+
+          }
+
+        });
+      }
+
+      canvas.forEachObject(function (obj) {
+        id1 = "s" + tagSwitchOF.length;
+
+        if (obj.elementContainer && obj.elementContainer == id1) {
+
+          posX1.push(obj.connection[0].x2);
+          posY1.push(obj.connection[0].y2);
+          objSwitch.push(obj);
+
+        }
+      });
+
+      for (var s = 0; s < posX1.length; s++) {
+
+        var link = makeLink([posX1[s], posY1[s], posX2[s], posY2[s]], "link");
+        canvas.add(link);
+        canvas.sendToBack(link);
+
+        objSwitch[s].state = "connected";
+        objHost[s].state = "connected";
+        objSwitch[s].connection.push(link);
+        objHost[s].connection.push(link);
+
+        objSwitch[s].link = link;
+        objHost[s].link = link;
+
+      }
+
+      console.log("switch: " + objSwitch[0].state);
 
       // Variables JSON
       console.log(netInfo);
@@ -559,8 +650,6 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
           alert(JSON.stringify(data));
         }*/
       });
-
-
 
     }
 
@@ -793,12 +882,42 @@ canvas.observe('mouse:down', function (options) {
         if (p.id.charAt(0) != "e") {
           for (var i = 0; i < p.connection.length; i++) {
 
-            p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+            //p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+
+
+            if (p.id.charAt(0) == "c") {
+
+              p.connection[i] && p.connection[i].set({  'x2': p.left + 30, 'y2': p.top + 35  });
+
+            } else {
+
+              p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+
+            }
           }
+
         } else {
           for (var i = 0; i < p.connection.length; i++) {
 
-            p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+            if (p.state == "connected") {
+
+              console.log("Estoy Conectado ...");
+              if (p.connection[i].id == "link") {
+                if (p.elementContainer.charAt(0) == "s") {
+                  p.connection[i] && p.connection[i].set({ 'x1': p.left + 10, 'y1': p.top + 7 });
+                } else {
+                  p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+                }
+
+              } else {
+                //muevo la asociasion 
+                p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+              }
+            } else {
+              console.log("Estoy Asociado ...");
+              p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+            }
+
           }
         }
 
@@ -1202,7 +1321,6 @@ function topologyTemplate(x) {
 
       numHost = 2;
       topologyType = "single";
-      tagGenerator(numHost, topologyType, 0, 0);
       topologyMaker(numHost, topologyType, 0, 0);
 
       break;
@@ -1280,7 +1398,6 @@ $('#createButtonTemplate').on('click', function () {
   var value = templateForm['inputHostTemplate'].value;
   numHostTemplate = parseInt(value);
 
-  tagGenerator(numHostTemplate, topologyType, 0, 0);
   topologyMaker(numHostTemplate, topologyType, 0, 0);
   parent.jQuery.fancybox.close();
 
@@ -1311,7 +1428,6 @@ $('#createButtonTree').on('click', function () {
   var fn = templateForm['inputFanoutTemplate'].value;
   numDepthTemplate = parseInt(dp);
   numFanoutTemplate = parseInt(fn);
-  tagGenerator(0, topologyType, numDepthTemplate, numFanoutTemplate);
   topologyMaker(0, topologyType, numDepthTemplate, numFanoutTemplate);
 
   parent.jQuery.fancybox.close();
