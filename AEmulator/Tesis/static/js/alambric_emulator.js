@@ -8,7 +8,7 @@ var imgUrl = '';
 var netInfo = []; //Contiene todos los Elementos(SwitchOF- Hosts) de la Red, con su PosX, PosY y su Etiqueta
 var tagHost = []; //Contiente las Etiquetas(H1,H2,...)de los Hosts de la Red
 var tagSwitchOF = []; //Contiente las Etiquetas(S1,S2,...)de los SwitchsOF de la Red
-var tagController = [];  // Contiene las Etiquetas(C1, C2, C3..) de los Controladores de Red 
+var tagController = []; // Contiene las Etiquetas(C1, C2, C3..) de los Controladores de Red 
 var link = []; //Contiene el Arreglo de Links de la Red
 var flag = true; //Control de Uso del Zoom
 var topologyType = "";
@@ -36,7 +36,7 @@ canvas.on('mouse:wheel', function (opt) {
 })
 
 // Crea un Grupo con el Elemento y su Etiqueta Respectíva
-function insertElement(x, y, image, tag, numHost) {
+function insertElement(x, y, image, tag, numHost, topology) {
   var img = new Image();
   img.src = image;
 
@@ -71,129 +71,359 @@ function insertElement(x, y, image, tag, numHost) {
     fill: '#15435d',
     fontSize: 15
   });
-
-  if (tag.charAt(0) == 'h') {
-
-    var groupHost = new fabric.Group([elemento, text], {
-
-      left: x,
-      top: y + 160,
-      hasControls: false,
-      transparentCorners: false,
-      selectable: true,
-      id: tag,
-      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-
-    });
-
-    connection.type = "association";
-    connection.elementOrigin = tag;
-    connection.x1 = x + 30;
-    connection.y1 = y + 195;
-    connection.x2 = (x + (1 * 65)) - 35;
-    connection.y2 = y + 107;
-    connection.id = "a" + 0;
-    elemento.elementConnection.push(connection);
-
-    var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portHost");
-
-    elemento.connectionLine.push(link);
-    groupHost.connection.push(link);
+  if (topology == "single") {
 
 
-    var line = elemento.connectionLine[0];
-    groupHost.line = line;
-    var port = new Image();
-    port.src = "../static/img/port.png";
+    if (tag.charAt(0) == 'h') {
 
-    var pt = new fabric.Image(port);
-    pt.set({
-      scaleX: 0.035,
-      scaleY: 0.035,
-      padding: 0,
-      id: tag,
-      connectionLine: [], // Contenedor de las lineas de conexión.
-    });
+      var groupHost = new fabric.Group([elemento, text], {
 
-    // Asignación de lineas por cada puerto  
-    pt.connectionLine.push(elemento.connectionLine[0]);
+        left: x,
+        top: y + 160,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
 
-    var label = new fabric.Textbox("eth" + 0, {
-      top: 22,
-      left: -5,
-      fontFamily: 'arial',
-      fill: '#15435d',
-      fontSize: 15
-    });
-
-    var groupHostPort = new fabric.Group([pt, label], {
-
-      left: (x + (1 * 65)) - 48,
-      top: y + 100,
-      hasControls: false,
-      transparentCorners: false,
-      selectable: true,
-      elementContainer: tag,
-      id: "eth" + 0,
-      connection: [], // Contenedor de lineas de conexión del grupo.
-
-    });
-    var li = elemento.connectionLine[0];
-    groupHostPort.connection.push(elemento.connectionLine[0]);
-    groupHost.li = li;
-    canvas.add(groupHost.connection[0]);
-    canvas.add(groupHostPort);
-    canvas.add(groupHost);
-    tagHost.push(tag);
-
-  } else if (tag.charAt(0) == 's') {
-
-    var groupSwitch = new fabric.Group([elemento, text], {
-
-      left: ((numHost * 100) / 2) + 35,
-      top: y,
-      hasControls: false,
-      transparentCorners: false,
-      selectable: true,
-      id: tag,
-      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-
-    });
-
-    // Creación de lineas por cada enlace
-    for (var i = 0; i < numHost; i++) {
+      });
 
       connection.type = "association";
       connection.elementOrigin = tag;
-      connection.x1 = ((numHost * 100) / 2) + 65;
-      connection.y1 = y + 35;
-      connection.x2 = (x + (i * 100)) + 26;
+      connection.x1 = x + 30;
+      connection.y1 = y + 195;
+      connection.x2 = (x + (1 * 65)) - 35;
       connection.y2 = y + 107;
-      connection.id = "a" + i;
+      connection.id = "a" + 0;
       elemento.elementConnection.push(connection);
 
-      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portSwitch");
+      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portHost");
 
       elemento.connectionLine.push(link);
-      groupSwitch.connection.push(link);
+      groupHost.connection.push(link);
+
+
+      var line = elemento.connectionLine[0];
+      groupHost.line = line;
+      var port = new Image();
+      port.src = "../static/img/port.png";
+
+      var pt = new fabric.Image(port);
+      pt.set({
+        scaleX: 0.035,
+        scaleY: 0.035,
+        padding: 0,
+        id: tag,
+        connectionLine: [], // Contenedor de las lineas de conexión.
+      });
+
+      // Asignación de lineas por cada puerto  
+      pt.connectionLine.push(elemento.connectionLine[0]);
+
+      var label = new fabric.Textbox("eth" + 0, {
+        top: 22,
+        left: -5,
+        fontFamily: 'arial',
+        fill: '#15435d',
+        fontSize: 15
+      });
+
+      var groupHostPort = new fabric.Group([pt, label], {
+
+        left: (x + (1 * 65)) - 48,
+        top: y + 100,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        elementContainer: tag,
+        id: "eth" + 0,
+        connection: [], // Contenedor de lineas de conexión del grupo.
+
+      });
+      var li = elemento.connectionLine[0];
+      groupHostPort.connection.push(elemento.connectionLine[0]);
+      groupHost.li = li;
+      canvas.add(groupHost.connection[0]);
+      canvas.add(groupHostPort);
+      canvas.add(groupHost);
+      tagHost.push(tag);
+
+    } else if (tag.charAt(0) == 's') {
+
+      var groupSwitch = new fabric.Group([elemento, text], {
+
+        left: ((numHost * 100) / 2) + 35,
+        top: y,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+
+      });
+
+      // Creación de lineas por cada enlace
+      for (var i = 0; i < numHost; i++) {
+
+        connection.type = "association";
+        connection.elementOrigin = tag;
+        connection.x1 = ((numHost * 100) / 2) + 65;
+        connection.y1 = y + 35;
+        connection.x2 = (x + (i * 100)) + 26;
+        connection.y2 = y + 107;
+        connection.id = "a" + i;
+        elemento.elementConnection.push(connection);
+
+        var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portSwitch");
+
+        elemento.connectionLine.push(link);
+        groupSwitch.connection.push(link);
+
+      }
+
+      // Asociamos el grupo con cada enlace
+      for (var i = 0; i < numHost; i++) {
+
+        var line = elemento.connectionLine[i];
+        groupSwitch.line = line;
+
+      }
+
+      var port = new Image();
+      port.src = "../static/img/port.png";
+      for (var i = 0; i < numHost; i++) {
+
+        var asociate = elemento.elementConnection[i].elementOrigin;
+
+        if (asociate.charAt(0) == "s") {
+
+          var pt = new fabric.Image(port);
+          pt.set({
+            scaleX: 0.035,
+            scaleY: 0.035,
+            padding: 0,
+            id: tag,
+            connectionLine: [], // Contenedor de las lineas de conexión.
+          });
+
+          // Asignación de lineas por cada puerto  
+          pt.connectionLine.push(elemento.connectionLine[i]);
+
+          var label = new fabric.Textbox("eth" + i, {
+            top: 22,
+            left: -5,
+            fontFamily: 'arial',
+            fill: '#15435d',
+            fontSize: 15
+          });
+
+          var groupSwitchPort = new fabric.Group([pt, label], {
+
+            //left: (x + (i * 100)) - 19,
+            left: (x + (i * 100)) + 15,
+            top: y + 100,
+            hasControls: false,
+            hasBorders: false,
+            transparentCorners: false,
+            selectable: true,
+            elementContainer: tag,
+            id: "eth" + i,
+            connection: [], // Contenedor de lineas de conexión del grupo.
+
+          });
+
+          groupSwitchPort.connection.push(elemento.connectionLine[i]);
+
+          var li = elemento.connectionLine[i];
+
+          // Asignación de lineas por cada puerto en el grupo
+          groupSwitch.link = li;
+          canvas.add(groupSwitch.connection[i]);
+          canvas.add(groupSwitchPort);
+        }
+
+      }
+      canvas.add(groupSwitch);
+      tagSwitchOF.push("s" + (tagSwitchOF.length + 1));
+
+    } else if (tag.charAt(0) == 'c') {
+
+      var groupController = new fabric.Group([elemento, text], {
+
+        left: ((numHost * 100) / 2) + 35,
+        top: y,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+      });
+
+      connection.type = "association";
+      connection.elementOrigin = tag;
+      connection.x2 = ((numHost * 100) / 2) + 65;
+      connection.y2 = y + 35;
+      connection.x1 = ((numHost * 100) / 2) + 65;
+      connection.y1 = y + 125;
+      connection.id = "a" + 0;
+      elemento.elementConnection.push(connection);
+
+      var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "normal");
+
+      elemento.connectionLine.push(link);
+      groupController.connection.push(link);
+
+      var line = elemento.connectionLine[0];
+      groupController.line = line;
+
+      canvas.add(groupController);
+
+      //groupController.
+
+      tagController.push(tag);
+      canvas.add(link);
+      canvas.sendToBack(link);
+
+      canvas.forEachObject(function (obj) {
+
+        var id1 = "s" + tagSwitchOF.length;
+
+        if (obj.id == id1) {
+          obj.link = link;
+          console.log(obj.id);
+          obj.connection.push(link);
+        }
+
+      });
+
+
 
     }
+  } else if (topology == "linear") {
+    if (tag.charAt(0) == 'h') {
+      var groupHost = new fabric.Group([elemento, text], {
+        left: x + 50,
+        top: y + 160,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [],
+      });
+      for (var i = 0; i < 2; i++) {
 
-    // Asociamos el grupo con cada enlace
-    for (var i = 0; i < numHost; i++) {
+        connection.type = "association";
+        connection.elementOrigin = tag;
+        connection.x1 = x + 80;
+        connection.y1 = y + 195;
+        connection.x2 = (x + (i * 100)) + 26;
+        connection.y2 = y + 107;
+        connection.id = "a" + 0;
 
-      var line = elemento.connectionLine[i];
-      groupSwitch.line = line;
+        var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portHost");
+        groupHost.connection.push(link);
+      }
 
-    }
+      for (var i = 0; i < 2; i++) {
+        var line = groupHost.connection[i];
+        groupHost.line = line;
+      }
 
-    var port = new Image();
-    port.src = "../static/img/port.png";
-    for (var i = 0; i < numHost; i++) {
+      var port = new Image();
+      port.src = "../static/img/port.png";
+      for (var i = 0; i < 2; i++) {
 
-      var asociate = elemento.elementConnection[i].elementOrigin;
 
-      if (asociate.charAt(0) == "s") {
+        var pt = new fabric.Image(port);
+        pt.set({
+          scaleX: 0.035,
+          scaleY: 0.035,
+          padding: 0,
+          id: tag,
+        });
+
+        var label = new fabric.Textbox("eth" + i, {
+          top: 22,
+          left: -5,
+          fontFamily: 'arial',
+          fill: '#15435d',
+          fontSize: 15
+        });
+
+        var groupHostPort = new fabric.Group([pt, label], {
+
+          left: (x + (i * 100)) + 15,
+          top: y + 100,
+          hasControls: false,
+          hasBorders: false,
+          transparentCorners: false,
+          selectable: true,
+          elementContainer: tag,
+          id: "eth" + 0,
+          connection: [], // Contenedor de lineas de conexión del grupo.
+
+        });
+        groupHostPort.connection.push(groupHost.connection[i]);
+
+        var l = groupHost.connection[i];
+
+        canvas.add(groupHost.connection[i]);
+        canvas.add(groupHostPort);
+
+      }
+
+      canvas.add(groupHost);
+      tagHost.push("h" + (tagHost.length + 1));
+
+    } else if (tag.charAt(0) == 's') {
+
+      var groupSwitch = new fabric.Group([elemento, text], {
+
+        //left: ((numHost * 100) / 2) + 35,
+        left: x + 48,
+        top: y - 35,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+
+      });
+
+      // Creación de lineas por cada enlace
+      for (var i = 0; i < 2; i++) {
+
+        connection.type = "association";
+        connection.elementOrigin = tag;
+        connection.x1 = x + 78;
+        connection.y1 = y;
+        connection.x2 = (x + (i * 75)) + 38;
+        connection.y2 = y + 50;
+        connection.id = "a" + i;
+
+        var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "portSwitch");
+        groupSwitch.connection.push(link);
+
+      }
+
+
+      // Asociamos el grupo con cada enlace
+      for (var i = 0; i < 2; i++) {
+
+        var line = elemento.connectionLine[i];
+        groupSwitch.line = line;
+
+      }
+
+      var port = new Image();
+      port.src = "../static/img/port.png";
+      for (var i = 0; i < 2; i++) {
 
         var pt = new fabric.Image(port);
         pt.set({
@@ -218,9 +448,10 @@ function insertElement(x, y, image, tag, numHost) {
         var groupSwitchPort = new fabric.Group([pt, label], {
 
           //left: (x + (i * 100)) - 19,
-          left: (x + (i * 100)) + 15,
-          top: y + 100,
+          left: (x + (i * 80)) + 25,
+          top: y + 50,
           hasControls: false,
+          hasBorders: false,
           transparentCorners: false,
           selectable: true,
           elementContainer: tag,
@@ -229,71 +460,87 @@ function insertElement(x, y, image, tag, numHost) {
 
         });
 
-        groupSwitchPort.connection.push(elemento.connectionLine[i]);
+        var line = groupSwitch.connection[i];
 
-        var li = elemento.connectionLine[i];
-
-        // Asignación de lineas por cada puerto en el grupo
-        groupSwitch.li = li;
+        groupSwitchPort.connection.push(groupSwitch.connection[i]);
+        groupSwitchPort.line = line;
         canvas.add(groupSwitch.connection[i]);
         canvas.add(groupSwitchPort);
+
+
       }
+      canvas.add(groupSwitch);
+      tagSwitchOF.push("s" + (tagSwitchOF.length + 1));
+
+    } else if (tag.charAt(0) == 'c') {
+
+      var groupController = new fabric.Group([elemento, text], {
+
+        left: ((numHost * 265)/2)-90,
+        top: y,
+        hasControls: false,
+        hasBorders: false,
+        transparentCorners: false,
+        selectable: true,
+        id: tag,
+        connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+      });
+
+      for (var i = 0; i < numHost; i++) {
+
+        connection.type = "association";
+        connection.elementOrigin = tag;
+        connection.x2 = ((numHost * 265) / 2) -50;
+        connection.y2 = y + 35;
+        connection.x1 = ((i*183) + 346);
+        connection.y1 = y + 155;
+        connection.id = "a" + i;
+
+        var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "normal");
+        groupController.connection.push(link);
+
+      }
+
+      for (var i = 0; i < numHost; i++) {
+
+        var line = groupController.connection[i];
+        groupController.line = line;
+        canvas.add(line);
+        canvas.sendToBack(line);
+
+      }
+
+      canvas.add(groupController);
+      tagController.push(tag);
+
+      var tagLastSwitch = [];
+
+      for (var i = tagSwitchOF.length - numHost; i < tagSwitchOF.length; i++) {
+
+        tagLastSwitch.push(tagSwitchOF[i]);
+
+      }
+
+      canvas.forEachObject(function (obj) {
+
+        for (var i = 0; i < groupController.connection.length; i++) {
+
+          var link = groupController.connection[i];
+
+          if (obj.id == tagLastSwitch[i]) {
+
+            obj.link = link;
+            obj.connection.push(link);
+
+          }
+        }
+
+      });
 
     }
-    canvas.add(groupSwitch);
-    tagSwitchOF.push("s" + (tagSwitchOF.length + 1));
 
-  } else if (tag.charAt(0) == 'c') {
 
-    var groupController = new fabric.Group([elemento, text], {
-
-      left: ((numHost * 100) / 2) + 35,
-      top: y,
-      hasControls: false,
-      transparentCorners: false,
-      selectable: true,
-      id: tag,
-      connection: [],// Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-    });
-
-    connection.type = "association";
-    connection.elementOrigin = tag;
-    connection.x2 = ((numHost * 100) / 2) + 65;
-    connection.y2 = y + 35;
-    connection.x1 = ((numHost * 100) / 2) + 65;
-    connection.y1 = y + 125;
-    connection.id = "a" + 0;
-    elemento.elementConnection.push(connection);
-
-    var link = makeLink([connection.x1, connection.y1, connection.x2, connection.y2], "normal");
-
-    elemento.connectionLine.push(link);
-    groupController.connection.push(link);
-
-    var line = elemento.connectionLine[0];
-    groupController.line = line;
-
-    canvas.add(groupController);
-    
-    //groupController.
-    
-    tagController.push(tag);
-    canvas.add(link);
-    canvas.sendToBack(link);
-
-    canvas.forEachObject(function (obj) {
-
-      var id1 = "s" + tagSwitchOF.length;
-
-      if (obj.id == id1) {
-        obj.link = link;
-        console.log(obj.id);
-        obj.connection.push(link);
-      }
-
-    });
-
-    
+  } else if (topology == "ring") {
 
   }
 
@@ -335,7 +582,7 @@ function makeLink(coords, linkType) {
 
     return new fabric.Line(coords, {
       fill: 'red',
-      stroke: '#8BDF66',
+      stroke: '#9733FA',
       strokeWidth: 2,
       selectable: false,
       evented: false,
@@ -392,7 +639,7 @@ function makeLink(coords, linkType) {
 function linkMaker(topologyType) {
 
   var pareja;
-  var k = [];//Contiene Todas las Parejas Enlazadas en la Red
+  var k = []; //Contiene Todas las Parejas Enlazadas en la Red
 
   // Creador de Enlaces de la Red Linear
   if (topologyType == "linear") {
@@ -406,8 +653,7 @@ function linkMaker(topologyType) {
         pareja = "(" + tagSwitchOF[temp - 1] + "," + tagHost[temp] + ")";
         k.push(pareja);
 
-      }
-      else {
+      } else {
         pareja = "(" + tagSwitchOF[temp - 1] + "," + tagHost[temp - 1] + ")";
         k.push(pareja);
       }
@@ -454,8 +700,7 @@ function linkMaker(topologyType) {
       //canvas.add(line);
 
     }
-  }
-  else if (topologyType == "ring") {
+  } else if (topologyType == "ring") {
 
     // Creador de Pares de Conexión según la Red
     for (var temp = 1; temp <= tagHost.length; temp++) {
@@ -482,7 +727,7 @@ function linkMaker(topologyType) {
 
 // Total de Host y SwitchsOF Topologia Tree
 function totalElementTree(depth, fanout) {
-  var total = [];//numero de Host , numero de SwitchOF
+  var total = []; //numero de Host , numero de SwitchOF
   var temp = 0;
   for (var i = 0; i <= depth; i++) {
     temp += Math.pow(fanout, i);
@@ -545,14 +790,14 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       // Insertar Elementos de Red
       for (var a = 0; a < h.length; a++) {
 
-        insertElement(h[a].rX, h[a].rY, "../static/img/host.png", "h" + (tagHost.length + 1), numHost);
+        insertElement(h[a].rX, h[a].rY, "../static/img/host.png", "h" + (tagHost.length + 1), numHost, topologyType);
       }
 
       //Inserta el SwithcOF de la Red Single
-      insertElement(101, pSY, '../static/img/openflow_switch.png', "s" + (tagSwitchOF.length + 1), numHost);
+      insertElement(101, pSY, '../static/img/openflow_switch.png', "s" + (tagSwitchOF.length + 1), numHost, topologyType);
 
       //Inserta el Controller de la Red Single
-      insertElement(pCX, pCY, '../static/img/controller.png', 'c' + (tagController.length + 1), numHost);
+      insertElement(pCX, pCY, '../static/img/controller.png', 'c' + (tagController.length + 1), numHost, topologyType);
 
       // 
       var id0 = [];
@@ -609,8 +854,6 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       }
 
-      console.log("switch: " + objSwitch[0].state);
-
       // Variables JSON
       console.log(netInfo);
       var json = JSON.stringify(netInfo[0]);
@@ -636,20 +879,20 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
                 'X-CSRFToken': csrftoken
               }
             });*/
+      /*
+            $.ajax({
+              type: "post",//get- consutla post- se actualiza
+              url: "http://127.0.0.1:3000/alambric_emulator/",
+              /* url: "../static/py/algo.py",
+              dataType: "json",
+              contentType: 'application/json; charset=utf-8',
+              data: json,
+              headers: { 'X-CSRFToken': csrftoken },
 
-      $.ajax({
-        type: "post",//get- consutla post- se actualiza
-        url: "http://127.0.0.1:3000/alambric_emulator/",
-        /* url: "../static/py/algo.py",*/
-        dataType: "json",
-        contentType: 'application/json; charset=utf-8',
-        data: json,
-        headers: { 'X-CSRFToken': csrftoken },
-
-        /*success: function (data) {
-          alert(JSON.stringify(data));
-        }*/
-      });
+              /*success: function (data) {
+                alert(JSON.stringify(data));
+              }
+            });*/
 
     }
 
@@ -657,13 +900,12 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
   // Creador Topología Linear - N Conmutador Conectado a N Host
   else if (topologyType == "linear") {
 
-
     if (numHost < 2) {
       alert("No es Posible Realizar la Red");
 
     } else {
       // Host
-      for (var r = 0; r < tagHost.length; r++) {
+      for (var r = 0; r < numHost; r++) {
 
         var pY = 3 * 60;
         posX[r] = (r + 1) * 180;
@@ -689,25 +931,18 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       }
 
-      linkMaker(topologyType);
       var pCX1 = (netInfo.length * 68);
-
-      // Inserta los Links desde el SwitchOF al Controller de la Topología Linear
-      for (var u = 0; u < s.length; u++) {
-
-        canvas.add(makeLink([(s[u].rX) + 28, (s[u].rY) + 35, pCX1 + 28, pCY + 20], "cont"));
-      }
-
+      
       // Inserta Switch y Host de la Topolgía Linear
       for (var a = 0; a < h.length; a++) {
 
-        canvas.add(insertElement(h[a].rX, h[a].rY, '../static/img/host.png', tagHost[a], 0));
-        canvas.add(insertElement(s[a].rX, s[a].rY, '../static/img/openflow_switch.png', tagSwitchOF[a], 0));
+        (insertElement(h[a].rX, h[a].rY, '../static/img/host.png', 'h' + (tagHost.length + 1), numHost, topologyType));
+        (insertElement(s[a].rX, s[a].rY, '../static/img/openflow_switch.png', 's' + (tagSwitchOF.length + 1), numHost, topologyType));
 
       }
 
       //Inserta el Controller de la Topología Linear
-      canvas.add(insertElement(pCX1, pCY, '../static/img/controller.png', 'c1', 0));
+      (insertElement(pCX1, pCY, '../static/img/controller.png', 'c' + +(tagController.length + 1), numHost, topologyType));
     }
   }
   //Creador Topología Ring - N Host conectados a N Conmutadores (conectados entre sí)
@@ -887,11 +1122,17 @@ canvas.observe('mouse:down', function (options) {
 
             if (p.id.charAt(0) == "c") {
 
-              p.connection[i] && p.connection[i].set({  'x2': p.left + 30, 'y2': p.top + 35  });
+              p.connection[i] && p.connection[i].set({
+                'x2': p.left + 30,
+                'y2': p.top + 35
+              });
 
             } else {
 
-              p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+              p.connection[i] && p.connection[i].set({
+                'x1': p.left + 30,
+                'y1': p.top + 35
+              });
 
             }
           }
@@ -904,18 +1145,30 @@ canvas.observe('mouse:down', function (options) {
               console.log("Estoy Conectado ...");
               if (p.connection[i].id == "link") {
                 if (p.elementContainer.charAt(0) == "s") {
-                  p.connection[i] && p.connection[i].set({ 'x1': p.left + 10, 'y1': p.top + 7 });
+                  p.connection[i] && p.connection[i].set({
+                    'x1': p.left + 10,
+                    'y1': p.top + 7
+                  });
                 } else {
-                  p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+                  p.connection[i] && p.connection[i].set({
+                    'x2': p.left + 10,
+                    'y2': p.top + 7
+                  });
                 }
 
               } else {
                 //muevo la asociasion 
-                p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+                p.connection[i] && p.connection[i].set({
+                  'x2': p.left + 10,
+                  'y2': p.top + 7
+                });
               }
             } else {
               console.log("Estoy Asociado ...");
-              p.connection[i] && p.connection[i].set({ 'x2': p.left + 10, 'y2': p.top + 7 });
+              p.connection[i] && p.connection[i].set({
+                'x2': p.left + 10,
+                'y2': p.top + 7
+              });
             }
 
           }
@@ -993,7 +1246,7 @@ function deleteElement() {
 
 
 
-function insertElementClick(x, y, image, tag,) {
+function insertElementClick(x, y, image, tag, ) {
 
   var img = new Image();
   img.src = image;
@@ -1232,7 +1485,7 @@ function insertElementClick(x, y, image, tag,) {
       transparentCorners: false,
       selectable: true,
       id: tag,
-      connection: [],// Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+      connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
     });
     canvas.add(groupController);
   }
@@ -1280,6 +1533,7 @@ function activeTool(id) {
   activeTool.css("backgroundColor", "#a4e7a4ad");
 
 }
+
 function desactiveTool(id) {
   var activeTool = $("#" + id);
 
@@ -1298,10 +1552,14 @@ function lockImageControl(elmt, select) {
     elmt.cornerColor = "#5a0e1075";
     elmt.transparentCorners = true;
     elmt.cornerStyle = "circle";
-    elmt.setControlsVisibility({ 'ml': false, 'mb': false, 'mr': false, 'mt': false });
+    elmt.setControlsVisibility({
+      'ml': false,
+      'mb': false,
+      'mr': false,
+      'mt': false
+    });
 
-  }
-  else {
+  } else {
 
     elmt.selectable = true;
     elmt.hasControls = false;
