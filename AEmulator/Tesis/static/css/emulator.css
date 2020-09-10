@@ -52,7 +52,6 @@ ul {
 
 #menu_option_bar li>a:hover {
     color: #009688;
-    
 }
 
 #menu_option_bar>li {
@@ -309,6 +308,7 @@ ul {
     width: 200px;
     text-align: left;
 }
+
 #doc {
     background-image: url(../img/book.png);
     background-size: 23px;
@@ -335,120 +335,9 @@ ul {
     padding-left: 30px;
 }
 
-/* Fancy Box Parametros Topologías */
-#parameter{
-    text-align: center;
-}
-
-#labelHost{
-    text-align: center;
-    margin-left: 85px;
-}
-#formulario{
-
-    font-family: 'Quicksand', sans-serif;
-}
-#inputHostTemplate{
-    
-    background-image: url(../img/host.png);
-    background-repeat: no-repeat;
-    font-size: 15px;
-    background-size: 22px;
-    background-position: 17px 3px;
-    letter-spacing: 3px;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 85px;
-}
-#inputHostTemplate:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-#createButtonTemplate{
-    
-    border: #b8b9bb solid 2px;
-    outline: none;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    margin-left: 85px;
-    
-}
-
-/* Fancy Box Parametros Topologías tree */
-#parameterTree{
-    text-align: center;
-}
-#labelDepth{
-    text-align: center;
-    margin-left: 78px;
-}
-#labelFanout{
-    text-align: center;
-    margin-left: 65px;
-}
-#formularioTree{
-
-    font-family: 'Quicksand', sans-serif;
-}
-#inputDepthTemplate{
-    
-    background-image: url(../img/level.png);
-    background-repeat: no-repeat;
-    font-size: 15px;
-    background-size: 17px;
-    background-position: 8px 5px;
-    letter-spacing: 3px;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    border: #bbb9b8 solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 85px;
-}
-#inputDepthTemplate:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-#inputFanoutTemplate{
-    
-    background-image: url(../img/fanout.png);
-    background-repeat: no-repeat;
-    font-size: 15px;
-    background-size: 17px;
-    background-position: 8px 5px;
-    letter-spacing: 3px;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 85px;
-}
-#inputFanoutTemplate:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-#createButtonTree{
-    
-    border: #b8b9bb solid 2px;
-    outline: none;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    margin-left: 85px;
-    
-}
-
-.emulator{
-   width: 100%;
-   height: 94.8%;
+.emulator {
+    width: 100%;
+    height: 94.8%;
 }
 
 .tool_bar {

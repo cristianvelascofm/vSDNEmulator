@@ -4,6 +4,7 @@
 {% block link_css %}
 
 <link rel="stylesheet" href="{% static 'css/emulator.css' %}">
+<link rel="stylesheet" href="{% static 'css/emulatorFancyBox.css' %}">
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
 <link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
 {% endblock link_css %}
@@ -199,7 +200,7 @@
                         </select>
                         <br>
                         <br>
-                        
+
 
                         <input type="button" id="CancelarButtonFancyHost" value="Cancelar">
                         <input type="button" id="GuardarButtonFancyHost" value="Guardar">
@@ -247,85 +248,101 @@
 
 <div style="display: none;">
         <div class="divFancySwitch">
-                <h2 id="parameterFancySwitch"> Parámetros del Switch de la Red </h2>
 
-                <form id="formularioFancySwitch">
-                        <label id="labelFancySwitch"> Switch </label><br>
+                <div id="containerParameterFancySwitch">
+                        <label id="labelFancySwitch"> Switch </label><br><br>
+                </div>
 
-                        <label id="labelFancyTypeSwitch"> Type: </label>
-                        <select id="optionTypeFancySwitch">
-                                <option value=" "> IVS Switch </option>
-                                <option value=" "> Linux Brigde </option>
-                                <option value=" "> OVS Brigde </option>
-                                <option value=" "> OVS Switch </option>
-                                <option value=" "> User Switch </option>
-                        </select>
-                        <br>
-                        <br>
+                <div id="containerFancyFormSwitch">
 
-                        <input id="STPFancySwitch" type="radio" value="">STP
-                        <br>
+                        <form id="formularioFancySwitch">
 
-                        <label id="labelFancyIPSwitch"> IP: </label>
-                        <input type="text" id="inputFancyIPSwitch" name="fname"><br><br>
+                                <label id="labelFancyTypeSwitch"> Type: </label>
 
-                        <label id="labelFancyProtocolSwitch"> Protocol: </label>
-                        <select id="optionProtocolFancySwitch">
-                                <option value=" "> OpenFlow 1.2 </option>
-                                <option value=" "> OpenFlow 1.3 </option>
-                                <option value=" "> OpenFlow 1.4 </option>
-                                <option value=" "> OpenFlow 1.5 </option>
-                        </select>
-                        <br>
-                        <br>
+                                <select id="optionTypeFancySwitch" onchange="xSelect()">
+                                        <option>
+                                                <li onclick="xSelect()"> None </li>
+                                        </option>
+                                        <option> IVS Switch </option>
+                                        <option> Linux Brigde </option>
+                                        <option onclick="xSelect()"> OVS Brigde </option>
+                                        <option> OVS Switch </option>
+                                        <option> User Switch </option>
+                                </select>
+                                <span id="xCloseSelect">X</span>
+                                <i id="arrowTypeFancySwitch"></i>
 
+                                <div id="containerSTPFancySwitch">
+                                        <input id="STPFancySwitch" type="checkbox" value=""> STP
 
-                        <label id="labelFancyDataPathSwitch"> DataPath: </label>
-                        <select id="optionDataPathFancySwitch">
-                                <option value=" "> Kernel </option>
-                                <option value=" "> User </option>
-                        </select>
-                        <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
-                        <input type="text" id="inputFancyDataPathIDSwitch">
-                        <br>
-                        <br>
+                                        <label id="labelFancySTPPriority"> STP Priority: </label>
+                                        <input type="number" id="inputFancySTPPriority" step="4096" min="0" max="61440">
 
-                        <label id="labelFancyOfDataPathArgsSwitch"> OfDataPath Arguments: </label>
-                        <input type="text" id="inputFancyOfDataPathArgsSwitch">
-                        <br>
-                        <br>
+                                </div>
 
+                                <label id="labelFancyIPSwitch"> IP: </label>
+                                <input type="text" id="inputFancyIPSwitch" name="fname"><br>
 
-                        <label id="labelFancyFailModeSwitch"> DataPath: </label>
-                        <select id="optionFailModeFancySwitch">
-                                <option value=" "> Secure </option>
-                                <option value=" "> Standalone </option>
-                        </select>
-                        <br>
-                        <br>
+                                <label id="labelFancyDPCTLPort"> DPCTL Port: </label>
+                                <input type="number" id="inputFancyDPCTLPort" step="1" min="0" max="65535">
+                                <br>
 
-                        <input id="InBandFancySwitch" type="radio" value="">InBand
-                        <br>
-                        <input id="InNameSpaceFancySwitch" type="radio" value="">In NameSpace
-                        <br>
-                        <input id="BatchFancySwitch" type="radio" value="">Batch
-                        <br><input id="VerboseFancySwitch" type="radio" value="">Verbose
-                        <br>
+                                <label id="labelFancyProtocolSwitch"> Protocol: </label>
+                                <select id="optionProtocolFancySwitch">
+                                        <option value=" "> OpenFlow 1.2 </option>
+                                        <option value=" "> OpenFlow 1.3 </option>
+                                        <option value=" "> OpenFlow 1.4 </option>
+                                        <option value=" "> OpenFlow 1.5 </option>
+                                </select>
+                                <br>
+
+                                <label id="labelFancyDataPathSwitch"> DataPath: </label>
+                                <select id="optionDataPathFancySwitch">
+                                        <option value=" "> Kernel </option>
+                                        <option value=" "> User </option>
+                                </select>
+                                <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
+                                <input type="text" id="inputFancyDataPathIDSwitch">
+                                <br>
+
+                                <label id="labelFancyOfDataPathArgsSwitch"> OfDataPath Arguments: </label>
+                                <input type="text" id="inputFancyOfDataPathArgsSwitch">
+                                <br>
 
 
-                        <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Additional Switch Options: </label>
-                        <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch"><br><br>
 
+                                <label id="labelFancyFailModeSwitch"> DataPath: </label>
+                                <select id="optionFailModeFancySwitch">
+                                        <option value=" "> Secure </option>
+                                        <option value=" "> Standalone </option>
+                                </select>
+                                <br>
 
-                        <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
-                        <input type="text" id="inputFancyStartScriptsSwitch"><br><br>
+                                <input id="InBandFancySwitch" type="checkbox" value="">InBand
+                                <br>
+                                <input id="InNameSpaceFancySwitch" type="checkbox" value="">In NameSpace
+                                <br>
+                                <input id="BatchFancySwitch" type="checkbox" value="">Batch
+                                <br>
+                                <input id="VerboseFancySwitch" type="checkbox" value="">Verbose
+                                <br>
 
-                        <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
-                        <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname"><br><br>
+                                <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Additional Switch Options:
+                                </label>
+                                <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch"><br>
 
+                                <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
+                                <input type="text" id="inputFancyStartScriptsSwitch"><br>
+
+                                <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
+                                <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname"><br>
+                        </form>
+                </div>
+                <div id="containerFancyButtonFormSwitch">
                         <input type="button" id="CancelarButtonFancySwitch" value="Cancelar">
                         <input type="button" id="GuardarButtonFancySwitch" value="Guardar">
-                </form>
+                </div>
+
 
         </div>
 </div>

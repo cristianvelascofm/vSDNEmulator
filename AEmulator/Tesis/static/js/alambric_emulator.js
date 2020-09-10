@@ -1690,26 +1690,26 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
     }
     // **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- **
 
-    
-    
-      objPort0.top = 280;
-      objPort0.line.set({ 'y2': 288 });
-      objPort2.top = 280;
-      objPort2.line.set({ 'y2': 288 });
 
-      canvas.add(objPort0);
-      canvas.add(objPort2);
-      canvas.add(objPort0.line);
-      canvas.add(objPort2.line);
-      canvas.sendToBack(objPort0.line);
-      canvas.sendToBack(objPort2.line);
-      var l = makeLink([objPort0.line.get( 'x2'),objPort0.line.get( 'y2'),objPort2.line.get( 'x2'),objPort2.line.get( 'y2')],"link");
-      canvas.add(l);
-      canvas.sendToBack(l);
-      objPort0.state = "connected";
-      objPort2.state = "connected";
-      objPort0.line = l;
-      objPort2.line = l;
+
+    objPort0.top = 280;
+    objPort0.line.set({ 'y2': 288 });
+    objPort2.top = 280;
+    objPort2.line.set({ 'y2': 288 });
+
+    canvas.add(objPort0);
+    canvas.add(objPort2);
+    canvas.add(objPort0.line);
+    canvas.add(objPort2.line);
+    canvas.sendToBack(objPort0.line);
+    canvas.sendToBack(objPort2.line);
+    var l = makeLink([objPort0.line.get('x2'), objPort0.line.get('y2'), objPort2.line.get('x2'), objPort2.line.get('y2')], "link");
+    canvas.add(l);
+    canvas.sendToBack(l);
+    objPort0.state = "connected";
+    objPort2.state = "connected";
+    objPort0.line = l;
+    objPort2.line = l;
 
 
   }
@@ -2352,7 +2352,7 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
     divFancy = ".divFancyController";
 
   }
-
+  $("#labelFancySwitch").text("Switch: " + tag);
   $.fancybox.open($(divFancy), {
     touch: false,
     modal: false,
@@ -2360,6 +2360,8 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
     clickSlide: false,
     clickOutside: false,
   });
+  
+  
   insertElementClick(x0, y0, img, tag);
 
 }
@@ -2431,3 +2433,8 @@ $("#inputFanoutTemplate").keypress(function (e) {
 
   }
 });
+
+function xSelect(){
+  $("#xCloseSelect").css({"display":"flex","margin-top":"-22px"});
+  console.log("Cerrar ");
+}
