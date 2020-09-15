@@ -1303,20 +1303,20 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
                 'X-CSRFToken': csrftoken
               }
             });*/
-      /*
+      
             $.ajax({
               type: "post",//get- consutla post- se actualiza
               url: "http://127.0.0.1:3000/alambric_emulator/",
-              /* url: "../static/py/algo.py",
+              // url: "../static/py/algo.py",
               dataType: "json",
               contentType: 'application/json; charset=utf-8',
               data: json,
-              headers: { 'X-CSRFToken': csrftoken },
+              //headers: { 'X-CSRFToken': csrftoken },
 
-              /*success: function (data) {
+              success: function (data) {
                 alert(JSON.stringify(data));
               }
-            });*/
+            });
 
     }
 
@@ -1463,7 +1463,9 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
           if (obj.id == "eth0") {
             posX2.push(obj.connection[0].x2);
             posY2.push(obj.connection[0].y2);
+            obj.position = "terminal";
             objSwitchAux.push(obj);
+
           }
 
 
@@ -1480,7 +1482,9 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
             posX1.push(obj.connection[0].x2);
             posY1.push(obj.connection[0].y2);
+            obj.position = "initial";
             objSwitch.push(obj);
+
           }
         }
       });
@@ -1591,6 +1595,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
           if (obj.id == "eth0") {
             posX2.push(obj.connection[0].x2);
             posY2.push(obj.connection[0].y2);
+
             objHost.push(obj);
           }
         }
@@ -1605,6 +1610,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
             posX1.push(obj.connection[0].x2);
             posY1.push(obj.connection[0].y2);
+
             objSwitch.push(obj);
           }
         }
@@ -1650,6 +1656,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
           if (obj.id == "eth0") {
             posX2.push(obj.connection[0].x2);
             posY2.push(obj.connection[0].y2);
+            obj.position = "terminal";
             objSwitchAux.push(obj);
           }
 
@@ -1667,6 +1674,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
             posX1.push(obj.connection[0].x2);
             posY1.push(obj.connection[0].y2);
+            obj.position = "initial";
             objSwitch.push(obj);
           }
         }
@@ -1704,14 +1712,17 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
     canvas.sendToBack(objPort0.line);
     canvas.sendToBack(objPort2.line);
     var l = makeLink([objPort0.line.get('x2'), objPort0.line.get('y2'), objPort2.line.get('x2'), objPort2.line.get('y2')], "link");
-    canvas.add(l);
-    canvas.sendToBack(l);
+    objPort0.position = "terminal";
+    objPort0.connection.push(l);
+    objPort2.position = "initial";
+    objPort2.connection.push(l);
     objPort0.state = "connected";
     objPort2.state = "connected";
     objPort0.line = l;
     objPort2.line = l;
 
-
+    canvas.add(l);
+    canvas.sendToBack(l);
   }
 
   //Creador Topología Tree - Deapth -> Número de Niveles, Fannout -> Apertura  por Nivel (A^F)
@@ -1829,10 +1840,24 @@ canvas.observe('mouse:down', function (options) {
               console.log("Estoy Conectado ...");
               if (p.connection[i].id == "link") {
                 if (p.elementContainer.charAt(0) == "s") {
-                  p.connection[i] && p.connection[i].set({
-                    'x1': p.left + 10,
-                    'y1': p.top + 7
-                  });
+                  if (p.position == "initial") {
+                    p.connection[i] && p.connection[i].set({
+                      'x2': p.left + 10,
+                      'y2': p.top + 7
+                    });
+                  } else if (p.position == "terminal") {
+                    p.connection[i] && p.connection[i].set({
+                      'x1': p.left + 10,
+                      'y1': p.top + 7
+                    });
+
+                  } else {
+                    p.connection[i] && p.connection[i].set({
+                      'x1': p.left + 10,
+                      'y1': p.top + 7
+                    });
+                  }
+
                 } else {
                   p.connection[i] && p.connection[i].set({
                     'x2': p.left + 10,
@@ -1873,7 +1898,6 @@ canvas.observe('mouse:down', function (options) {
 
       break;
     case 'controller':
-      frameFancyBoxInsertElement('controller');
       img = '../static/img/controller.png';
       tag = "c" + (tagController.length + 1);
       frameFancyBoxInsertElement('controller', tag, x0, y0, img);
@@ -1894,6 +1918,9 @@ canvas.observe('mouse:down', function (options) {
       break;
 
     case 'port':
+      img = '../static/img/port.png';
+      tag = "eth";
+      frameFancyBoxInsertElement('port', tag, x0, y0, img);
       tool = "cursor";
       desactiveTool('port');
       activeTool(tool);
@@ -1908,6 +1935,9 @@ canvas.observe('mouse:down', function (options) {
       break;
 
     case 'link':
+      img = '';
+      tag = "";
+      frameFancyBoxInsertElement('link', tag, x0, y0, img);
       tool = "cursor";
       desactiveTool('link');
       activeTool(tool);
@@ -2351,8 +2381,13 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
   } else if (id == "controller") {
     divFancy = ".divFancyController";
 
+  } else if (id == "link") {
+    divFancy = ".divFancyLink";
+  } else if (id == "port") {
+    divFancy = ".divFancyPort";
   }
-  $("#labelFancySwitch").text("Switch: " + tag);
+
+  //$("#labelFancySwitch").text("Switch: " + tag);
   $.fancybox.open($(divFancy), {
     touch: false,
     modal: false,
@@ -2360,8 +2395,8 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
     clickSlide: false,
     clickOutside: false,
   });
-  
-  
+
+
   insertElementClick(x0, y0, img, tag);
 
 }
@@ -2434,7 +2469,7 @@ $("#inputFanoutTemplate").keypress(function (e) {
   }
 });
 
-function xSelect(){
-  $("#xCloseSelect").css({"display":"flex","margin-top":"-22px"});
+function xSelect() {
+  $("#xCloseSelect").css({ "display": "flex", "margin-top": "-22px" });
   console.log("Cerrar ");
 }

@@ -1,7 +1,14 @@
 /* Fancy Box Parameters Switch */
 
-.divFancySwitch {
-    font-family: 'Quicksand', sans-serif;
+/* Contenedor del Label Principal */
+
+#containerInsertFancySwitch {
+    width: 400px;
+}
+
+#containerInsertSwitch {
+    max-height: calc(100vh - 200px);
+    overflow: auto;
 }
 
 #containerParameterFancySwitch {
@@ -12,126 +19,406 @@
     background-position: 85px -2px;
     width: auto;
     height: 35px;
-}
-
-#labelFancySwitch {
     font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
 }
 
-/*#containerFancyFormSwitch {
-    background-color: #2ef738;
-}*/
+/* Contenedor del Formulario */
 
-#containerFancyButtonFormSwitch {
-    background-color: #f7d92e;
-    margin-top: 40px;
-    text-align: right;
+#containerFancyFormSwitch {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Contenedor Tipo de Switch */
+
+#containerTypeSwitch {
+    padding-left: 10px;
+    margin-top: 3px;
 }
 
 #optionTypeFancySwitch {
     height: 25px;
-    width: 53%;
+    width: 60%;
     letter-spacing: 2px;
-    border-bottom: #b8b9bb solid 2px;
+    border-bottom: #2AC176 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
     text-align: right;
     outline: none;
-    margin-top: 10px;
-    appearance: none;
+    margin-top: 20px;
+    /*appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 36%;
+    margin-left: 96px;
 }
 
-#optionTypeFancySwitch::-ms-expand {
-    display: none;
-}
-
-#optionTypeFancySwitch:focus {
-    border-bottom: #16eaf1 solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-}
-
+/*
 #arrowTypeFancySwitch {
     position: absolute;
-    right: 50px;
-    top: 95px;
+    right: 60px;
+    top: 105px;
     width: 10px;
     height: 10px;
     display: block;
     border-left: 2px solid #2AC176;
     border-bottom: 2px solid #2AC176;
     transform: rotate(-45deg);
-    /* Giramos el cuadrado */
     transition: all 0.25s ease;
 }
 
 #arrowTypeFancySwitch:hover {
-    margin-top: 4px;
-    width: 7px;
-    height: 7px;
-}
+    margin-top: 2px;
+}*/
 
-#xCloseSelect {
-    width: 5px;
-    right: 5px;
-    margin-top: -22px;
-    margin-left: 380px;
-    margin-bottom: 0;
-    display: none;
-    font-size: 15px;
-    color: #2AC176;
-    background-color: #f72e2e;
-}
+/* Contenedor STP Switch*/
 
 #containerSTPFancySwitch {
+    padding-left: 40px;
     margin-top: 15px;
-    padding-left: 80px;
 }
 
 #labelFancySTPPriority {
     margin-left: 55px;
 }
 
-#STPFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyAdditionalSwOptionsScriptsSwitch {
+#inputFancySTPPriority {
     height: 25px;
-    width: 53%;
+    width: 37%;
     letter-spacing: 2px;
-    border-bottom: #b8b9bb solid 2px;
+    border-bottom: #2AC176 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
     text-align: right;
     outline: none;
-    margin-top: 10px;
-    appearance: none;
+}
+
+/* Contenedor IP Switch */
+
+#containerIPSwitch {
+    margin-top: 15px;
+    padding-left: 12px;
+}
+
+#inputFancyIPSwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 118px;
+}
+
+/* Contenedor DPCTL Port Switch */
+
+#containerDPCTLPort {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#inputFancyDPCTLPort {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 53px;
+}
+
+/* Contenedor de Protocoloes Switch */
+
+#containerProtocolSwitch {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#optionProtocolFancySwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    /*appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;*/
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 74px;
+}
+
+/*
+#arrowProtocolFancySwitch {
+    position: absolute;
+    right: 60px;
+    top: 265px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowProtocolFancySwitch:hover {
+    margin-top: 2px;
+}
+*/
+
+/* Contenedor de Data Path del Switch */
+
+#containerDataPath {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#optionDataPathFancySwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    /*appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;*/
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 65px;
+}
+
+/*
+#arrowDataPathFancySwitch {
+    position: absolute;
+    right: 60px;
+    top: 308px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowDataPathFancySwitch:hover {
+    margin-top: 2px;
+}*/
+
+/* Contenedor Data Path Id Switch */
+
+#containerDataPathID {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#inputFancyDataPathIDSwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 46px;
+}
+
+/* Contenedor Data Path Arguments Switch */
+
+#containerOfDataPathArguments {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#inputFancyOfDataPathArgsSwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 30px;
+}
+
+/* Contenedor Fail Mode Switch */
+
+#FailMode {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#optionFailModeFancySwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    /*appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;*/
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 65px;
+}
+
+/*
+#arrowFailMode {
+    position: absolute;
+    right: 60px;
+    top: 425px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowFailMode:hover {
+    margin-top: 2px;
+}
+*/
+
+/* Contenedor Elecciones Check Box */
+
+#containerCheckBoxOne {
+    margin-top: 15px;
+    padding-left: 18px;
+}
+
+#InBandFancySwitch {
+    margin-left: 60px;
+}
+
+#InNameSpaceFancySwitch {
+    margin-left: 50px;
+}
+
+/* Contenedor Elecciones Check Box 2*/
+
+#containerCheckBoxTwo {
+    margin-top: 15px;
+    padding-left: 18px;
+}
+
+#BatchFancySwitch {
+    margin-left: 60px;
+}
+
+#VerboseFancySwitch {
+    margin-left: 60px;
+}
+
+/* Contenedor Adicionar Opciones al Switch*/
+
+#containerAddOption {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#inputFancyAdditionalSwOptionsScriptsSwitch {
+    height: 25px;
+    width: 47%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
 }
 
-#inputFancyAdditionalSwOptionsScriptsSwitch:focus {
-    border-bottom: #16eaf1 solid 2px;
+/* Contenedor StartUp Script Switch */
+
+#containerStartUp {
+    margin-top: 25px;
+    padding-left: 10px;
+}
+
+#inputFancyStartScriptsSwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
+    text-align: right;
     outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 38px;
 }
 
-/* Botones del Fancy */
+/* Contenedor ShutDown Scripts Switch*/
+
+#containerShutDown {
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+#inputFancyShutDownScriptsSwitch {
+    height: 25px;
+    width: 59%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 18px;
+}
+
+/* Contenedor de los Botones del Formulario */
+
+#containerFancyButtonFormSwitch {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
 
 #CancelarButtonFancySwitch {
     border: #b8b9bb solid 2px;
@@ -139,11 +426,15 @@
     height: 22px;
     width: 25%;
     border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
 }
 
 #CancelarButtonFancySwitch:focus {
-    border: #88aefa solid 2px;
+    border: #2AC176 solid 2px;
     outline: none;
+    background-color: #2AC176;
+    color: white;
 }
 
 #GuardarButtonFancySwitch {
@@ -152,228 +443,16 @@
     height: 22px;
     width: 25%;
     border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
 }
 
 #GuardarButtonFancySwitch:focus {
-    border: #88aefa solid 2px;
+    border: #2AC176 solid 2px;
     outline: none;
+    background-color: #2AC176;
+    color: white;
 }
-
-/*
-
-#labelFancySTPPriority {
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-#STPFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancySTPPriority {
-    height: 25px;
-    width: 57%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    margin-top: 10px;
-    outline: none;
-}
-
-#inputFancySTPPriority:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyIPSwitch {
-    height: 25px;
-    width: 90%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyIPSwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyDPCTLPort {
-    height: 25px;
-    width: 72%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyDPCTLPort:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#optionProtocolFancySwitch {
-    height: 25px;
-    width: 78%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#optionProtocolFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#optionDataPathFancySwitch {
-    height: 25px;
-    width: 17%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#optionDataPathFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyDataPathIDSwitch {
-    height: 25px;
-    width: 33%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyDataPathIDSwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyOfDataPathArgsSwitch {
-    height: 25px;
-    width: 50%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyOfDataPathArgsSwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#optionFailModeFancySwitch {
-    height: 25px;
-    width: 76%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#optionFailModeFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#InBandFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#InNameSpaceFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#BatchFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#VerboseFancySwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-
-#inputFancyStartScriptsSwitch {
-    height: 25px;
-    width: 68%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyStartScriptsSwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#inputFancyShutDownScriptsSwitch {
-    height: 25px;
-    width: 63%;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 5px;
-    outline: none;
-    margin-top: 10px;
-}
-
-#inputFancyShutDownScriptsSwitch:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-
-*/
 
 /* Fancy Box Parametros Topologías */
 
@@ -418,6 +497,624 @@
     width: 45%;
     border-radius: 15px;
     margin-left: 85px;
+}
+
+/*-------------------------------------------------------------*/
+
+/* Fancy Box Insert Controller */
+
+/* Contenedor Parametros Controller */
+
+#containerParameterFancyController {
+    text-align: center;
+    background-image: url(../img/controller.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 50px 0;
+    height: 35px;
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerInsertController {
+    height: 190px;
+    width: 300px;
+}
+
+#containerTypeController {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#optionTypeFancyController {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 92px;
+}
+
+#arrowOptionTypeController {
+    position: absolute;
+    right: 60px;
+    top: 85px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowOptionTypeController:hover {
+    margin-top: 2px;
+}
+
+#containerIPController {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#containerProtocolController {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#optionProtocolFancyController {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 58px;
+}
+
+#arrowProtocolController {
+    position: absolute;
+    right: 60px;
+    top: 160px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowProtocolController:hover {
+    margin-top: 2px;
+}
+
+#containerIPController {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyIpController {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 117px;
+}
+
+/* Contenedor de los Botones del Formulario */
+
+#containerButtonController {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#CancelarButtonFancyController {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyController:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyController {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyController:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+/*-------------------------------------------------------------*/
+
+/* Fancy Box Insert Port */
+
+/* Contenedor de los Botones del Formulario */
+
+#containerInsertPort {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerParameterFancyPort {
+    text-align: center;
+    background-image: url(../img/port.png);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 60px 7px;
+    height: 35px;
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerFormPort {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    margin-top: 15px;
+}
+
+#labelFancyIPPort {
+    font-size: 20px;
+    margin-left: 3px;
+}
+
+#inputFancyIPPort {
+    height: 100px;
+    width: 300px;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    margin-left: 0;
+    background-color: rgb(240, 236, 236);
+}
+
+#containerFancyButtonFormPort {
+    margin-top: 20px;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    margin-left: 70px;
+}
+
+#CancelarButtonFancyPort {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyPort:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyPort {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyPort:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+/*-------------------------------------------------------------*/
+
+/* Fancy Box Insert Link */
+
+/* Contenedor visible Fancy Insert Link */
+
+#containerInsertLink {
+    width: 350px;
+    height: 280px;
+}
+
+#containerParameterFancyLink {
+    text-align: center;
+    background-image: url(../img/);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 85px -2px;
+    height: 35px;
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#divFancyFormLink {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerBandWidthLink {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyBandWidthLink {
+    height: 25px;
+    width: 45%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    margin-left: 50px;
+}
+
+#containerDelayLink {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyDelayLink {
+    height: 25px;
+    width: 45%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    margin-left: 88px;
+}
+
+#containerJitterLink {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyJitterLink {
+    height: 25px;
+    width: 45%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    margin-left: 92px;
+}
+
+#containerMaxQueueLink {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyMaxQueueLink {
+    height: 25px;
+    width: 45%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    margin-left: 50px;
+}
+
+#containerLossLink {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyLossLink {
+    height: 25px;
+    width: 45%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    margin-left: 96px;
+}
+
+/* Contenedor de los Botones del Formulario */
+
+#containerButtonLink {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#CancelarButtonFancyLink {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyLink:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyLink {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyLink:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+/*-------------------------------------------------------------*/
+
+/* Fancy Box Insert Host */
+
+/* Contenedor visible Fancy Insert Host*/
+
+#containerInsertHost {
+    width: 350px;
+    height: 200px;
+}
+
+/* Contenedor Label Host Fancy*/
+
+#containerParameterFancyHost {
+    text-align: center;
+    background-image: url(../img/host.png);
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-position: 85px -2px;
+    height: 35px;
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Contenedor Form Host Fancy*/
+
+#containerFormHost {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Contenedor IP Host*/
+
+#containerIPHost {
+    margin-top: 10px;
+    padding-left: 3px;
+}
+
+#inputFancyIPHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 70px;
+}
+
+/* Contenedor Sheduler Host */
+
+#containerShedulerHost {
+    margin-top: 3px;
+    padding-left: 3px;
+}
+
+#optionShedulerFancyHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 96px;
+}
+
+#arrowProtocolFancyHost {
+    position: absolute;
+    right: 60px;
+    top: 115px;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-left: 2px solid #2AC176;
+    border-bottom: 2px solid #2AC176;
+    transform: rotate(-45deg);
+    transition: all 0.25s ease;
+}
+
+#arrowProtocolFancyHost:hover {
+    margin-top: 2px;
+}
+
+#containerCPUCoresHost {
+    margin-top: 3px;
+    padding-left: 3px;
+}
+
+#inputFancyCPUCoresHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 90px;
+}
+
+#containerStartUp {
+    margin-top: 3px;
+    padding-left: 3px;
+}
+
+#inputFancyStartScriptsHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 70px;
+}
+
+#containerShutDown {
+    margin-top: 3px;
+    padding-left: 3px;
+}
+
+#inputFancyShutDownScriptsHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 50px;
+}
+
+/* Contenedor de los Botones del Formulario */
+
+#containerFancyButtonFormHost {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#CancelarButtonFancyHost {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyHost:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyHost {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 25%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyHost:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
 }
 
 /* Fancy Box Parametros Topologías tree */
