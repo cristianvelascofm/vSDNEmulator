@@ -2,13 +2,15 @@
 
 /* Contenedor del Label Principal */
 
-#containerInsertFancySwitch {
-    width: 400px;
+.divFancySwitch {
+    width: 500px;
+    height: 610px;
+    
 }
 
 #containerInsertSwitch {
-    max-height: calc(100vh - 200px);
-    overflow: auto;
+    height: calc(80vh - 100px);
+    /*overflow: auto;*/
 }
 
 #containerParameterFancySwitch {
@@ -294,7 +296,7 @@
     -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 65px;
+    margin-left: 13px;
 }
 
 /*
@@ -414,7 +416,7 @@
 /* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormSwitch {
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
@@ -510,10 +512,11 @@
     background-image: url(../img/controller.png);
     background-repeat: no-repeat;
     background-size: 30px;
-    background-position: 50px 0;
+    background-position: 18px 0;
     height: 35px;
     font-size: 25px;
     font-family: 'Quicksand', sans-serif;
+    
 }
 
 #containerInsertController {
@@ -536,18 +539,18 @@
     border-right: none;
     text-align: right;
     outline: none;
-    appearance: none;
+    /*appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 92px;
+    margin-left: 98px;
 }
 
-#arrowOptionTypeController {
+/*#arrowOptionTypeController {
     position: absolute;
     right: 60px;
-    top: 85px;
+    top: 95px;
     width: 10px;
     height: 10px;
     display: block;
@@ -559,7 +562,7 @@
 
 #arrowOptionTypeController:hover {
     margin-top: 2px;
-}
+}*/
 
 #containerIPController {
     margin-top: 10px;
@@ -581,15 +584,15 @@
     border-right: none;
     text-align: right;
     outline: none;
-    appearance: none;
+   /* appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 58px;
+    margin-left: 60px;
 }
 
-#arrowProtocolController {
+/*#arrowProtocolController {
     position: absolute;
     right: 60px;
     top: 160px;
@@ -604,7 +607,7 @@
 
 #arrowProtocolController:hover {
     margin-top: 2px;
-}
+}*/
 
 #containerIPController {
     margin-top: 10px;
@@ -673,8 +676,6 @@
 
 /* Fancy Box Insert Port */
 
-/* Contenedor de los Botones del Formulario */
-
 #containerInsertPort {
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
@@ -717,6 +718,8 @@
     margin-left: 0;
     background-color: rgb(240, 236, 236);
 }
+
+/* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormPort {
     margin-top: 20px;
@@ -766,7 +769,7 @@
 /* Contenedor visible Fancy Insert Link */
 
 #containerInsertLink {
-    width: 350px;
+    width: 400px;
     height: 280px;
 }
 
@@ -793,7 +796,7 @@
 
 #inputFancyBandWidthLink {
     height: 25px;
-    width: 45%;
+    width: 50%;
     letter-spacing: 2px;
     border-bottom: #2AC176 solid 2px;
     border-top: none;
@@ -801,7 +804,7 @@
     border-right: none;
     text-align: right;
     outline: none;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 #containerDelayLink {
@@ -811,7 +814,7 @@
 
 #inputFancyDelayLink {
     height: 25px;
-    width: 45%;
+    width: 50%;
     letter-spacing: 2px;
     border-bottom: #2AC176 solid 2px;
     border-top: none;
@@ -819,7 +822,7 @@
     border-right: none;
     text-align: right;
     outline: none;
-    margin-left: 88px;
+    margin-left: 80px;
 }
 
 #containerJitterLink {
@@ -829,7 +832,7 @@
 
 #inputFancyJitterLink {
     height: 25px;
-    width: 45%;
+    width: 50%;
     letter-spacing: 2px;
     border-bottom: #2AC176 solid 2px;
     border-top: none;
@@ -837,7 +840,7 @@
     border-right: none;
     text-align: right;
     outline: none;
-    margin-left: 92px;
+    margin-left: 99px;
 }
 
 #containerMaxQueueLink {
@@ -847,7 +850,7 @@
 
 #inputFancyMaxQueueLink {
     height: 25px;
-    width: 45%;
+    width: 50%;
     letter-spacing: 2px;
     border-bottom: #2AC176 solid 2px;
     border-top: none;
@@ -855,7 +858,11 @@
     border-right: none;
     text-align: right;
     outline: none;
-    margin-left: 50px;
+    margin-left: 45px;
+}
+
+#spanBandMaxQueueLink{
+    font-size: 13px;
 }
 
 #containerLossLink {
@@ -865,7 +872,7 @@
 
 #inputFancyLossLink {
     height: 25px;
-    width: 45%;
+    width: 50%;
     letter-spacing: 2px;
     border-bottom: #2AC176 solid 2px;
     border-top: none;
@@ -873,13 +880,13 @@
     border-right: none;
     text-align: right;
     outline: none;
-    margin-left: 96px;
+    margin-left: 73px;
 }
 
 /* Contenedor de los Botones del Formulario */
 
 #containerButtonLink {
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
@@ -921,12 +928,102 @@
 
 /*-------------------------------------------------------------*/
 
+/* Fancy Box Insert Label */
+
+#containerInsertLabel {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerParameterFancyLabel {
+    text-align: center;
+    background-image: url(../img/label.png);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 60px 7px;
+    height: 35px;
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerFormLabel {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    margin-top: 15px;
+}
+
+#labelFancyLabel {
+    font-size: 20px;
+    margin-left: 3px;
+}
+
+#inputFancyLabel {
+    height: 100px;
+    width: 300px;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    margin-left: 0;
+    background-color: rgb(240, 236, 236);
+}
+
+/* Contenedor de los Botones del Formulario */
+
+#containerFancyButtonFormLabel {
+    margin-top: 20px;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    margin-left: 70px;
+}
+
+#CancelarButtonFancyLabel {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyLabel:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyLabel {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyLabel:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+/*-------------------------------------------------------------*/
+
 /* Fancy Box Insert Host */
 
 /* Contenedor visible Fancy Insert Host*/
 
 #containerInsertHost {
-    width: 350px;
+    width: 380px;
     height: 200px;
 }
 
@@ -948,6 +1045,7 @@
 #containerFormHost {
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
+    margin-top: 20px;
 }
 
 /* Contenedor IP Host*/
@@ -969,7 +1067,21 @@
     outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 70px;
+    margin-left: 45px;
+}
+
+#inputFancyIPHost:hover {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+#inputFancyIPHost:focus {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 /* Contenedor Sheduler Host */
@@ -989,18 +1101,32 @@
     border-right: none;
     text-align: right;
     outline: none;
-    appearance: none;
+    /*appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
     margin-left: 96px;
 }
 
-#arrowProtocolFancyHost {
+#optionShedulerFancyHost:hover {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+#optionShedulerFancyHost:focus {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+/*#arrowProtocolFancyHost {
     position: absolute;
-    right: 60px;
-    top: 115px;
+    right: 65px;
+    top: 120px;
     width: 10px;
     height: 10px;
     display: block;
@@ -1012,7 +1138,9 @@
 
 #arrowProtocolFancyHost:hover {
     margin-top: 2px;
-}
+    border-bottom: #2a46c1 solid 2px;
+    border-left: #2a46c1 solid 2px;
+}*/
 
 #containerCPUCoresHost {
     margin-top: 3px;
@@ -1031,7 +1159,20 @@
     outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 90px;
+    margin-left: 76px;
+}
+
+#inputFancyCPUCoresHost:focus {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+#inputFancyCPUCoresHost:hover {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 #containerStartUp {
@@ -1052,6 +1193,19 @@
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
     margin-left: 70px;
+}
+#inputFancyStartScriptsHost:focus {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+#inputFancyStartScriptsHost:hover {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 #containerShutDown {
@@ -1074,10 +1228,26 @@
     margin-left: 50px;
 }
 
+#inputFancyShutDownScriptsHost:focus {
+    
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    
+}
+
+#inputFancyShutDownScriptsHost:hover {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+ 
+}
 /* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormHost {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;

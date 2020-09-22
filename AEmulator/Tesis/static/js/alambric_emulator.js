@@ -1008,7 +1008,7 @@ function makeLink(coords, linkType) {
       fill: 'red',
       stroke: '#9733FA',
       strokeWidth: 2,
-      selectable: false,
+      selectable: true,
       evented: false,
       id: "normal",
     });
@@ -1018,7 +1018,7 @@ function makeLink(coords, linkType) {
       fill: 'yellow',
       stroke: '#E1B13C',
       strokeWidth: 2,
-      selectable: false,
+      selectable: true,
       evented: false,
       id: "portHost",
     });
@@ -1028,7 +1028,7 @@ function makeLink(coords, linkType) {
       fill: 'green',
       stroke: '#2AFE00',
       strokeWidth: 2,
-      selectable: false,
+      selectable: true,
       evented: false,
       id: "link",
     });
@@ -1039,7 +1039,7 @@ function makeLink(coords, linkType) {
       fill: 'yellow',
       stroke: '#57E3EC',
       strokeWidth: 2,
-      selectable: false,
+      selectable: true,
       evented: false,
       id: "portSwitch",
     });
@@ -1050,7 +1050,7 @@ function makeLink(coords, linkType) {
       strokeDashArray: [5, 5],
       stroke: 'blue',
       strokeWidth: 2,
-      selectable: false,
+      selectable: true,
       evented: false,
       id: "normal",
     });
@@ -1303,20 +1303,20 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
                 'X-CSRFToken': csrftoken
               }
             });*/
-      
-            $.ajax({
-              type: "post",//get- consutla post- se actualiza
-              url: "http://127.0.0.1:3000/alambric_emulator/",
-              // url: "../static/py/algo.py",
-              dataType: "json",
-              contentType: 'application/json; charset=utf-8',
-              data: json,
-              //headers: { 'X-CSRFToken': csrftoken },
 
-              success: function (data) {
-                alert(JSON.stringify(data));
-              }
-            });
+      $.ajax({
+        type: "post",//get- consutla post- se actualiza
+        url: "http://127.0.0.1:3000/alambric_emulator/",
+        // url: "../static/py/algo.py",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        data: json,
+        //headers: { 'X-CSRFToken': csrftoken },
+
+        success: function (data) {
+          alert(JSON.stringify(data));
+        }
+      });
 
     }
 
@@ -1781,12 +1781,20 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
 
 }
+
+
+
+
 var insertOP = false;
 var imgUrl = "";
-
+var selected = null;
 var x0, y0;
 var tool = 'cursor';
-var action = 'none';
+var action = null;
+var countAsociate = 0;
+var tag = "";
+var img = '';
+
 
 $(".mode").click(function () {
   tool = $(this).attr('id');
@@ -1796,102 +1804,45 @@ $(".mode").click(function () {
 });
 
 
+
+// Mouse Down Canvas Opciones
 canvas.observe('mouse:down', function (options) {
   var pointer = canvas.getPointer(options.e);
   x0 = pointer.x; //get initial starting point of x
   y0 = pointer.y; //get initial starting point of y
-  var img = '';
-  var tag = "";
+
   switch (tool) {
     case 'cursor':
 
-      canvas.on('object:moving', function (e) {
-        var p = e.target;
-        console.log(p.connection.length);
+      var objActive = canvas.getActiveObject();
+      
+      if (objActive != null) {
+        canvas.forEachObject(function (obj) {
+          console.log("propiedades: "+obj.type);
+          obj.set({
+            opacity: 1,
+          })
 
-        if (p.id.charAt(0) != "e") {
-          for (var i = 0; i < p.connection.length; i++) {
+        });
+        objActive.set({
+          opacity: 0.7,
+        });
+      } else {
+        canvas.forEachObject(function (obj) {
+          obj.set({
+            opacity: 1,
+          })
 
-            //p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
-
-
-            if (p.id.charAt(0) == "c") {
-
-              p.connection[i] && p.connection[i].set({
-                'x2': p.left + 30,
-                'y2': p.top + 35
-              });
-
-            } else {
-
-              p.connection[i] && p.connection[i].set({
-                'x1': p.left + 30,
-                'y1': p.top + 35
-              });
-
-            }
-          }
-
-        } else {
-          for (var i = 0; i < p.connection.length; i++) {
-
-            if (p.state == "connected") {
-
-              console.log("Estoy Conectado ...");
-              if (p.connection[i].id == "link") {
-                if (p.elementContainer.charAt(0) == "s") {
-                  if (p.position == "initial") {
-                    p.connection[i] && p.connection[i].set({
-                      'x2': p.left + 10,
-                      'y2': p.top + 7
-                    });
-                  } else if (p.position == "terminal") {
-                    p.connection[i] && p.connection[i].set({
-                      'x1': p.left + 10,
-                      'y1': p.top + 7
-                    });
-
-                  } else {
-                    p.connection[i] && p.connection[i].set({
-                      'x1': p.left + 10,
-                      'y1': p.top + 7
-                    });
-                  }
-
-                } else {
-                  p.connection[i] && p.connection[i].set({
-                    'x2': p.left + 10,
-                    'y2': p.top + 7
-                  });
-                }
-
-              } else {
-                //muevo la asociasion 
-                p.connection[i] && p.connection[i].set({
-                  'x2': p.left + 10,
-                  'y2': p.top + 7
-                });
-              }
-            } else {
-              console.log("Estoy Asociado ...");
-              p.connection[i] && p.connection[i].set({
-                'x2': p.left + 10,
-                'y2': p.top + 7
-              });
-            }
-
-          }
-        }
+        });
 
 
-      });
+      }
+      canvas.renderAll();
       break;
     case 'host':
       img = '../static/img/host.png';
       tag = "h" + (tagHost.length + 1);
       frameFancyBoxInsertElement('host', tag, x0, y0, img);
-
-      tagHost.push(tag);
       tool = "cursor";
       desactiveTool('host');
       activeTool(tool);
@@ -1901,7 +1852,7 @@ canvas.observe('mouse:down', function (options) {
       img = '../static/img/controller.png';
       tag = "c" + (tagController.length + 1);
       frameFancyBoxInsertElement('controller', tag, x0, y0, img);
-      tagController.push(tag);
+
       tool = "cursor";
       desactiveTool('controller');
       activeTool(tool);
@@ -1911,7 +1862,7 @@ canvas.observe('mouse:down', function (options) {
       img = '../static/img/openflow_switch.png';
       tag = "s" + (tagSwitchOF.length + 1);
       frameFancyBoxInsertElement('switch_openflow', tag, x0, y0, img);
-      tagSwitchOF.push(tag);
+
       tool = "cursor";
       desactiveTool('switch_openflow');
       activeTool(tool);
@@ -1928,37 +1879,275 @@ canvas.observe('mouse:down', function (options) {
       break;
 
     case 'label':
+      img = '../static/img/';
+      tag = "Label1";
+      frameFancyBoxInsertElement('label', tag, x0, y0, img);
       tool = "cursor";
       desactiveTool('label');
+      createLabel(x0, y0);
       activeTool(tool);
 
       break;
 
     case 'link':
-      img = '';
-      tag = "";
+      img = '../static/img/';
+      tag = "Link1";
       frameFancyBoxInsertElement('link', tag, x0, y0, img);
-      tool = "cursor";
-      desactiveTool('link');
-      activeTool(tool);
+      var asociate = [];
+      /*do {
+        var objActive = canvas.getActiveObject();
+        if (objActive != null) {
+          asociate.push(objActive);
+          countAsociate = countAsociate + 1;
 
+
+
+
+
+
+        }
+
+      } while (countAsociate <= 2);
+
+      var coordinates = [asociate[0].x2, asociate[0].y2, asociate[1].x2, asociate[1].y2]; //set initial coordinates of straight line to the mouse point
+      // if (objActive.id.charAt(0) == "e") {
+      var line = new fabric.Line(coordinates, options = {
+        strokeWidth: 3,
+        stroke: 'red',
+      });
+      selected = line;
+      canvas.add(line);
+      canvas.setActiveObject(line);
+      //  }
+
+
+
+
+      //frameFancyBoxInsertElement('link', tag, x0, y0, img);
+      //tool = "cursor";
+      //desactiveTool('link');
+      //activeTool(tool);
+      */
       break;
   }
 });
 
-//funcion Elimina el elmento seleccionado 
-function deleteElement() {
+canvas.observe('object:moving', function (e) {
+  var p = e.target;
+  switch (tool) {
 
-  var object = canvas.getActiveObject();
-  if (!object) {
-    $.fancybox.open('<div class="message"><h2>Mensaje</h2><p>Selecciona un Elemento Primero</p></div>');
-    return "";
+    case 'cursor':
+      if (p.id.charAt(0) != "e") {
+        for (var i = 0; i < p.connection.length; i++) {
+
+          //p.connection[i] && p.connection[i].set({ 'x1': p.left + 30, 'y1': p.top + 35 });
+
+
+          if (p.id.charAt(0) == "c") {
+
+            p.connection[i] && p.connection[i].set({
+              'x2': p.left + 30,
+              'y2': p.top + 35
+            });
+
+          } else {
+
+            p.connection[i] && p.connection[i].set({
+              'x1': p.left + 30,
+              'y1': p.top + 35
+            });
+
+          }
+        }
+
+      } else {
+        for (var i = 0; i < p.connection.length; i++) {
+
+          if (p.state == "connected") {
+
+            if (p.connection[i].id == "link") {
+              if (p.elementContainer.charAt(0) == "s") {
+                if (p.position == "initial") {
+                  p.connection[i] && p.connection[i].set({
+                    'x2': p.left + 10,
+                    'y2': p.top + 7
+                  });
+                } else if (p.position == "terminal") {
+                  p.connection[i] && p.connection[i].set({
+                    'x1': p.left + 10,
+                    'y1': p.top + 7
+                  });
+
+                } else {
+                  p.connection[i] && p.connection[i].set({
+                    'x1': p.left + 10,
+                    'y1': p.top + 7
+                  });
+                }
+
+              } else {
+                p.connection[i] && p.connection[i].set({
+                  'x2': p.left + 10,
+                  'y2': p.top + 7
+                });
+              }
+
+            } else {
+              //muevo la asociasion 
+              p.connection[i] && p.connection[i].set({
+                'x2': p.left + 10,
+                'y2': p.top + 7
+              });
+            }
+          } else {
+            p.connection[i] && p.connection[i].set({
+              'x2': p.left + 10,
+              'y2': p.top + 7
+            });
+          }
+
+        }
+      }
+      break;
+    case 'link':
+      tool = null;
+
+
+
+
   }
-  canvas.remove(object);
-  insertOp = false;
-  activeTool(selector);
+
+
+});
+// Mouse Move Canvas Opciiones
+canvas.observe('mouse:move', function (options) {
+  var objActive = canvas.getActiveObject();
+  var pointer = canvas.getPointer(options.e);
+  var x2 = pointer.x; //get the current value of X
+  var y2 = pointer.y; //get the current value of Y
+  switch (tool) {
+    case 'cursor':
+
+
+      break;
+
+    case 'link':
+      if (selected != null) {
+        if (objActive != null) {
+          objActive.set({
+            lockMovementX: true,
+            lockMovementY: true,
+          });
+
+        }
+        selected.set({
+          x2: x2, //set the line's x2 to the current X value of the mouse
+          y2: y2,  //set the line's y2 to the current Y value of the mouse
+          selectable: true,
+          hasBorders: false,
+          hasControls: false,
+        })
+      }
+      canvas.setActiveObject(selected);
+
+
+      canvas.renderAll();
+      break;
+
+  }
+});
+
+canvas.observe('mouse:up', function (options) {
+  switch (tool) {
+    case 'link':
+      x0 = 0;
+      y0 = 0;
+      selected = null;
+      tool = 'cursor';
+  }
+});
+
+/*
+canvas.observe('selection:created', function (options) {
+  console.log('selection created');
+  var selected = canvas.getActiveObjects(),
+    selGroup = new fabric.ActiveSelection(selected, {
+      canvas: canvas
+    });
+
+});
+*/
+
+
+
+
+//funcion Elimina el elmento seleccionado o el grupo  seleccionado
+
+function createLabel(x0, y0) {
+  var label = "Esto es una Etiqueta"
+  var labelText = new fabric.IText(label, {
+    left: 5,
+    top: 5,
+    fontFamily: 'Helvetica',
+    fill: '#333',
+    lineHeight: 1.1,
+    fontSize: 18,
+  });
+
+  var boxWidth = labelText.getScaledWidth();
+  var rectangle = new fabric.Rect({
+    left: 0,
+    top: 0,
+    width: boxWidth + 10,
+    height: 25,
+    fill: 'white',
+    strokeWidth: 2,
+    stroke: 'rgba(100,200,200,0.5)'
+  });
+
+  var groupLabel = new fabric.Group([rectangle, labelText], {
+    left: x0,
+    top: y0,
+    opacity: 1,
+    hasControls: false,
+    hasBorders: true,
+    transparentCorners: false,
+    selectable: true,
+    id: "label",
+    connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[]))   
+  })
+  canvas.add(groupLabel);
+
 
 }
+
+function deleteElement() {
+
+  var selected = canvas.getActiveObjects();
+
+  var selGroup = new fabric.ActiveSelection(selected, {
+    canvas: canvas
+  });
+
+
+  if (selGroup != null) {
+
+    selGroup.forEachObject(function (obj) {
+      canvas.remove(obj);
+    });
+
+
+  } else {
+    $.fancybox.open('<div class="message"><h2>Mensaje</h2><p>Selecciona un Elemento Primero</p></div>');
+    return false;
+  }
+  canvas.discardActiveObject().renderAll();
+}
+/*canvas.remove(object);
+insertOp = false;
+activeTool(selector);*/
+
+
 
 
 
@@ -2004,6 +2193,7 @@ function insertElementClick(x, y, image, tag,) {
 
       left: x,
       top: y,
+      opacity: 1,
       hasControls: false,
       hasBorders: false,
       transparentCorners: false,
@@ -2151,6 +2341,7 @@ function insertElementClick(x, y, image, tag,) {
         pt.set({
           scaleX: 0.035,
           scaleY: 0.035,
+          opacity: 1,
           padding: 0,
           id: tag,
           connectionLine: [], // Contenedor de las lineas de conexión.
@@ -2185,8 +2376,6 @@ function insertElementClick(x, y, image, tag,) {
 
         // Asignación de lineas por cada puerto en el grupo
         groupSwitch.li = li;
-        console.log(groupSwitch.li = li);
-
         canvas.add(groupSwitch.connection[i]);
         canvas.add(groupSwitchPort);
       }
@@ -2372,34 +2561,175 @@ function frameFancyBox(id) {
 }
 
 function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
+
   var divFancy = "";
 
   if (id == "host") {
+
+    $("#labelFancyHost").text("Host: " + tag);
+    console.log("a: " + $("#labelFancyHost").val());
     divFancy = ".divFancyHost";
+
   } else if (id == "switch_openflow") {
+    $("#labelFancySwitch").text("Switch: " + tag);
     divFancy = ".divFancySwitch";
+
   } else if (id == "controller") {
+    $("#labelFancyController").text("Controlador: " + tag);
     divFancy = ".divFancyController";
 
   } else if (id == "link") {
     divFancy = ".divFancyLink";
+
   } else if (id == "port") {
     divFancy = ".divFancyPort";
+
+  } else if (id == "label") {
+    divFancy = ".divFancyLabel";
   }
 
-  //$("#labelFancySwitch").text("Switch: " + tag);
+
   $.fancybox.open($(divFancy), {
     touch: false,
-    modal: false,
+    modal: true,
     infobar: false,
     clickSlide: false,
     clickOutside: false,
   });
 
 
-  insertElementClick(x0, y0, img, tag);
+
 
 }
+
+/*------------------------------------------------------------------------------------------------------*/
+/* Parametrización de los elementos de la paleta de herramientas */
+/*------------------------------------------------------------------------------------------------------*/
+var insert = false;
+
+
+/* Crear Parametros Elementos  Switch */
+$('#GuardarButtonFancySwitch').on('click', function () {
+  var type = $('#optionTypeFancySwitch option:selected').text();
+  var stp = $('#STPFancySwitch:checkbox:checked').val();
+  var stpPriority = $('#inputFancySTPPriority').val();
+  var ipSw = $('#inputFancyIPSwitch').val();
+  var dpctlPort = $('#inputFancyDPCTLPort').val();
+  var protocol = $('#optionProtocolFancySwitch option:selected').text();
+  var dataPath = $('#optionDataPathFancySwitch option:selected').text();
+  var dataPathIP = $('#inputFancyDataPathIDSwitch').val();
+  var dataPathArgs = $('#inputFancyOfDataPathArgsSwitch').val();
+  var model = $('#optionFailModeFancySwitch option:selected').text();
+  var inBand = $('#InBandFancySwitch:checkbox:checked').val();
+  var inNameSpace = $('#InNameSpaceFancySwitch:checkbox:checked').val();
+  var batch = $('#BatchFancySwitch:checkbox:checked').val();
+  var verbose = $('#VerboseFancySwitch:checkbox:checked').val();
+  insert = true;
+  insertElementClick(x0, y0, img, tag);
+  tagSwitchOF.push(tag);
+  parent.jQuery.fancybox.close();
+});
+
+/* Cerrar Fancy Parametros Elementos  Switch */
+$('#CancelarButtonFancySwitch').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+
+/* Crear Parametros Elementos  Port*/
+$('#GuardarButtonFancyPort').on('click', function () {
+  var iPPort = $('#inputFancyIPPort').val();
+  parent.jQuery.fancybox.close();
+});
+
+/* Cerrar Fancy Parametros Elementos  Port */
+$('#CancelarButtonFancyPort').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+
+/* Crear Parametros Elementos  Link */
+$('#GuardarButtonFancyLink').on('click', function () {
+  var bW = $('#inputFancyBandWidthLink').val();
+  var delay = $('#inputFancyDelayLink').val();
+  var jitter = $('#inputFancyJitterLink').val();
+  var queue = $('#inputFancyMaxQueueLink').val();
+  var loss = $('#inputFancyLossLink').val();
+  parent.jQuery.fancybox.close();
+
+});
+
+/* Cerrar Fancy Parametros Elementos  Link */
+$('#CancelarButtonFancyLink').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+/* Crear Parametros Elementos  Label */
+$('#GuardarButtonFancyLabel').on('click', function () {
+  var label = $('#inputFancyLabel').val();
+  parent.jQuery.fancybox.close();
+});
+
+
+/* Cerrar Fancy Parametros Elementos  Label */
+$('#CancelarButtonFancyLabel').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+
+/* Crear Parametros Elementos  Host*/
+$('#GuardarButtonFancyHost').on('click', function () {
+  var iPHost = $('#inputFancyIPHost').val();
+  var sheduler = $('#optionShedulerFancyHost option:selected').text();
+  var cpuCores = $('#inputFancyCPUCoresHost').val();
+  insertElementClick(x0, y0, img, tag);
+  tagHost.push(tag);
+  parent.jQuery.fancybox.close();
+
+});
+
+/* Cerrar Fancy Parametros Elementos  Host */
+$('#CancelarButtonFancyHost').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+/* Crear Parametros Elementos  Controller */
+$('#GuardarButtonFancyController').on('click', function () {
+  var type = $('#optionTypeFancyController option:selected').text();
+  var iPController = $('#inputFancyIpController').val();
+  var protocol = $('#optionProtocolFancyController option:selected').text();
+  insertElementClick(x0, y0, img, tag);
+  tagController.push(tag);
+
+  canvas.forEachObject(function (obj) {
+
+    if (obj.id == tag) {
+      if (type != "Por defecto") {
+        obj.type = type;
+      }
+
+      if (iPController != null) {
+        obj.iPController = iPController;
+      }
+
+      if (protocol != "Ninguno") {
+        obj.protocol = protocol;
+      }
+      
+
+    }
+  });
+  parent.jQuery.fancybox.close();
+});
+
+/* Cerrar Fancy Parametros Elementos  Controller */
+$('#CancelarButtonFancyController').on('click', function () {
+  parent.jQuery.fancybox.close();
+});
+
+/*------------------------------------------------------------------------------------------------------*/
+/* Parametrización de los tipos de Red */
+/*------------------------------------------------------------------------------------------------------*/
 
 
 /* Envio parametros (FancyBox) para crear Topologia */
@@ -2414,6 +2744,7 @@ $('#createButtonTemplate').on('click', function () {
 
 
 });
+
 /* Opciones de enter en el Formulario (FancyBox) para parametros Topologia */
 $("#inputHostTemplate").keypress(function (e) {
   var code = (e.keyCode ? e.keyCode : e.which);
@@ -2445,6 +2776,7 @@ $('#createButtonTree').on('click', function () {
 
 
 });
+
 /* Opciones de enter en el Formulario (FancyBox) para parametros Topologia Tree */
 $("#inputDepthTemplate").keypress(function (e) {
   var code = (e.keyCode ? e.keyCode : e.which);

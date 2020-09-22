@@ -184,31 +184,31 @@
                         <form id="formularioFancyLink">
 
                                 <div id="containerBandWidthLink">
-                                        <label id="labelFancyBandWidthLink"> BandWidht: </label>
+                                        <label id="labelFancyBandWidthLink"> Ancho de Banda: </label>
                                         <input type="number" id="inputFancyBandWidthLink" step="1" min="0"
                                                 max="1000000000000000000"><span id="spanBandWidthLink">MBits/s</span>
                                 </div>
 
                                 <div id="containerDelayLink">
-                                        <label id="labelFancyBandWidthLink"> Delay: </label>
+                                        <label id="labelFancyDelayLink"> Retardo: </label>
                                         <input type="number" id="inputFancyDelayLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandWidthLink">mS</span>
+                                                max="1000000000000000000"><span id="spanBandWidthLink">ms</span>
                                 </div>
 
                                 <div id="containerJitterLink">
                                         <label id="labelFancyJitterLink"> Jitter: </label>
                                         <input type="number" id="inputFancyJitterLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandJitterLink">mS</span>
+                                                max="1000000000000000000"><span id="spanBandJitterLink">ms</span>
                                 </div>
 
                                 <div id="containerMaxQueueLink">
-                                        <label id="labelFancyMaxQueueLink"> Max Queue: </label>
+                                        <label id="labelFancyMaxQueueLink"> Cola Máxima: </label>
                                         <input type="number" id="inputFancyMaxQueueLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandMaxQueueLink">packets</span>
+                                                max="1000000000000000000"><span id="spanBandMaxQueueLink">paquetes</span>
                                 </div>
 
                                 <div id="containerLossLink">
-                                        <label id="labelFancyLossLink"> Loss: </label>
+                                        <label id="labelFancyLossLink"> Pérdidas: </label>
                                         <input type="number" id="inputFancyLossLink" step="1" min="0" max="100"><span
                                                 id="spanBandJitterLink">%</span>
                                 </div>
@@ -231,7 +231,7 @@
         <div id="containerInsertController">
 
                 <div id="containerParameterFancyController">
-                        <label id="labelFancyHost"> Controller </label>
+                        <label id="labelFancyController"> Controller </label>
                 </div>
 
                 <div id="divFancyFormController">
@@ -240,14 +240,13 @@
 
                                 <div id="containerTypeController">
 
-                                        <label id="labelTypeFancyController"> Type: </label>
+                                        <label id="labelTypeFancyController"> Tipo: </label>
                                         <select id="optionTypeFancyController">
-                                                <option value=" "> None </option>
+                                                <option value=" "> Por defecto </option>
                                                 <option value=" "> OpenFlow Reference Implementation </option>
                                                 <option value=" "> NOX </option>
                                                 <option value=" "> OVS Controller </option>
-                                                <option value=" "> Remote Controller </option>
-                                                <option value=" "> RYU </option>
+                                                <option value=" "> OpenDayLigth </option>
                                         </select>
                                         <i id="arrowOptionTypeController"></i>
 
@@ -255,13 +254,13 @@
 
                                 <div id="containerIPController">
                                         <label id="labelFancyIpController"> IP: </label>
-                                        <input type="text" id="inputFancyIpController">
+                                        <input type="text" id="inputFancyIpController" placeholder="0.0.0.0">
                                 </div>
 
                                 <div id="containerProtocolController">
-                                        <label id="labelFancyProtocolController"> Protocol: </label>
+                                        <label id="labelFancyProtocolController"> Protocolo: </label>
                                         <select id="optionProtocolFancyController">
-                                                <option value=" "> None </option>
+                                                <option value=" "> Ninguno </option>
                                                 <option value=" "> TCP </option>
                                                 <option value=" "> SSL </option>
                                         </select>
@@ -285,21 +284,21 @@
         <div id="containerInsertHost">
 
                 <div id="containerParameterFancyHost">
-                        <label id="labelFancyHost"> HOST </label>
+                        <label id="labelFancyHost">  </label>
                 </div>
 
                 <div id="containerFormHost">
                         <form id="formularioFancyHost">
 
                                 <div id="containerIPHost">
-                                        <label id="labelFancyIPHost"> Default Route: </label>
+                                        <label id="labelFancyIPHost">Ruta por Defecto:</label>
                                         <input type="text" id="inputFancyIPHost" name="fname">
                                 </div>
 
                                 <div id="containerShedulerHost">
                                         <label id="labelSchedulerFancyHost"> Scheduler: </label>
                                         <select id="optionShedulerFancyHost">
-                                                <option value=" "> None </option>
+                                                <option value=" "> Ninguno </option>
                                                 <option value=" "> CFS </option>
                                                 <option value=" "> RT </option>
                                         </select>
@@ -307,10 +306,10 @@
                                 </div>
 
                                 <div id="containerCPUCoresHost">
-                                        <label id="labelFancyCPUCoreHost"> CPU Cores: </label>
+                                        <label id="labelFancyCPUCoreHost"> Núcleos CPU: </label>
                                         <input type="text" id="inputFancyCPUCoresHost" name="fname">
                                 </div>
-
+                                <!-- 
                                 <div id="containerStartUp">
                                         <label id="labelFancyStartScriptsHost"> Startup Script: </label>
                                         <input type="text" id="inputFancyStartScriptsHost" name="fname">
@@ -319,7 +318,7 @@
                                 <div id="containerShutDown">
                                         <label id="labelFancyShutDownScriptsHost"> ShutDown Script: </label>
                                         <input type="text" id="inputFancyShutDownScriptsHost" name="fname">
-                                </div>
+                                </div>-->
                         </form>
                 </div>
 
@@ -333,130 +332,125 @@
 
 <div class="divFancySwitch" style="display: none;">
 
-        <div id="containerInsertFancySwitch">
+        <div id="containerParameterFancySwitch">
+                <label id="labelFancySwitch"> Switch </label><br><br>
+        </div>
 
-                <div id="containerParameterFancySwitch">
-                        <label id="labelFancySwitch"> Switch </label><br><br>
+        <div id="containerInsertSwitch">
+
+                <div id="containerFancyFormSwitch">
+
+                        <form id="formularioFancySwitch">
+
+                                <div id="containerTypeSwitch">
+                                        <label id="labelFancyTypeSwitch"> Type: </label>
+
+                                        <select id="optionTypeFancySwitch">
+                                                <option> Ninguno </option>
+                                                <option> IVS Switch </option>
+                                                <option> Linux Brigde </option>
+                                                <option> OVS Brigde </option>
+                                                <option> OVS Switch </option>
+                                                <option> User Switch </option>
+                                        </select>
+                                        <i id="arrowTypeFancySwitch"></i>
+                                </div>
+
+                                <div id="containerSTPFancySwitch">
+                                        <input id="STPFancySwitch" type="checkbox" name="activado" value="activado"> STP
+
+                                        <label id="labelFancySTPPriority"> STP Priority: </label>
+                                        <input type="number" id="inputFancySTPPriority" step="4096" min="0" max="61440">
+
+                                </div>
+
+                                <div id="containerIPSwitch">
+                                        <label id="labelFancyIPSwitch"> IP: </label>
+                                        <input type="text" id="inputFancyIPSwitch" name="fname"><br>
+                                </div>
+
+                                <div id="containerDPCTLPort">
+                                        <label id="labelFancyDPCTLPort"> DPCTL Port: </label>
+                                        <input type="number" id="inputFancyDPCTLPort" step="1" min="0" max="65535">
+                                </div>
+
+                                <div id="containerProtocolSwitch">
+                                        <label id="labelFancyProtocolSwitch"> Protocol: </label>
+                                        <select id="optionProtocolFancySwitch">
+                                                <option value=" "> OpenFlow 1.0 </option>
+                                                <option value=" "> OpenFlow 1.2 </option>
+                                                <option value=" "> OpenFlow 1.3 </option>
+                                                <option value=" "> OpenFlow 1.4 </option>
+                                                <option value=" "> OpenFlow 1.5 </option>
+                                        </select>
+                                        <i id="arrowProtocolFancySwitch"></i>
+                                </div>
+
+                                <div id="containerDataPath">
+                                        <label id="labelFancyDataPathSwitch"> DataPath: </label>
+                                        <select id="optionDataPathFancySwitch">
+                                                <option value=" "> Ninguno </option>
+                                                <option value=" "> Kernel </option>
+                                                <option value=" "> User </option>
+                                        </select>
+                                        <i id="arrowDataPathFancySwitch"></i>
+                                </div>
+
+                                <div id="containerDataPathID">
+                                        <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
+                                        <input type="text" id="inputFancyDataPathIDSwitch">
+                                </div>
+
+                                <div id="containerOfDataPathArguments">
+                                        <label id="labelFancyOfDataPathArgsSwitch"> DataPath Args: </label>
+                                        <input type="text" id="inputFancyOfDataPathArgsSwitch">
+                                </div>
+
+                                <div id="FailMode">
+                                        <label id="labelFancyFailModeSwitch"> Modelo de Fallas: </label>
+                                        <select id="optionFailModeFancySwitch">
+                                                <option value=" "> Ninguno </option>
+                                                <option value=" "> Secure </option>
+                                                <option value=" "> Standalone </option>
+                                        </select>
+                                        <i id="arrowFailMode"></i>
+                                </div>
+
+                                <div id="containerCheckBoxOne">
+                                        <input id="InBandFancySwitch" type="checkbox" value="activado">InBand
+                                        <input id="InNameSpaceFancySwitch" type="checkbox" value="activado">In NameSpace
+                                </div>
+
+                                <div id="containerCheckBoxTwo">
+                                        <input id="BatchFancySwitch" type="checkbox" value="activado">Batch
+                                        <input id="VerboseFancySwitch" type="checkbox" value="activado">Verbose
+                                </div>
+                                <!--
+                                <div id="containerAddOption">
+                                        <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Opciones adicionales del Switch:
+                                        </label>
+                                        <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch">
+                                </div>
+
+                                
+                                <div id="containerStartUp">
+                                        <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
+                                        <input type="text" id="inputFancyStartScriptsSwitch">
+                                </div>
+
+                                <div id="containerShutDown">
+                                        <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
+                                        <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname">
+                                </div>
+                                -->
+                        </form>
                 </div>
 
-                <div id="containerInsertSwitch">
+        </div>
 
-                        <div id="containerFancyFormSwitch">
-
-                                <form id="formularioFancySwitch">
-
-                                        <div id="containerTypeSwitch">
-                                                <label id="labelFancyTypeSwitch"> Type: </label>
-
-                                                <select id="optionTypeFancySwitch">
-                                                        <option> None </option>
-                                                        <option> IVS Switch </option>
-                                                        <option> Linux Brigde </option>
-                                                        <option> OVS Brigde </option>
-                                                        <option> OVS Switch </option>
-                                                        <option> User Switch </option>
-                                                </select>
-                                                <i id="arrowTypeFancySwitch"></i>
-                                        </div>
-
-                                        <div id="containerSTPFancySwitch">
-                                                <input id="STPFancySwitch" type="checkbox" value=""> STP
-
-                                                <label id="labelFancySTPPriority"> STP Priority: </label>
-                                                <input type="number" id="inputFancySTPPriority" step="4096" min="0"
-                                                        max="61440">
-
-                                        </div>
-
-                                        <div id="containerIPSwitch">
-                                                <label id="labelFancyIPSwitch"> IP: </label>
-                                                <input type="text" id="inputFancyIPSwitch" name="fname"><br>
-                                        </div>
-
-                                        <div id="containerDPCTLPort">
-                                                <label id="labelFancyDPCTLPort"> DPCTL Port: </label>
-                                                <input type="number" id="inputFancyDPCTLPort" step="1" min="0"
-                                                        max="65535">
-                                        </div>
-
-                                        <div id="containerProtocolSwitch">
-                                                <label id="labelFancyProtocolSwitch"> Protocol: </label>
-                                                <select id="optionProtocolFancySwitch">
-                                                        <option value=" "> OpenFlow 1.0 </option>
-                                                        <option value=" "> OpenFlow 1.2 </option>
-                                                        <option value=" "> OpenFlow 1.3 </option>
-                                                        <option value=" "> OpenFlow 1.4 </option>
-                                                        <option value=" "> OpenFlow 1.5 </option>
-                                                </select>
-                                                <i id="arrowProtocolFancySwitch"></i>
-                                        </div>
-
-                                        <div id="containerDataPath">
-                                                <label id="labelFancyDataPathSwitch"> DataPath: </label>
-                                                <select id="optionDataPathFancySwitch">
-                                                        <option value=" "> None </option>
-                                                        <option value=" "> Kernel </option>
-                                                        <option value=" "> User </option>
-                                                </select>
-                                                <i id="arrowDataPathFancySwitch"></i>
-                                        </div>
-
-                                        <div id="containerDataPathID">
-                                                <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
-                                                <input type="text" id="inputFancyDataPathIDSwitch">
-                                        </div>
-
-                                        <div id="containerOfDataPathArguments">
-                                                <label id="labelFancyOfDataPathArgsSwitch"> DataPath Args: </label>
-                                                <input type="text" id="inputFancyOfDataPathArgsSwitch">
-                                        </div>
-
-                                        <div id="FailMode">
-                                                <label id="labelFancyFailModeSwitch"> DataPath: </label>
-                                                <select id="optionFailModeFancySwitch">
-                                                        <option value=" "> None </option>
-                                                        <option value=" "> Secure </option>
-                                                        <option value=" "> Standalone </option>
-                                                </select>
-                                                <i id="arrowFailMode"></i>
-                                        </div>
-
-                                        <div id="containerCheckBoxOne">
-                                                <input id="InBandFancySwitch" type="checkbox" value="">InBand
-                                                <input id="InNameSpaceFancySwitch" type="checkbox" value="">In NameSpace
-                                        </div>
-
-                                        <div id="containerCheckBoxTwo">
-                                                <input id="BatchFancySwitch" type="checkbox" value="">Batch
-                                                <input id="VerboseFancySwitch" type="checkbox" value="">Verbose
-                                        </div>
-
-                                        <div id="containerAddOption">
-                                                <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Additional
-                                                        Switch
-                                                        Options:
-                                                </label>
-                                                <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch">
-                                        </div>
-
-                                        <div id="containerStartUp">
-                                                <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
-                                                <input type="text" id="inputFancyStartScriptsSwitch">
-                                        </div>
-
-                                        <div id="containerShutDown">
-                                                <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
-                                                <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname">
-                                        </div>
-                                </form>
-                        </div>
-
-                </div>
-
-                <div id="containerFancyButtonFormSwitch">
-                        <input type="button" id="CancelarButtonFancySwitch" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancySwitch" value="Guardar">
-                </div>
+        <div id="containerFancyButtonFormSwitch">
+                <input type="button" id="CancelarButtonFancySwitch" value="Cancelar">
+                <input type="button" id="GuardarButtonFancySwitch" value="Guardar">
         </div>
 </div>
 
@@ -465,7 +459,7 @@
         <div id="containerInsertPort">
 
                 <div id="containerParameterFancyPort">
-                        <label id="labelFancyHost"> PORT </label>
+                        <label id="labelFancyHost"> PUERTO </label>
                 </div>
 
                 <div id="containerFormPort">
@@ -473,11 +467,7 @@
 
                                 <div id="containerIPPort">
                                         <label id="labelFancyIPPort">IPs:</label>
-                                        <textarea id="inputFancyIPPort" rows="5" cols="30">
-
-                                        </textarea>
-
-                                        <!--<input type="text" id="inputFancyIPPort" name="fname"> -->
+                                        <input type="text" id="inputFancyIPPort" name="fname">
                                 </div>
                         </form>
                 </div>
@@ -491,6 +481,31 @@
 </div>
 
 
+<div class="divFancyLabel" style="display: none;">
+
+        <div id="containerInsertLabel">
+
+                <div id="containerParameterFancyLabel">
+                        <label id="labelFancyLabel"> ETIQUETA </label>
+                </div>
+
+                <div id="containerFormLabel">
+                        <form id="formularioFancyLabel">
+
+                                <div id="containerLabel">
+                                        <label id="labelFancyLabel">Etiqueta: </label>
+                                        <input type="text" id="inputFancyLabel" name="fname">
+                                </div>
+                        </form>
+                </div>
+
+                <div id="containerFancyButtonFormLabel">
+                        <input type="button" id="CancelarButtonFancyLabel" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyLabel" value="Guardar">
+                </div>
+        </div>
+
+</div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
