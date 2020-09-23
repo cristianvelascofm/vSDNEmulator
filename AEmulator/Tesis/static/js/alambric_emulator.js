@@ -1,3 +1,44 @@
+var labelText = new fabric.IText("label", {
+  left: 5,
+  top: 5,
+  fontFamily: 'Helvetica',
+  fill: '#333',
+  lineHeight: 1.1,
+  fontSize: 18,
+});
+
+var boxWidth = labelText.getScaledWidth();
+var rectangle = new fabric.Rect({
+  left: 0,
+  top: 0,
+  width: boxWidth + 10,
+  height: 25,
+  fill: 'white',
+  strokeWidth: 2,
+  stroke: 'rgba(100,200,200,0.5)'
+});
+
+var groupLabelController = new fabric.Group([rectangle, labelText], {
+  left: 30,
+  top: 30,
+  opacity: 1,
+  hasControls: false,
+  hasBorders: true,
+  transparentCorners: false,
+  selectable: false,
+  visible: false,
+  id: "label",
+  connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[]))   
+});
+
+
+
+window.onload = function () {
+  canvas.add(groupLabelController);
+}
+
+
+
 // Lienzo canvas
 var canvas = this._canvas = new fabric.Canvas('canvas');
 canvas.backgroundColor = '#EDFAFA';
@@ -12,6 +53,8 @@ var tagController = []; // Contiene las Etiquetas(C1, C2, C3..) de los Controlad
 var link = []; //Contiene el Arreglo de Links de la Red
 var flag = true; //Control de Uso del Zoom
 var topologyType = "";
+
+
 
 //Variables para la ejecucion de las Topologías desde Templates
 
@@ -1803,6 +1846,107 @@ $(".mode").click(function () {
   canvas.isDrawingMode = false; //don't draw until "Freeline" is clicked
 });
 
+canvas.on("mouse:dblclick", function (options) {
+
+  switch (tool) {
+    case 'cursor':
+
+      var objActive = canvas.getActiveObject();
+      var divFancy = "";
+
+      action = "visor";
+
+      if (objActive != null) {
+
+        var objId = objActive.id.charAt(0);
+        tag = objActive.id;
+
+        $("#labelFancyController").text("Controlador: " + tag);
+        if (objId == "c") {
+
+          var type = objActive.type;
+          var iPController = objActive.iPController;
+          var protocol = objActive.protocol;
+
+          $("#optionTypeFancyController > option[value='" + type + "']").prop("selected", "selected");
+          $('#inputFancyIpController').val(iPController);
+          $("#optionProtocolFancyController > option[value='" + protocol + "']").prop("selected", 'selected');
+
+          divFancy = ".divFancyController";
+
+        } else if (objId == "h") {
+
+          var iPHost = objActive.iPHost;
+          var sheduler = objActive.sheduler;
+          var cpuCores = objActive.cpuCores;
+
+          $('#inputFancyIPHost').val(iPHost);
+          $("#optionShedulerFancyHost > option[value='" + sheduler + "']").prop("selected", "selected");
+          $('#inputFancyCPUCoresHost').val(cpuCores);
+
+          divFancy = ".divFancyHost";
+
+        }
+
+        $.fancybox.open($(divFancy), {
+          touch: false,
+          modal: true,
+          infobar: false,
+          clickSlide: false,
+          clickOutside: false,
+        });
+
+      }
+
+      break;
+  }
+});
+
+// Mouse Obj Hover
+canvas.observe('mouse:over', function (options) {
+  var pointer = canvas.getPointer(options.e);
+  x0 = pointer.x; //get initial starting point of x
+  y0 = pointer.y; //get initial starting point of y
+
+  switch (tool) {
+    case 'cursor':
+      if (options.target != null) {
+        console.log(options.target.type);
+
+        var objId = options.target.id.charAt(0);
+
+        if (objId == "c") {
+
+          var ipController = options.target.iPController;
+          groupLabelController.set({
+
+            left: x0,
+            top: y0,
+            visible: true,
+
+          });
+          canvas.renderAll();
+        }
+
+      } else {
+
+        console.log("aqui esta el grupo ");
+        groupLabelController.set({
+          visible: false,
+        });
+        canvas.renderAll();
+      }
+
+      break;
+  }
+});
+
+function labelOver(label) {
+
+
+  return groupLabel;
+
+}
 
 
 // Mouse Down Canvas Opciones
@@ -1815,10 +1959,18 @@ canvas.observe('mouse:down', function (options) {
     case 'cursor':
 
       var objActive = canvas.getActiveObject();
-      
+
       if (objActive != null) {
+        console.log("id: " + objActive.type);
+        console.log("id: " + objActive.stp);
+        console.log("id: " + objActive.iPPort);
+        console.log("id: " + objActive.bW);
+        console.log("id: " + objActive.label);
+        console.log("id: " + objActive.iPHost);
+
         canvas.forEachObject(function (obj) {
-          console.log("propiedades: "+obj.type);
+
+          // console.log("propiedades: "+obj.type);
           obj.set({
             opacity: 1,
           })
@@ -2115,7 +2267,8 @@ function createLabel(x0, y0) {
     selectable: true,
     id: "label",
     connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[]))   
-  })
+  });
+
   canvas.add(groupLabel);
 
 
@@ -2174,7 +2327,7 @@ function insertElementClick(x, y, image, tag,) {
     scaleX: 0.125,
     scaleY: 0.125,
     padding: 0,
-    id: tag,
+    //id: tag,
     elementConnection: [], // Contiene las conexiones pertenecientes al elmento
     connectionLine: [], // Contiene todos los enlaces (lineas (makeLine())) del elemento
   });
@@ -2563,7 +2716,7 @@ function frameFancyBox(id) {
 function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
 
   var divFancy = "";
-
+  action = "insert";
   if (id == "host") {
 
     $("#labelFancyHost").text("Host: " + tag);
@@ -2602,11 +2755,15 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
 
 }
 
+function resetVariables() {
+
+
+}
+
 /*------------------------------------------------------------------------------------------------------*/
 /* Parametrización de los elementos de la paleta de herramientas */
 /*------------------------------------------------------------------------------------------------------*/
 var insert = false;
-
 
 /* Crear Parametros Elementos  Switch */
 $('#GuardarButtonFancySwitch').on('click', function () {
@@ -2625,9 +2782,89 @@ $('#GuardarButtonFancySwitch').on('click', function () {
   var batch = $('#BatchFancySwitch:checkbox:checked').val();
   var verbose = $('#VerboseFancySwitch:checkbox:checked').val();
   insert = true;
+
+
   insertElementClick(x0, y0, img, tag);
   tagSwitchOF.push(tag);
+
+  canvas.forEachObject(function (obj) {
+
+
+    if (obj.id == tag) {
+
+      if (verbose != null) {
+        obj.verbose = verbose;
+      }
+
+      if (batch != null) {
+        obj.batch = batch;
+      }
+
+      if (inNameSpace != null) {
+        obj.inNameSpace = inNameSpace;
+      }
+
+      if (inBand != null) {
+        obj.inBand = inBand;
+      }
+
+      if (model != "Ninguno") {
+        obj.model = model;
+      }
+
+      if (dataPathArgs != null) {
+        obj.dataPathArgs = dataPathArgs;
+      }
+
+      if (dataPathIP != null) {
+        obj.dataPathIP = dataPathIP;
+      }
+
+      if (dataPath != "Ninguno") {
+        obj.dataPath = dataPath;
+      }
+
+      if (protocol != "OpenFlow 1.0") {
+        obj.protocol = protocol;
+      }
+
+      if (dpctlPort != null) {
+        obj.dpctlPort = dpctlPort;
+      }
+
+      if (ipSw != null) {
+        obj.ipSw = ipSw;
+      }
+
+      if (stpPriority != null) {
+        obj.stpPriority = stpPriority;
+      }
+
+      if (stp != null) {
+        obj.stp = stp;
+      }
+
+      if (type != "Ninguno") {
+        obj.type = type;
+      }
+
+    }
+  });
+
   parent.jQuery.fancybox.close();
+
+  // Restablecimiento por Defecto de los Select SW
+  var selectType = $('#optionTypeFancySwitch');
+  selectType.val(selectType.data('default'));
+
+  var selectProtocol = $('#optionProtocolFancySwitch');
+  selectProtocol.val(selectProtocol.data('default'));
+
+  var selectDataPath = $('#optionDataPathFancySwitch');
+  selectDataPath.val(selectDataPath.data('default'));
+
+  var selectFailMode = $('#optionFailModeFancySwitch');
+  selectFailMode.val(selectFailMode.data('default'));
 });
 
 /* Cerrar Fancy Parametros Elementos  Switch */
@@ -2639,6 +2876,17 @@ $('#CancelarButtonFancySwitch').on('click', function () {
 /* Crear Parametros Elementos  Port*/
 $('#GuardarButtonFancyPort').on('click', function () {
   var iPPort = $('#inputFancyIPPort').val();
+
+  canvas.forEachObject(function (obj) {
+
+    if (obj.id == tag) {
+
+      if (iPPort != null) {
+        obj.iPPort = iPPort;
+      }
+    }
+  });
+
   parent.jQuery.fancybox.close();
 });
 
@@ -2655,6 +2903,34 @@ $('#GuardarButtonFancyLink').on('click', function () {
   var jitter = $('#inputFancyJitterLink').val();
   var queue = $('#inputFancyMaxQueueLink').val();
   var loss = $('#inputFancyLossLink').val();
+
+  canvas.forEachObject(function (obj) {
+
+    if (obj.id == tag) {
+
+      if (loss != null) {
+        obj.loss = loss;
+      }
+
+      if (queue != null) {
+        obj.queue = queue;
+      }
+
+      if (jitter != null) {
+        obj.jitter = jitter;
+      }
+
+      if (delay != null) {
+        obj.delay = delay;
+      }
+
+      if (bW != null) {
+        obj.bW = bW;
+      }
+
+    }
+  });
+
   parent.jQuery.fancybox.close();
 
 });
@@ -2667,7 +2943,20 @@ $('#CancelarButtonFancyLink').on('click', function () {
 /* Crear Parametros Elementos  Label */
 $('#GuardarButtonFancyLabel').on('click', function () {
   var label = $('#inputFancyLabel').val();
+
+  canvas.forEachObject(function (obj) {
+
+    if (obj.id == tag) {
+
+      if (label != null) {
+        obj.label = label;
+      }
+
+    }
+  });
+
   parent.jQuery.fancybox.close();
+
 });
 
 
@@ -2679,12 +2968,62 @@ $('#CancelarButtonFancyLabel').on('click', function () {
 
 /* Crear Parametros Elementos  Host*/
 $('#GuardarButtonFancyHost').on('click', function () {
+
   var iPHost = $('#inputFancyIPHost').val();
   var sheduler = $('#optionShedulerFancyHost option:selected').text();
   var cpuCores = $('#inputFancyCPUCoresHost').val();
-  insertElementClick(x0, y0, img, tag);
-  tagHost.push(tag);
-  parent.jQuery.fancybox.close();
+
+  if (action != "visor") {
+    insertElementClick(x0, y0, img, tag);
+    tagHost.push(tag);
+
+    canvas.forEachObject(function (obj) {
+
+      if (obj.id == tag) {
+
+
+        obj.iPHost = iPHost;
+
+
+
+        obj.sheduler = sheduler;
+
+
+        obj.cpuCores = cpuCores;
+
+      }
+    });
+
+    parent.jQuery.fancybox.close();
+
+    // Restablecimiento por Defecto de los Select Host
+    var selectScheluder = $('#optionShedulerFancyHost');
+    selectScheluder.val(selectScheluder.data('default'));
+
+  } else {
+
+    canvas.forEachObject(function (obj) {
+
+      if (obj.id == tag) {
+
+
+        obj.iPHost = iPHost;
+        obj.sheduler = sheduler;
+        obj.cpuCores = cpuCores;
+
+      }
+
+      parent.jQuery.fancybox.close();
+
+      // Restablecimiento por Defecto de los Select Host
+      var selectScheluder = $('#optionShedulerFancyHost');
+      selectScheluder.val(selectScheluder.data('default'));
+
+    });
+
+  }
+
+
 
 });
 
@@ -2693,39 +3032,87 @@ $('#CancelarButtonFancyHost').on('click', function () {
   parent.jQuery.fancybox.close();
 });
 
+
 /* Crear Parametros Elementos  Controller */
 $('#GuardarButtonFancyController').on('click', function () {
   var type = $('#optionTypeFancyController option:selected').text();
   var iPController = $('#inputFancyIpController').val();
   var protocol = $('#optionProtocolFancyController option:selected').text();
-  insertElementClick(x0, y0, img, tag);
-  tagController.push(tag);
 
-  canvas.forEachObject(function (obj) {
+  if (action != "visor") {
+    insertElementClick(x0, y0, img, tag);
+    tagController.push(tag);
 
-    if (obj.id == tag) {
-      if (type != "Por defecto") {
+
+    canvas.forEachObject(function (obj) {
+
+      if (obj.id && obj.id === tag) {
+
         obj.type = type;
-      }
-
-      if (iPController != null) {
         obj.iPController = iPController;
-      }
-
-      if (protocol != "Ninguno") {
         obj.protocol = protocol;
-      }
-      
 
-    }
-  });
-  parent.jQuery.fancybox.close();
+      }
+
+    });
+
+    parent.jQuery.fancybox.close();
+
+    // Restablecimiento por Defecto los Select - Controller
+    var selectType = $('#optionTypeFancyController');
+    selectType.val(selectType.data('default'));
+
+    var selectProtocol = $('#optionProtocolFancyController');
+    selectProtocol.val(selectProtocol.data('default'));
+
+    $("#inputFancyIpController").val(null);
+
+  } else {
+
+    canvas.forEachObject(function (obj) {
+
+      if (obj.id && obj.id === tag) {
+
+        obj.type = type;
+        obj.iPController = iPController;
+        obj.protocol = protocol;
+
+      }
+
+    });
+
+    parent.jQuery.fancybox.close();
+
+    var selectType = $('#optionTypeFancyController');
+    selectType.val(selectType.data('default'));
+
+    var selectProtocol = $('#optionProtocolFancyController');
+    selectProtocol.val(selectProtocol.data('default'));
+
+    $("#inputFancyIpController").val(null);
+
+  }
+
 });
 
 /* Cerrar Fancy Parametros Elementos  Controller */
 $('#CancelarButtonFancyController').on('click', function () {
+
   parent.jQuery.fancybox.close();
+
+  var selectType = $('#optionTypeFancyController');
+  selectType.val(selectType.data('default'));
+
+  var selectProtocol = $('#optionProtocolFancyController');
+  selectProtocol.val(selectProtocol.data('default'));
+
+  $("#inputFancyIpController").val(null);
+
 });
+
+
+
+
 
 /*------------------------------------------------------------------------------------------------------*/
 /* Parametrización de los tipos de Red */

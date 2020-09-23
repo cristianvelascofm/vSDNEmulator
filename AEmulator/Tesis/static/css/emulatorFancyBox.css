@@ -4,7 +4,7 @@
 
 .divFancySwitch {
     width: 500px;
-    height: 610px;
+    height: 680px;
     
 }
 
@@ -416,7 +416,7 @@
 /* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormSwitch {
-    margin-top: 50px;
+    margin-top: 10px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
