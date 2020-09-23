@@ -1,14 +1,17 @@
-var labelText = new fabric.IText("label", {
+
+/* ********--------------*******************------------------***************------------*/
+// Etiqueta Hover para los elementos
+var labelTextController = new fabric.IText("label", {
   left: 5,
   top: 5,
   fontFamily: 'Helvetica',
   fill: '#333',
   lineHeight: 1.1,
-  fontSize: 18,
+  fontSize: 13,
 });
 
-var boxWidth = labelText.getScaledWidth();
-var rectangle = new fabric.Rect({
+var boxWidth = labelTextController.getScaledWidth();
+var rectangleController = new fabric.Rect({
   left: 0,
   top: 0,
   width: boxWidth + 10,
@@ -18,7 +21,7 @@ var rectangle = new fabric.Rect({
   stroke: 'rgba(100,200,200,0.5)'
 });
 
-var groupLabelController = new fabric.Group([rectangle, labelText], {
+var groupLabelController = new fabric.Group([rectangleController, labelTextController], {
   left: 30,
   top: 30,
   opacity: 1,
@@ -31,6 +34,7 @@ var groupLabelController = new fabric.Group([rectangle, labelText], {
   connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[]))   
 });
 
+groupLabelController.setShadow("10px 10px 5px rgba(94, 128, 191, 0.2)");
 
 
 window.onload = function () {
@@ -1909,44 +1913,126 @@ canvas.observe('mouse:over', function (options) {
   y0 = pointer.y; //get initial starting point of y
 
   switch (tool) {
+
     case 'cursor':
+
       if (options.target != null) {
         console.log(options.target.type);
 
         var objId = options.target.id.charAt(0);
 
+        var boxWidth = 0;
+        var boxHeight = 0;
+        var visibility = false;
         if (objId == "c") {
+          if (options.target.type == "Por defecto" && options.target.iPController != "") {
 
-          var ipController = options.target.iPController;
+            groupLabelController.item(1).set({
+              text: options.target.type + "\n" + options.target.iPController,
+            });
+            boxWidth = groupLabelController.item(1).getScaledWidth();
+            boxHeight = groupLabelController.item(1).getScaledHeight();
+            visibility = true;
+
+          } else if (options.target.type != "Por defecto" && options.target.iPController == "") {
+            var type = options.target.type;
+            if (type == "OpenFlow Reference Implementation") {
+              type = "OpenFlow R.I."
+            }
+            groupLabelController.item(1).set({
+              text: type,
+            });
+            boxWidth = groupLabelController.item(1).getScaledWidth();
+            boxHeight = groupLabelController.item(1).getScaledHeight();
+            visibility = true;
+          } else if (options.target.type != "Por defecto" && options.target.iPController != "") {
+            var type = options.target.type;
+            if (type == "OpenFlow Reference Implementation") {
+              type = "OpenFlow R.I."
+            }
+            groupLabelController.item(1).set({
+              text: type + "\n" + options.target.iPController,
+            });
+            boxWidth = groupLabelController.item(1).getScaledWidth();
+            boxHeight = groupLabelController.item(1).getScaledHeight();
+            visibility = true;
+          }
+          groupLabelController.item(0).set({
+            width: boxWidth + 10,
+            height: boxHeight + 10,
+          });
           groupLabelController.set({
 
             left: x0,
             top: y0,
-            visible: true,
+            visible: visibility,
 
           });
+          canvas.bringToFront(groupLabelController);
           canvas.renderAll();
+
+        } else if (objId == "h") {
+          if (options.target.iPHost != "") {
+            groupLabelController.item(1).set({
+              text: "Ruta: " +options.target.iPHost,
+            });
+            boxWidth = groupLabelController.item(1).getScaledWidth();
+            boxHeight = groupLabelController.item(1).getScaledHeight();
+            visibility = true;
+
+
+          groupLabelController.item(0).set({
+            width: boxWidth + 10,
+            height: boxHeight + 10,
+          });
+          groupLabelController.set({
+
+            left: x0,
+            top: y0,
+            visible: visibility,
+
+          });
+          canvas.bringToFront(groupLabelController);
+          canvas.renderAll();
+          }
+        } else if (objId == "s"){
+          if (options.target.type != "Ninguno") {
+            groupLabelController.item(1).set({
+              text: options.target.type,
+            });
+            boxWidth = groupLabelController.item(1).getScaledWidth();
+            boxHeight = groupLabelController.item(1).getScaledHeight();
+            visibility = true;
+
+
+          groupLabelController.item(0).set({
+            width: boxWidth + 10,
+            height: boxHeight + 10,
+          });
+          groupLabelController.set({
+
+            left: x0,
+            top: y0,
+            visible: visibility,
+
+          });
+          canvas.bringToFront(groupLabelController);
+          canvas.renderAll();
+          }
         }
 
-      } else {
+        }
 
-        console.log("aqui esta el grupo ");
-        groupLabelController.set({
-          visible: false,
-        });
-        canvas.renderAll();
+        break;
       }
+  });
 
-      break;
-  }
+canvas.on('mouse:out', function (options) {
+  groupLabelController.set({
+    visible: false,
+  })
+  canvas.renderAll();
 });
-
-function labelOver(label) {
-
-
-  return groupLabel;
-
-}
 
 
 // Mouse Down Canvas Opciones
@@ -2084,6 +2170,7 @@ canvas.observe('mouse:down', function (options) {
   }
 });
 
+//Objeto Move Opciones
 canvas.observe('object:moving', function (e) {
   var p = e.target;
   switch (tool) {
@@ -2171,6 +2258,8 @@ canvas.observe('object:moving', function (e) {
 
 
 });
+
+
 // Mouse Move Canvas Opciiones
 canvas.observe('mouse:move', function (options) {
   var objActive = canvas.getActiveObject();
@@ -2179,7 +2268,21 @@ canvas.observe('mouse:move', function (options) {
   var y2 = pointer.y; //get the current value of Y
   switch (tool) {
     case 'cursor':
+      if (options.target != null) {
 
+        groupLabelController.set({
+          left: x2,
+          top: y2,
+        });
+        canvas.renderAll();
+
+      } else {
+
+        groupLabelController.set({
+          visible: false,
+        });
+
+      }
 
       break;
 
@@ -2770,7 +2873,7 @@ $('#GuardarButtonFancySwitch').on('click', function () {
   var type = $('#optionTypeFancySwitch option:selected').text();
   var stp = $('#STPFancySwitch:checkbox:checked').val();
   var stpPriority = $('#inputFancySTPPriority').val();
-  var ipSw = $('#inputFancyIPSwitch').val();
+  var ipSwitch = $('#inputFancyIPSwitch').val();
   var dpctlPort = $('#inputFancyDPCTLPort').val();
   var protocol = $('#optionProtocolFancySwitch option:selected').text();
   var dataPath = $('#optionDataPathFancySwitch option:selected').text();
@@ -2792,61 +2895,48 @@ $('#GuardarButtonFancySwitch').on('click', function () {
 
     if (obj.id == tag) {
 
-      if (verbose != null) {
+      
         obj.verbose = verbose;
-      }
+      
 
-      if (batch != null) {
+      
         obj.batch = batch;
-      }
+      
 
-      if (inNameSpace != null) {
         obj.inNameSpace = inNameSpace;
-      }
 
-      if (inBand != null) {
         obj.inBand = inBand;
-      }
 
-      if (model != "Ninguno") {
         obj.model = model;
-      }
 
-      if (dataPathArgs != null) {
         obj.dataPathArgs = dataPathArgs;
-      }
 
-      if (dataPathIP != null) {
         obj.dataPathIP = dataPathIP;
-      }
-
-      if (dataPath != "Ninguno") {
         obj.dataPath = dataPath;
-      }
 
-      if (protocol != "OpenFlow 1.0") {
+      
         obj.protocol = protocol;
-      }
+      
 
-      if (dpctlPort != null) {
+      
         obj.dpctlPort = dpctlPort;
-      }
+      
 
-      if (ipSw != null) {
-        obj.ipSw = ipSw;
-      }
+      
+        obj.ipSwitch = ipSwitch;
+      
 
-      if (stpPriority != null) {
+
         obj.stpPriority = stpPriority;
-      }
 
-      if (stp != null) {
+
+      
         obj.stp = stp;
-      }
+      
 
-      if (type != "Ninguno") {
+      
         obj.type = type;
-      }
+      
 
     }
   });
