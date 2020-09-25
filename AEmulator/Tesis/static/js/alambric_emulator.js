@@ -39,6 +39,8 @@ groupLabelController.setShadow("10px 10px 5px rgba(94, 128, 191, 0.2)");
 
 window.onload = function () {
   canvas.add(groupLabelController);
+  canvas.discardActiveObject();
+  canvas.renderAll();
 }
 
 
@@ -1056,7 +1058,15 @@ function makeLink(coords, linkType) {
       stroke: '#9733FA',
       strokeWidth: 2,
       selectable: true,
-      evented: false,
+      hasBorders: false,
+      hasControls: false,
+      /*   lockMovementX: true,
+         lockMovementY: true,
+         lockScalingX: true,
+         lockScalingY: true,
+         lockUniScaling: true,
+         lockRotation: true,*/
+      // evented: false,
       id: "normal",
     });
   } else if (linkType == "portHost") {
@@ -1066,7 +1076,15 @@ function makeLink(coords, linkType) {
       stroke: '#E1B13C',
       strokeWidth: 2,
       selectable: true,
-      evented: false,
+      hasBorders: false,
+      hasControls: false,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockUniScaling: true,
+      lockRotation: true,
+      // evented: false,
       id: "portHost",
     });
   } else if (linkType == "link") {
@@ -1076,7 +1094,15 @@ function makeLink(coords, linkType) {
       stroke: '#2AFE00',
       strokeWidth: 2,
       selectable: true,
-      evented: false,
+      hasBorders: false,
+      hasControls: false,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockUniScaling: true,
+      lockRotation: true,
+      //evented: false,
       id: "link",
     });
 
@@ -1087,7 +1113,15 @@ function makeLink(coords, linkType) {
       stroke: '#57E3EC',
       strokeWidth: 2,
       selectable: true,
-      evented: false,
+      hasBorders: false,
+      hasControls: false,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockUniScaling: true,
+      lockRotation: true,
+      //evented: false,
       id: "portSwitch",
     });
 
@@ -1098,7 +1132,13 @@ function makeLink(coords, linkType) {
       stroke: 'blue',
       strokeWidth: 2,
       selectable: true,
-      evented: false,
+      /* lockMovementX: true,
+       lockMovementY: true,
+       lockScalingX: true,
+       lockScalingY: true,
+       lockUniScaling: true,
+       lockRotation: true,*/
+      // evented: false,
       id: "normal",
     });
   }
@@ -1350,20 +1390,20 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
                 'X-CSRFToken': csrftoken
               }
             });*/
-
-      $.ajax({
-        type: "post",//get- consutla post- se actualiza
-        url: "http://127.0.0.1:3000/alambric_emulator/",
-        // url: "../static/py/algo.py",
-        dataType: "json",
-        contentType: 'application/json; charset=utf-8',
-        data: json,
-        //headers: { 'X-CSRFToken': csrftoken },
-
-        success: function (data) {
-          alert(JSON.stringify(data));
-        }
-      });
+      /*
+            $.ajax({
+              type: "post",//get- consutla post- se actualiza
+              url: "http://127.0.0.1:3000/alambric_emulator/",
+              // url: "../static/py/algo.py",
+              dataType: "json",
+              contentType: 'application/json; charset=utf-8',
+              data: json,
+              //headers: { 'X-CSRFToken': csrftoken },
+      
+              success: function (data) {
+                alert(JSON.stringify(data));
+              }
+            });*/
 
     }
 
@@ -1841,6 +1881,8 @@ var action = null;
 var countAsociate = 0;
 var tag = "";
 var img = '';
+var objectActiveLinkInitial = null;
+var objectActiveLinkFinal = null;
 
 
 $(".mode").click(function () {
@@ -1917,7 +1959,7 @@ canvas.observe('mouse:over', function (options) {
     case 'cursor':
 
       if (options.target != null) {
-        console.log(options.target.type);
+
 
         var objId = options.target.id.charAt(0);
 
@@ -1955,7 +1997,12 @@ canvas.observe('mouse:over', function (options) {
             });
             boxWidth = groupLabelController.item(1).getScaledWidth();
             boxHeight = groupLabelController.item(1).getScaledHeight();
-            visibility = true;
+            if (options.target.iPController == undefined) {
+              visibility = false;
+            } else {
+              visibility = true;
+            }
+
           }
           groupLabelController.item(0).set({
             width: boxWidth + 10,
@@ -1974,64 +2021,102 @@ canvas.observe('mouse:over', function (options) {
         } else if (objId == "h") {
           if (options.target.iPHost != "") {
             groupLabelController.item(1).set({
-              text: "Ruta: " +options.target.iPHost,
+              text: "Ruta: " + options.target.iPHost,
             });
             boxWidth = groupLabelController.item(1).getScaledWidth();
             boxHeight = groupLabelController.item(1).getScaledHeight();
-            visibility = true;
 
+            if (options.target.iPHost == undefined) {
+              visibility = false;
+            } else {
+              visibility = true;
+            }
 
-          groupLabelController.item(0).set({
-            width: boxWidth + 10,
-            height: boxHeight + 10,
-          });
-          groupLabelController.set({
+            groupLabelController.item(0).set({
+              width: boxWidth + 10,
+              height: boxHeight + 10,
+            });
+            groupLabelController.set({
 
-            left: x0,
-            top: y0,
-            visible: visibility,
+              left: x0,
+              top: y0,
+              visible: visibility,
 
-          });
-          canvas.bringToFront(groupLabelController);
-          canvas.renderAll();
+            });
+            canvas.bringToFront(groupLabelController);
+            canvas.renderAll();
           }
-        } else if (objId == "s"){
+        } else if (objId == "s") {
           if (options.target.type != "Ninguno") {
             groupLabelController.item(1).set({
               text: options.target.type,
             });
             boxWidth = groupLabelController.item(1).getScaledWidth();
             boxHeight = groupLabelController.item(1).getScaledHeight();
-            visibility = true;
 
+            if (options.target.type != "Ninguno" && options.target.type != "IVS Switch"
+              && options.target.type != "Linux Brigde" && options.target.type != "OVS Brigde"
+              && options.target.type != "OVS Switch" && options.target.type != "User Switch") {
+              visibility = false;
+            } else {
+              visibility = true;
+            }
 
-          groupLabelController.item(0).set({
-            width: boxWidth + 10,
-            height: boxHeight + 10,
-          });
-          groupLabelController.set({
+            groupLabelController.item(0).set({
+              width: boxWidth + 10,
+              height: boxHeight + 10,
+            });
+            groupLabelController.set({
 
-            left: x0,
-            top: y0,
-            visible: visibility,
+              left: x0,
+              top: y0,
+              visible: visibility,
 
-          });
-          canvas.bringToFront(groupLabelController);
-          canvas.renderAll();
+            });
+            canvas.bringToFront(groupLabelController);
+            canvas.renderAll();
           }
-        }
+        }/* else if (objId == "l" || objId == "n") {
+          options.target.set({
+            strokeWidth: 4,
 
-        }
+          })
+        }*/
 
-        break;
       }
-  });
+
+      break;
+    /*case "link":
+      canvas.discardActiveObject();
+      canvas.renderAll(); 
+      objectActiveLink = options.target;
+      console.log("Move Active:" + objectActiveLink.id);
+
+      break;*/
+  }
+});
 
 canvas.on('mouse:out', function (options) {
-  groupLabelController.set({
-    visible: false,
-  })
-  canvas.renderAll();
+
+  switch (tool) {
+    case "cursor":
+      groupLabelController.set({
+        visible: false,
+      })
+      canvas.forEachObject(function (obj) {
+
+        /* if (obj.id == "link" || obj.id == "normal") {
+           obj.set({
+             //id= "tambor",
+             strokeWidth: 2,
+           });
+         }*/
+
+      })
+      canvas.renderAll();
+      break;
+  }
+
 });
 
 
@@ -2044,20 +2129,33 @@ canvas.observe('mouse:down', function (options) {
   switch (tool) {
     case 'cursor':
 
+
+      canvas.requestRenderAll();
       var objActive = canvas.getActiveObject();
 
       if (objActive != null) {
-        console.log("id: " + objActive.type);
-        console.log("id: " + objActive.stp);
-        console.log("id: " + objActive.iPPort);
-        console.log("id: " + objActive.bW);
-        console.log("id: " + objActive.label);
-        console.log("id: " + objActive.iPHost);
+        objActive && objActive.set({
+          lockMovementX: false,
+          lockMovementY: false,
+          lockScalingX: false,
+          lockScalingY: false,
+          lockUniScaling: false,
+          lockRotation: false,
+        });
+
+        if (objActive.id.charAt(0) == "l" || objActive.id.charAt(0) == "n") {
+          objActive && objActive.set({
+            strokeWidth: 4,
+
+          });
+
+          canvas.renderAll();
+        }
 
         canvas.forEachObject(function (obj) {
 
           // console.log("propiedades: "+obj.type);
-          obj.set({
+          obj && obj.set({
             opacity: 1,
           })
 
@@ -2067,9 +2165,17 @@ canvas.observe('mouse:down', function (options) {
         });
       } else {
         canvas.forEachObject(function (obj) {
+          if (obj.id.charAt(0) == "l" || obj.id.charAt(0) == "n") {
+            obj.set({
+              strokeWidth: 2,
+
+            });
+          }
           obj.set({
             opacity: 1,
-          })
+
+          });
+          canvas.renderAll();
 
         });
 
@@ -2082,7 +2188,7 @@ canvas.observe('mouse:down', function (options) {
       tag = "h" + (tagHost.length + 1);
       frameFancyBoxInsertElement('host', tag, x0, y0, img);
       tool = "cursor";
-      desactiveTool('host');
+      desactiveTool();
       activeTool(tool);
 
       break;
@@ -2092,7 +2198,7 @@ canvas.observe('mouse:down', function (options) {
       frameFancyBoxInsertElement('controller', tag, x0, y0, img);
 
       tool = "cursor";
-      desactiveTool('controller');
+      desactiveTool();
       activeTool(tool);
 
       break;
@@ -2105,7 +2211,6 @@ canvas.observe('mouse:down', function (options) {
       desactiveTool('switch_openflow');
       activeTool(tool);
       break;
-
     case 'port':
       img = '../static/img/port.png';
       tag = "eth";
@@ -2115,57 +2220,110 @@ canvas.observe('mouse:down', function (options) {
       activeTool(tool);
 
       break;
-
     case 'label':
       img = '../static/img/';
       tag = "Label1";
       frameFancyBoxInsertElement('label', tag, x0, y0, img);
       tool = "cursor";
-      desactiveTool('label');
+      desactiveTool();
       createLabel(x0, y0);
       activeTool(tool);
 
       break;
-
     case 'link':
-      img = '../static/img/';
-      tag = "Link1";
-      frameFancyBoxInsertElement('link', tag, x0, y0, img);
-      var asociate = [];
-      /*do {
-        var objActive = canvas.getActiveObject();
-        if (objActive != null) {
-          asociate.push(objActive);
-          countAsociate = countAsociate + 1;
+
+      var activo = canvas.getActiveObject();
+
+      if (activo != null) {
+
+        activo && activo.set({
+          lockMovementX: true,
+          lockMovementY: true,
+          lockScalingX: true,
+          lockScalingY: true,
+          lockUniScaling: true,
+          lockRotation: true,
+        });
+      }
+
+      if (activo != null && activo.id.charAt(0) == "e") {
+
+        activo.set({
+          opacity: 0.7,
+        });
 
 
+        if (objectActiveLinkInitial == null && activo.state != "connected" && objectActiveLinkFinal == null) {
+
+          objectActiveLinkInitial = activo;
+
+          if (objectActiveLinkInitial.elementContainer.charAt('s')) {
+            objectActiveLinkInitial.position = "initial";
+          }
+
+          selected = link;
+          canvas.add(link);
+
+        } else if (objectActiveLinkInitial != null && objectActiveLinkFinal == null && activo.state != "connected") {
+
+          objectActiveLinkFinal = activo;
+          if (objectActiveLinkFinal.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer != objectActiveLinkFinal.elementContainer) {
+
+            selected.set({
+              x2: objectActiveLinkFinal.connection[0].x2,
+              y2: objectActiveLinkFinal.connection[0].y2,
+            });
 
 
+            objectActiveLinkInitial.state = "connected";
+            objectActiveLinkFinal.state = "connected";
+            objectActiveLinkInitial.line = selected;
+            objectActiveLinkFinal.line = selected;
+            objectActiveLinkInitial.connection.push(selected);
+            objectActiveLinkFinal.connection.push(selected);
+            objectActiveLinkFinal.position = "terminal";
+            canvas.sendToBack(selected);
 
 
+          } else if (objectActiveLinkFinal.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer.charAt(0) == 'h') {
+
+
+            selected.set({
+              x2: objectActiveLinkFinal.connection[0].x2,
+              y2: objectActiveLinkFinal.connection[0].y2,
+            });
+            objectActiveLinkInitial.state = "connected";
+            objectActiveLinkFinal.state = "connected";
+            objectActiveLinkInitial.line = selected;
+            objectActiveLinkFinal.line = selected;
+            objectActiveLinkInitial.connection.push(selected);
+            objectActiveLinkFinal.connection.push(selected);
+            canvas.sendToBack(selected);
+
+          } else if (objectActiveLinkFinal.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer == objectActiveLinkFinal.elementContainer) {
+
+            canvas.remove(selected);
+          } else if (objectActiveLinkFinal.elementContainer.charAt(0) == 'h' && objectActiveLinkInitial.elementContainer.charAt(0) == 'h' && objectActiveLinkInitial.elementContainer.charAt(0) == 'h') {
+
+            canvas.remove(selected);
+          }
+
+          tool = "cursor";
+          desactiveTool();
+          activeTool(tool);
+          selected = null;
+          objectActiveLinkInitial = null;
+          objectActiveLinkFinal = null;
         }
 
-      } while (countAsociate <= 2);
 
-      var coordinates = [asociate[0].x2, asociate[0].y2, asociate[1].x2, asociate[1].y2]; //set initial coordinates of straight line to the mouse point
-      // if (objActive.id.charAt(0) == "e") {
-      var line = new fabric.Line(coordinates, options = {
-        strokeWidth: 3,
-        stroke: 'red',
-      });
-      selected = line;
-      canvas.add(line);
-      canvas.setActiveObject(line);
-      //  }
-
-
-
+      }
 
       //frameFancyBoxInsertElement('link', tag, x0, y0, img);
       //tool = "cursor";
       //desactiveTool('link');
       //activeTool(tool);
-      */
+
       break;
   }
 });
@@ -2188,6 +2346,7 @@ canvas.observe('object:moving', function (e) {
               'x2': p.left + 30,
               'y2': p.top + 35
             });
+            canvas.renderAll();
 
           } else {
 
@@ -2195,9 +2354,11 @@ canvas.observe('object:moving', function (e) {
               'x1': p.left + 30,
               'y1': p.top + 35
             });
+            canvas.renderAll();
 
           }
         }
+        canvas.renderAll();
 
       } else {
         for (var i = 0; i < p.connection.length; i++) {
@@ -2211,17 +2372,20 @@ canvas.observe('object:moving', function (e) {
                     'x2': p.left + 10,
                     'y2': p.top + 7
                   });
+                  canvas.renderAll();
                 } else if (p.position == "terminal") {
                   p.connection[i] && p.connection[i].set({
                     'x1': p.left + 10,
                     'y1': p.top + 7
                   });
+                  canvas.renderAll();
 
                 } else {
                   p.connection[i] && p.connection[i].set({
                     'x1': p.left + 10,
                     'y1': p.top + 7
                   });
+                  canvas.renderAll();
                 }
 
               } else {
@@ -2229,6 +2393,7 @@ canvas.observe('object:moving', function (e) {
                   'x2': p.left + 10,
                   'y2': p.top + 7
                 });
+                canvas.renderAll();
               }
 
             } else {
@@ -2237,21 +2402,19 @@ canvas.observe('object:moving', function (e) {
                 'x2': p.left + 10,
                 'y2': p.top + 7
               });
+              canvas.renderAll();
             }
           } else {
             p.connection[i] && p.connection[i].set({
               'x2': p.left + 10,
               'y2': p.top + 7
             });
+            canvas.renderAll();
           }
 
         }
       }
       break;
-    case 'link':
-      tool = null;
-
-
 
 
   }
@@ -2267,6 +2430,7 @@ canvas.observe('mouse:move', function (options) {
   var x2 = pointer.x; //get the current value of X
   var y2 = pointer.y; //get the current value of Y
   switch (tool) {
+
     case 'cursor':
       if (options.target != null) {
 
@@ -2285,40 +2449,59 @@ canvas.observe('mouse:move', function (options) {
       }
 
       break;
-
     case 'link':
-      if (selected != null) {
-        if (objActive != null) {
-          objActive.set({
-            lockMovementX: true,
-            lockMovementY: true,
-          });
 
-        }
+      if (selected != null) {
+
         selected.set({
           x2: x2, //set the line's x2 to the current X value of the mouse
           y2: y2,  //set the line's y2 to the current Y value of the mouse
           selectable: true,
           hasBorders: false,
           hasControls: false,
-        })
+        });
       }
-      canvas.setActiveObject(selected);
-
-
       canvas.renderAll();
       break;
 
   }
 });
 
-canvas.observe('mouse:up', function (options) {
+canvas.observe('mouse:up', function (e) {
   switch (tool) {
-    case 'link':
-      x0 = 0;
-      y0 = 0;
-      selected = null;
-      tool = 'cursor';
+    case 'cursor':
+
+      //var objFinal = e.target;
+      // console.log("Cursor: " + objFinal.id);
+      /*// x0 = 0;
+      // y0 = 0;
+       console.log("aqui");
+       canvas.requestRenderAll();
+       canvas.renderAll();
+       selected = null;
+       tool = 'cursor';*/
+      break;
+    /* case "link":
+ 
+       console.log("unpress");
+ 
+       console.log("id ACtive2: " + objectActiveLink.id);
+       //console.log("X2: " + selected.x2);
+       //var objFinal = e.target;
+       //console.log("XF: " + objFinal.id);
+       selected.set({
+         x2: objectActiveLink.left,
+         y2: objectActiveLink.top,
+       });
+       //x0 = 0;
+       //y0 = 0;
+ 
+       desactiveTool('link');
+       tool = 'cursor';
+       selected = null;
+       activeTool(tool);
+ 
+       break;*/
   }
 });
 
@@ -2521,6 +2704,7 @@ function insertElementClick(x, y, image, tag,) {
           hasBorders: false,
           transparentCorners: false,
           selectable: true,
+          elementContainer: tag,
           id: "eth" + i,
           connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -2621,6 +2805,7 @@ function insertElementClick(x, y, image, tag,) {
           hasBorders: false,
           transparentCorners: false,
           selectable: true,
+          elementContainer: tag,
           id: "eth" + i,
           connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -2646,9 +2831,9 @@ function insertElementClick(x, y, image, tag,) {
 
       left: x,
       top: y,
-      hasBorders: false,
-      hasControls: false,
-      transparentCorners: false,
+      //hasBorders: false,
+      //hasControls: false,
+      //transparentCorners: false,
       selectable: true,
       id: tag,
       connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
@@ -2700,10 +2885,16 @@ function activeTool(id) {
 
 }
 
-function desactiveTool(id) {
-  var activeTool = $("#" + id);
+function desactiveTool() {
+  $("#controller").css("backgroundColor", "#E1F3F1");;
+  $("#switch_openflow").css("backgroundColor", "#E1F3F1");;
+  $("#host").css("backgroundColor", "#E1F3F1");;
+  $("#port").css("backgroundColor", "#E1F3F1");;
+  $("#label").css("backgroundColor", "#E1F3F1");;
+  $("#link").css("backgroundColor", "#E1F3F1");;
 
-  activeTool.css("backgroundColor", "#E1F3F1");
+
+  
 }
 
 function lockImageControl(elmt, select) {
@@ -2895,48 +3086,48 @@ $('#GuardarButtonFancySwitch').on('click', function () {
 
     if (obj.id == tag) {
 
-      
-        obj.verbose = verbose;
-      
 
-      
-        obj.batch = batch;
-      
-
-        obj.inNameSpace = inNameSpace;
-
-        obj.inBand = inBand;
-
-        obj.model = model;
-
-        obj.dataPathArgs = dataPathArgs;
-
-        obj.dataPathIP = dataPathIP;
-        obj.dataPath = dataPath;
-
-      
-        obj.protocol = protocol;
-      
-
-      
-        obj.dpctlPort = dpctlPort;
-      
-
-      
-        obj.ipSwitch = ipSwitch;
-      
+      obj.verbose = verbose;
 
 
-        obj.stpPriority = stpPriority;
+
+      obj.batch = batch;
 
 
-      
-        obj.stp = stp;
-      
+      obj.inNameSpace = inNameSpace;
 
-      
-        obj.type = type;
-      
+      obj.inBand = inBand;
+
+      obj.model = model;
+
+      obj.dataPathArgs = dataPathArgs;
+
+      obj.dataPathIP = dataPathIP;
+      obj.dataPath = dataPath;
+
+
+      obj.protocol = protocol;
+
+
+
+      obj.dpctlPort = dpctlPort;
+
+
+
+      obj.ipSwitch = ipSwitch;
+
+
+
+      obj.stpPriority = stpPriority;
+
+
+
+      obj.stp = stp;
+
+
+
+      obj.type = type;
+
 
     }
   });
