@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',login, name = 'login'),
     path('home/',home, name = 'home'),
-    path('alambric_emulator/', alambric_emulator, name = 'alambric_emulator'),
+    path('alambric_emulator/', emulationView.as_view(), name='alambric_emulator')
 ]

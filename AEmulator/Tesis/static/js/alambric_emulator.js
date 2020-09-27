@@ -36,14 +36,11 @@ var groupLabelController = new fabric.Group([rectangleController, labelTextContr
 
 groupLabelController.setShadow("10px 10px 5px rgba(94, 128, 191, 0.2)");
 
-
 window.onload = function () {
   canvas.add(groupLabelController);
   canvas.discardActiveObject();
   canvas.renderAll();
 }
-
-
 
 // Lienzo canvas
 var canvas = this._canvas = new fabric.Canvas('canvas');
@@ -1295,8 +1292,6 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       linkMaker(topologyType);
 
-      // Agrega el Link del Controller
-      //canvas.add(makeLink([pSX + 33, pSY + 20, pCX + 35, pCY + 20], "cont"));
 
       // Insertar Elementos de Red
       for (var a = 0; a < h.length; a++) {
@@ -1310,7 +1305,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       //Inserta el Controller de la Red Single
       insertElement(pCX, pCY, '../static/img/controller.png', 'c' + (tagController.length + 1), numHost, topologyType);
 
-      // 
+      // Esta sección Crea Los Links y Las Asociaciones al Controlador de la Red Single
       var id0 = [];
       var id1 = "";
       var posX1 = [];
@@ -1369,46 +1364,23 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       console.log(netInfo);
       var json = JSON.stringify(netInfo[0]);
       console.log('esto es un json: ' + json);
-      const csrftoken = getCookie('csrftoken');
 
-      /*
-            const res = axios.post('http://127.0.0.1:3000/alambric_emulator/', json, {
-              headers: {
-                // Overwrite Axios's automatically set Content-Type
-                'Content-Type': 'application/json'
-              }
-            });
-      
-      
-      /*
-            axios({
-              method: 'post',
-              url: 'http://127.0.0.1:3000/alambric_emulator/',
-              data: json,
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
-              }
-            });*/
-      /*
-            $.ajax({
-              type: "post",//get- consutla post- se actualiza
-              url: "http://127.0.0.1:3000/alambric_emulator/",
-              // url: "../static/py/algo.py",
-              dataType: "json",
-              contentType: 'application/json; charset=utf-8',
-              data: json,
-              //headers: { 'X-CSRFToken': csrftoken },
-      
-              success: function (data) {
-                alert(JSON.stringify(data));
-              }
-            });*/
+      //Formato de Petición AJAX
+      $.ajax({
+        type: "post",//get- consutla post- se actualiza
+        url: "http://127.0.0.1:8000/alambric_emulator/",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        data: json,
+        success: function (data) {
+          alert(JSON.stringify(data));
+        }
+      });
 
     }
 
   }
-  // Creador Topología Linear - N Conmutador Conectado a N Host
+  // Creador Topología Linear - N Conmutador Conectado a N Host cada uno
   else if (topologyType == "linear") {
 
     if (numHost < 2) {
@@ -1470,7 +1442,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       //Inserta el Controller de la Topología Linear
       (insertElement(pCX1, pCY, '../static/img/controller.png', 'c' + +(tagController.length + 1), numHost, topologyType));
     }
-
+    // Esta sección Crea Los Links y Las Asociaciones al Controlador de la Red Linear
     var id0 = [];
     var id1 = [];
     var posX1 = [];
@@ -1870,7 +1842,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 }
 
 
-
+//Variables Controlar Eventos en el Canvas
 
 var insertOP = false;
 var imgUrl = "";
@@ -1884,36 +1856,36 @@ var img = '';
 var objectActiveLinkInitial = null;
 var objectActiveLinkFinal = null;
 
-
+//Identifica que Herramienta está seleccionada y la fija
 $(".mode").click(function () {
   tool = $(this).attr('id');
-  console.log(tool);
   activeTool(tool);
-  canvas.isDrawingMode = false; //don't draw until "Freeline" is clicked
 });
 
+
+//Deteccion Doble Click en el Canvas
 canvas.on("mouse:dblclick", function (options) {
 
   switch (tool) {
     case 'cursor':
 
+      //Se lanza el FancyBox Correspondiente del Objeto Activo 
+
       var objActive = canvas.getActiveObject();
       var divFancy = "";
-
       action = "visor";
 
       if (objActive != null) {
-
         var objId = objActive.id.charAt(0);
         tag = objActive.id;
 
         $("#labelFancyController").text("Controlador: " + tag);
         if (objId == "c") {
-
+          //Se Obtienen los Valores del Controlador 
           var type = objActive.type;
           var iPController = objActive.iPController;
           var protocol = objActive.protocol;
-
+          //Se Establecen los Valores del Controlador en el FancyBox
           $("#optionTypeFancyController > option[value='" + type + "']").prop("selected", "selected");
           $('#inputFancyIpController').val(iPController);
           $("#optionProtocolFancyController > option[value='" + protocol + "']").prop("selected", 'selected');
@@ -1921,11 +1893,11 @@ canvas.on("mouse:dblclick", function (options) {
           divFancy = ".divFancyController";
 
         } else if (objId == "h") {
-
+          //Se Obtienen los Valores del Host
           var iPHost = objActive.iPHost;
           var sheduler = objActive.sheduler;
           var cpuCores = objActive.cpuCores;
-
+          //Se Establecen los Valores del Host en el FancyBox
           $('#inputFancyIPHost').val(iPHost);
           $("#optionShedulerFancyHost > option[value='" + sheduler + "']").prop("selected", "selected");
           $('#inputFancyCPUCoresHost').val(cpuCores);
@@ -1933,7 +1905,7 @@ canvas.on("mouse:dblclick", function (options) {
           divFancy = ".divFancyHost";
 
         }
-
+        //Se lanza el Fancy Box del Elemento Activo
         $.fancybox.open($(divFancy), {
           touch: false,
           modal: true,
@@ -1948,25 +1920,26 @@ canvas.on("mouse:dblclick", function (options) {
   }
 });
 
-// Mouse Obj Hover
+//Deteccion Mouse Object Hover en el Lienzo Canvas
 canvas.observe('mouse:over', function (options) {
   var pointer = canvas.getPointer(options.e);
-  x0 = pointer.x; //get initial starting point of x
-  y0 = pointer.y; //get initial starting point of y
+  x0 = pointer.x; //Obtiene la Posición Inicial de x respecto al Mouse
+  y0 = pointer.y; //Obtiene la Posición Inicial de y respecto al Mouse
 
   switch (tool) {
 
     case 'cursor':
+      //Se Identifica el Elemento y Si tiene Características Asignadas las Muestra en un Texto Flotante
 
       if (options.target != null) {
 
-
         var objId = options.target.id.charAt(0);
-
         var boxWidth = 0;
         var boxHeight = 0;
         var visibility = false;
+
         if (objId == "c") {
+
           if (options.target.type == "Por defecto" && options.target.iPController != "") {
 
             groupLabelController.item(1).set({
@@ -2086,13 +2059,7 @@ canvas.observe('mouse:over', function (options) {
       }
 
       break;
-    /*case "link":
-      canvas.discardActiveObject();
-      canvas.renderAll(); 
-      objectActiveLink = options.target;
-      console.log("Move Active:" + objectActiveLink.id);
 
-      break;*/
   }
 });
 
@@ -2103,24 +2070,14 @@ canvas.on('mouse:out', function (options) {
       groupLabelController.set({
         visible: false,
       })
-      canvas.forEachObject(function (obj) {
 
-        /* if (obj.id == "link" || obj.id == "normal") {
-           obj.set({
-             //id= "tambor",
-             strokeWidth: 2,
-           });
-         }*/
-
-      })
-      canvas.renderAll();
       break;
   }
 
 });
 
 
-// Mouse Down Canvas Opciones
+// Mouse Down Canvas 
 canvas.observe('mouse:down', function (options) {
   var pointer = canvas.getPointer(options.e);
   x0 = pointer.x; //get initial starting point of x
@@ -2129,11 +2086,18 @@ canvas.observe('mouse:down', function (options) {
   switch (tool) {
     case 'cursor':
 
+      desactiveTool();
+      //Si Existe una Asociacion o Link sin Completar, la Elimina
+      if (selected != null) {
+        canvas.remove(selected);
+      }
 
       canvas.requestRenderAll();
+
       var objActive = canvas.getActiveObject();
 
       if (objActive != null) {
+        //Reestablece el Libre Movimiento al Elemento Activo
         objActive && objActive.set({
           lockMovementX: false,
           lockMovementY: false,
@@ -2142,23 +2106,17 @@ canvas.observe('mouse:down', function (options) {
           lockUniScaling: false,
           lockRotation: false,
         });
-
+        //Si el Elemento Activo es una Asiciación o Link aumenta su Grosor
         if (objActive.id.charAt(0) == "l" || objActive.id.charAt(0) == "n") {
           objActive && objActive.set({
             strokeWidth: 4,
-
           });
-
           canvas.renderAll();
         }
-
         canvas.forEachObject(function (obj) {
-
-          // console.log("propiedades: "+obj.type);
           obj && obj.set({
             opacity: 1,
-          })
-
+          });
         });
         objActive.set({
           opacity: 0.7,
@@ -2168,59 +2126,54 @@ canvas.observe('mouse:down', function (options) {
           if (obj.id.charAt(0) == "l" || obj.id.charAt(0) == "n") {
             obj.set({
               strokeWidth: 2,
-
             });
           }
           obj.set({
             opacity: 1,
-
           });
           canvas.renderAll();
-
         });
-
-
       }
       canvas.renderAll();
       break;
     case 'host':
+
       img = '../static/img/host.png';
       tag = "h" + (tagHost.length + 1);
       frameFancyBoxInsertElement('host', tag, x0, y0, img);
       tool = "cursor";
       desactiveTool();
       activeTool(tool);
-
       break;
     case 'controller':
+
       img = '../static/img/controller.png';
       tag = "c" + (tagController.length + 1);
       frameFancyBoxInsertElement('controller', tag, x0, y0, img);
-
       tool = "cursor";
       desactiveTool();
       activeTool(tool);
-
       break;
     case 'switch_openflow':
+
       img = '../static/img/openflow_switch.png';
       tag = "s" + (tagSwitchOF.length + 1);
       frameFancyBoxInsertElement('switch_openflow', tag, x0, y0, img);
-
       tool = "cursor";
       desactiveTool('switch_openflow');
       activeTool(tool);
       break;
     case 'port':
+
       img = '../static/img/port.png';
       tag = "eth";
       frameFancyBoxInsertElement('port', tag, x0, y0, img);
       tool = "cursor";
       desactiveTool('port');
       activeTool(tool);
-
       break;
     case 'label':
+
       img = '../static/img/';
       tag = "Label1";
       frameFancyBoxInsertElement('label', tag, x0, y0, img);
@@ -2256,6 +2209,7 @@ canvas.observe('mouse:down', function (options) {
         if (objectActiveLinkInitial == null && activo.state != "connected" && objectActiveLinkFinal == null) {
 
           objectActiveLinkInitial = activo;
+          var link = makeLink([objectActiveLinkInitial.connection[0].x2, objectActiveLinkInitial.connection[0].y2, objectActiveLinkInitial.connection[0].x2, objectActiveLinkInitial.connection[0].y2], "link");
 
           if (objectActiveLinkInitial.elementContainer.charAt('s')) {
             objectActiveLinkInitial.position = "initial";
@@ -2267,6 +2221,7 @@ canvas.observe('mouse:down', function (options) {
         } else if (objectActiveLinkInitial != null && objectActiveLinkFinal == null && activo.state != "connected") {
 
           objectActiveLinkFinal = activo;
+          //var link = makeLink([objectActiveLinkInitial.connection[0].x2,objectActiveLinkInitial.connection[0].y2, objectActiveLinkInitial.connection[0].x2,objectActiveLinkInitial.connection[0].y2 ], "link");
           if (objectActiveLinkFinal.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer != objectActiveLinkFinal.elementContainer) {
 
             selected.set({
@@ -2300,6 +2255,7 @@ canvas.observe('mouse:down', function (options) {
             objectActiveLinkFinal.connection.push(selected);
             canvas.sendToBack(selected);
 
+
           } else if (objectActiveLinkFinal.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer.charAt(0) == 's' && objectActiveLinkInitial.elementContainer == objectActiveLinkFinal.elementContainer) {
 
             canvas.remove(selected);
@@ -2319,16 +2275,11 @@ canvas.observe('mouse:down', function (options) {
 
       }
 
-      //frameFancyBoxInsertElement('link', tag, x0, y0, img);
-      //tool = "cursor";
-      //desactiveTool('link');
-      //activeTool(tool);
-
       break;
   }
 });
 
-//Objeto Move Opciones
+//Opciones Cuando El Objeto se Mueve y sus Componentes
 canvas.observe('object:moving', function (e) {
   var p = e.target;
   switch (tool) {
@@ -2471,37 +2422,7 @@ canvas.observe('mouse:up', function (e) {
   switch (tool) {
     case 'cursor':
 
-      //var objFinal = e.target;
-      // console.log("Cursor: " + objFinal.id);
-      /*// x0 = 0;
-      // y0 = 0;
-       console.log("aqui");
-       canvas.requestRenderAll();
-       canvas.renderAll();
-       selected = null;
-       tool = 'cursor';*/
       break;
-    /* case "link":
- 
-       console.log("unpress");
- 
-       console.log("id ACtive2: " + objectActiveLink.id);
-       //console.log("X2: " + selected.x2);
-       //var objFinal = e.target;
-       //console.log("XF: " + objFinal.id);
-       selected.set({
-         x2: objectActiveLink.left,
-         y2: objectActiveLink.top,
-       });
-       //x0 = 0;
-       //y0 = 0;
- 
-       desactiveTool('link');
-       tool = 'cursor';
-       selected = null;
-       activeTool(tool);
- 
-       break;*/
   }
 });
 
@@ -2515,8 +2436,6 @@ canvas.observe('selection:created', function (options) {
 
 });
 */
-
-
 
 
 //funcion Elimina el elmento seleccionado o el grupo  seleccionado
@@ -2582,12 +2501,6 @@ function deleteElement() {
   }
   canvas.discardActiveObject().renderAll();
 }
-/*canvas.remove(object);
-insertOp = false;
-activeTool(selector);*/
-
-
-
 
 
 function insertElementClick(x, y, image, tag,) {
@@ -2831,9 +2744,9 @@ function insertElementClick(x, y, image, tag,) {
 
       left: x,
       top: y,
-      //hasBorders: false,
-      //hasControls: false,
-      //transparentCorners: false,
+      hasBorders: false,
+      hasControls: false,
+      transparentCorners: false,
       selectable: true,
       id: tag,
       connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
@@ -2894,7 +2807,7 @@ function desactiveTool() {
   $("#link").css("backgroundColor", "#E1F3F1");;
 
 
-  
+
 }
 
 function lockImageControl(elmt, select) {
@@ -3035,7 +2948,6 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
     divFancy = ".divFancyLabel";
   }
 
-
   $.fancybox.open($(divFancy), {
     touch: false,
     modal: true,
@@ -3043,14 +2955,6 @@ function frameFancyBoxInsertElement(id, tag, x0, y0, img) {
     clickSlide: false,
     clickOutside: false,
   });
-
-
-
-
-}
-
-function resetVariables() {
-
 
 }
 
@@ -3086,49 +2990,20 @@ $('#GuardarButtonFancySwitch').on('click', function () {
 
     if (obj.id == tag) {
 
-
       obj.verbose = verbose;
-
-
-
       obj.batch = batch;
-
-
       obj.inNameSpace = inNameSpace;
-
       obj.inBand = inBand;
-
       obj.model = model;
-
       obj.dataPathArgs = dataPathArgs;
-
       obj.dataPathIP = dataPathIP;
       obj.dataPath = dataPath;
-
-
       obj.protocol = protocol;
-
-
-
       obj.dpctlPort = dpctlPort;
-
-
-
       obj.ipSwitch = ipSwitch;
-
-
-
       obj.stpPriority = stpPriority;
-
-
-
       obj.stp = stp;
-
-
-
       obj.type = type;
-
-
     }
   });
 
