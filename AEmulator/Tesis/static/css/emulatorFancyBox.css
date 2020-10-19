@@ -4,12 +4,11 @@
 
 .divFancySwitch {
     width: 500px;
-    height: 680px;
-    
+    height: 620px;    
 }
 
 #containerInsertSwitch {
-    height: calc(80vh - 100px);
+    height: calc(70vh - 100px);
     /*overflow: auto;*/
 }
 
@@ -416,10 +415,11 @@
 /* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormSwitch {
-    margin-top: 10px;
+    margin-top: 35px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
+    
 }
 
 #CancelarButtonFancySwitch {
@@ -456,56 +456,16 @@
     color: white;
 }
 
-/* Fancy Box Parametros Topologías */
-
-#parameter {
-    text-align: center;
-}
-
-#labelHost {
-    text-align: center;
-    margin-left: 85px;
-}
-
-#formulario {
-    font-family: 'Quicksand', sans-serif;
-}
-
-#inputHostTemplate {
-    background-image: url(../img/host.png);
-    background-repeat: no-repeat;
-    font-size: 15px;
-    background-size: 22px;
-    background-position: 17px 3px;
-    letter-spacing: 3px;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    border: #b8b9bb solid 2px;
-    padding-right: 8px;
-    text-align: right;
-    margin-left: 85px;
-}
-
-#inputHostTemplate:focus {
-    border: #88aefa solid 2px;
-    outline: none;
-}
-
-#createButtonTemplate {
-    border: #b8b9bb solid 2px;
-    outline: none;
-    height: 32px;
-    width: 45%;
-    border-radius: 15px;
-    margin-left: 85px;
-}
-
 /*-------------------------------------------------------------*/
 
 /* Fancy Box Insert Controller */
 
 /* Contenedor Parametros Controller */
+
+#containerInsertController {
+    height: 250px;
+    width: 350px;
+}
 
 #containerParameterFancyController {
     text-align: center;
@@ -516,17 +476,11 @@
     height: 35px;
     font-size: 25px;
     font-family: 'Quicksand', sans-serif;
-    
-}
-
-#containerInsertController {
-    height: 190px;
-    width: 300px;
 }
 
 #containerTypeController {
     margin-top: 10px;
-    padding-left: 3px;
+    padding-left: 5px;
 }
 
 #optionTypeFancyController {
@@ -544,7 +498,7 @@
     -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 98px;
+    margin-left: 108px;
 }
 
 /*#arrowOptionTypeController {
@@ -566,7 +520,42 @@
 
 #containerIPController {
     margin-top: 10px;
-    padding-left: 3px;
+    padding-left: 5px;
+}
+
+#inputFancyIpController {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 130px;
+}
+
+#containerPortController {
+    margin-top: 10px;
+    padding-left: 5px;
+}
+
+#inputFancyPuertoController {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 87px;
 }
 
 #containerProtocolController {
@@ -584,7 +573,7 @@
     border-right: none;
     text-align: right;
     outline: none;
-   /* appearance: none;
+    /* appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
@@ -609,30 +598,10 @@
     margin-top: 2px;
 }*/
 
-#containerIPController {
-    margin-top: 10px;
-    padding-left: 3px;
-}
-
-#inputFancyIpController {
-    height: 25px;
-    width: 50%;
-    letter-spacing: 2px;
-    border-bottom: #2AC176 solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-align: right;
-    outline: none;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 15px;
-    margin-left: 117px;
-}
-
 /* Contenedor de los Botones del Formulario */
 
 #containerButtonController {
-    margin-top: 30px;
+    margin-top: 40px;
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
@@ -861,7 +830,7 @@
     margin-left: 45px;
 }
 
-#spanBandMaxQueueLink{
+#spanBandMaxQueueLink {
     font-size: 13px;
 }
 
@@ -1071,7 +1040,7 @@
 }
 
 #inputFancyIPHost:hover {
-    border-bottom: #2a46c1 solid 2px;
+    border-bottom: #14ace7 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -1110,7 +1079,7 @@
 }
 
 #optionShedulerFancyHost:hover {
-    border-bottom: #2a46c1 solid 2px;
+    border-bottom: #14ace7 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -1142,6 +1111,44 @@
     border-left: #2a46c1 solid 2px;
 }*/
 
+/* Contenedor CPU Utilization Limit Host */
+
+#containerCPULimitHost {
+    margin-top: 3px;
+    padding-left: 3px;
+}
+
+#inputFancyCpuLimitHost {
+    height: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+    border-bottom: #2AC176 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 85px;
+}
+
+#inputFancyCpuLimitHost:focus {
+    border-bottom: #2a46c1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+#inputFancyCpuLimitHost:hover {
+    border-bottom: #14ace7 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+/* Contenedor CPU Cores Host */
+
 #containerCPUCoresHost {
     margin-top: 3px;
     padding-left: 3px;
@@ -1159,7 +1166,7 @@
     outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 76px;
+    margin-left: 75px;
 }
 
 #inputFancyCPUCoresHost:focus {
@@ -1168,8 +1175,9 @@
     border-left: none;
     border-right: none;
 }
+
 #inputFancyCPUCoresHost:hover {
-    border-bottom: #2a46c1 solid 2px;
+    border-bottom: #14ace7 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -1194,6 +1202,7 @@
     font-size: 15px;
     margin-left: 70px;
 }
+
 #inputFancyStartScriptsHost:focus {
     border-bottom: #2a46c1 solid 2px;
     border-top: none;
@@ -1229,12 +1238,10 @@
 }
 
 #inputFancyShutDownScriptsHost:focus {
-    
     border-bottom: #2a46c1 solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
-    
 }
 
 #inputFancyShutDownScriptsHost:hover {
@@ -1242,8 +1249,8 @@
     border-top: none;
     border-left: none;
     border-right: none;
- 
 }
+
 /* Contenedor de los Botones del Formulario */
 
 #containerFancyButtonFormHost {
@@ -1285,6 +1292,51 @@
     outline: none;
     background-color: #2AC176;
     color: white;
+}
+
+/* Fancy Box Parametros Topologías */
+
+#parameter {
+    text-align: center;
+}
+
+#labelHost {
+    text-align: center;
+    margin-left: 85px;
+}
+
+#formulario {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#inputHostTemplate {
+    background-image: url(../img/host.png);
+    background-repeat: no-repeat;
+    font-size: 15px;
+    background-size: 22px;
+    background-position: 17px 3px;
+    letter-spacing: 3px;
+    height: 32px;
+    width: 45%;
+    border-radius: 15px;
+    border: #b8b9bb solid 2px;
+    padding-right: 8px;
+    text-align: right;
+    margin-left: 85px;
+}
+
+#inputHostTemplate:focus {
+    border: #88aefa solid 2px;
+    outline: none;
+}
+
+#createButtonTemplate {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 32px;
+    width: 45%;
+    border-radius: 15px;
+    margin-left: 85px;
 }
 
 /* Fancy Box Parametros Topologías tree */
