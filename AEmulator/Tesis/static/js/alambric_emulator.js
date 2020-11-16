@@ -8,6 +8,7 @@ var labelTextController = new fabric.IText("label", {
   fill: '#333',
   lineHeight: 1.1,
   fontSize: 13,
+
 });
 
 var boxWidth = labelTextController.getScaledWidth();
@@ -30,7 +31,7 @@ var groupLabelController = new fabric.Group([rectangleController, labelTextContr
   transparentCorners: false,
   selectable: false,
   visible: false,
-  id: "label",
+  id: "float",
   connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[]))   
 });
 
@@ -58,6 +59,8 @@ var flag = true; //Control de Uso del Zoom
 var topologyType = "";
 
 
+var elements = [];//contiene todos los elementos de red y su configuración
+
 
 //Variables para la ejecucion de las Topologías desde Templates
 
@@ -81,7 +84,7 @@ canvas.on('mouse:wheel', function (opt) {
 
 })
 
-// Crea un Grupo con el Elemento y su Etiqueta Respectíva
+// Inserta una Topología con los elementos correspondientes
 function insertElement(x, y, image, tag, numHost, topology) {
   var img = new Image();
   img.src = image;
@@ -185,6 +188,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Hp',// HostPort
         id: "eth" + 0,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -209,7 +213,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-
+        type: null,
       });
 
       // Creación de lineas por cada enlace
@@ -277,6 +281,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
             transparentCorners: false,
             selectable: true,
             elementContainer: tag,
+            identificator: 'Sp',//SwitchPort
             id: "eth" + i,
             connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -308,6 +313,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+        type: null,
       });
 
       connection.type = "association";
@@ -411,6 +417,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Hp',
         id: "eth" + 0,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -438,7 +445,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-
+        type: null
       });
 
       var port = new Image();
@@ -489,6 +496,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 0,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -542,6 +550,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 1,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -599,6 +608,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 2,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -639,6 +649,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+        type: null
       });
 
       for (var i = 0; i < numHost; i++) {
@@ -757,6 +768,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Hp',
         id: "eth" + 0,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -784,7 +796,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
-
+        type: null
       });
 
       var port = new Image();
@@ -835,6 +847,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 0,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -888,6 +901,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 1,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -945,6 +959,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         transparentCorners: false,
         selectable: true,
         elementContainer: tag,
+        identificator: 'Sp',
         id: "eth" + 2,
         connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -985,6 +1000,7 @@ function insertElement(x, y, image, tag, numHost, topology) {
         selectable: true,
         id: tag,
         connection: [], // Contiene todos los enlaces del grupo (son los mismos enlaces del elemento (connectionLine[])) 
+        type: null
       });
 
       for (var i = 0; i < numHost; i++) {
@@ -1246,6 +1262,93 @@ function totalElementTree(depth, fanout) {
   return total;
 }
 
+//Car
+function loadInfoElements() {
+  canvas.forEachObject(function (obj) {
+    //Recopila la información de cada Host
+    if (obj.id.charAt(0) == 'h') {
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        ipHost: obj.ipHost,
+        shedule: obj.sheduler,
+        cpuLimit: obj.cpuLimit,
+        cpuCores: obj.cpuCores
+      };
+      elements.push(element);
+    } else if (obj.id.charAt(0) == 's') { //Recopila la información de cada Switch
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        verbose: obj.verbose,
+        batch: obj.batch,
+        inNameSpace: obj.inNameSpace,
+        inBand: obj.inBand,
+        modej: obj.model,
+        dataPathArgs: obj.dataPathArgs,
+        dataPathIP: obj.dataPathIP,
+        dataPath: obj.dataPath,
+        protocol: obj.protocol,
+        dpctlPort: obj.dpctlPort,
+        ipSwitch: obj.ipSwitch,
+        stpPriority: obj.stpPriority,
+        stp: obj.stp,
+        type: obj.type
+      };
+      elements.push(element);
+
+    } else if (obj.id.charAt(0) == 'c') { //Recopila la información de cada Controlador
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        type: obj.type,
+        iPController: obj.iPController,
+        portController: obj.portController,
+        protocol: obj.protocol
+
+      };
+      elements.push(element);
+
+    } else if (obj.id.charAt(0) == 'l') {//Recopila la información de cada Asociacion tipo Link
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        loss: obj.loss,
+        queue: obj.queue,
+        jitter: obj.jitter,
+        delay: obj.delay,
+        bw: obj.bw,
+        connection: obj.connectionLink,
+        intfName1: obj.intfName1,
+        intfName2: obj.intfName2
+
+      };
+      elements.push(element);
+
+    } else if (obj.id.charAt(1) == 'a') { //Para los Labels identifica la letra a de lAbel - Recopila la información de cada Label
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        label: obj.label,
+
+      }
+      elements.push(element);
+    } else if (obj.id.charAt(0) == 'e') {
+      var element = {
+        id: obj.id,
+        rX: obj.left,
+        rY: obj.top,
+        iPPort: obj.iPPort
+      }
+      elements.push(element);
+    }
+  });
+}
 
 
 //Creador de Topologías
@@ -1274,7 +1377,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
         posX[r] = (r + 1) * 100; // Separación entre Host
         image = 'img/host.png';
         var obj = {
-          value: tagHost[r + 1],
+          value: tagHost[tagHost.length + r + 1],
           rX: posX[r],
           rY: pY
         };
@@ -1316,9 +1419,10 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       var objSwitch = [];
       var objController = [];
 
-      for (var i = (tagHost.length) - numHost; i <= tagHost.length; i++) {
 
-        id0.push("h" + (i + 1));
+      for (var i = (tagHost.length) - numHost; i <= tagHost.length; i++) {// Toma los útlimos hosts agregados previamente
+
+        id0.push("h" + (i + 1));//Armamos el id del host necesitado
         canvas.forEachObject(function (obj) {
 
           if (obj.elementContainer && obj.elementContainer == id0[i - 1]) {
@@ -1326,6 +1430,8 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
             posX2.push(obj.connection[0].x2);
             posY2.push(obj.connection[0].y2);
             objHost.push(obj);
+
+
 
           }
 
@@ -1358,24 +1464,14 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
         objSwitch[s].link = link;
         objHost[s].link = link;
 
+        //Emparejamiento
+        link.connectionLink = objSwitch[s].elementContainer + "," + objHost[s].elementContainer;
+        link.intfName1 = objSwitch[s].elementContainer + "-" + objSwitch[s].id;
+        link.intfName2 = objHost[s].elementContainer + "-" + objHost[s].id;
+
+
       }
 
-      // Variables JSON
-      console.log(netInfo);
-      var json = JSON.stringify(netInfo[0]);
-      console.log('esto es un json: ' + json);
-
-      //Formato de Petición AJAX
-      $.ajax({
-        type: "post",//get- consutla post- se actualiza
-        url: "http://127.0.0.1:8000/alambric_emulator/",
-        dataType: "json",
-        contentType: 'application/json; charset=utf-8',
-        data: json,
-        success: function (data) {
-          alert(JSON.stringify(data));
-        }
-      });
 
     }
 
@@ -1497,6 +1593,12 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
       objSwitch[s].link = link;
       objHost[s].link = link;
 
+      //Emparejamiento
+      link.connectionLink = objSwitch[s].elementContainer + "," + objHost[s].elementContainer;
+      link.intfName1 = objSwitch[s].elementContainer + "-" + objSwitch[s].id;
+      link.intfName2 = objHost[s].elementContainer + "-" + objHost[s].id;
+
+
     }
     // **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- **
 
@@ -1562,6 +1664,12 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       objSwitch[s].link = link;
       objSwitchAux[s].link = link;
+
+      //Emparejamiento
+      link.connectionLink = objSwitch[s].elementContainer + "," + objSwitchAux[s].elementContainer;
+      link.intfName1 = objSwitch[s].elementContainer + "-" + objSwitch[s].id;
+      link.intfName2 = objSwitchAux[s].elementContainer + "-" + objSwitchAux[s].id;
+
 
     }
     // **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- **
@@ -1753,6 +1861,11 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
 
       objSwitch[s].link = link;
       objSwitchAux[s].link = link;
+      //Emparejamiento
+      link.connectionLink = objSwitch[s].elementContainer + "," + objSwitchAux[s].elementContainer;
+      link.intfName1 = objSwitch[s].elementContainer + "-" + objSwitch[s].id;
+      link.intfName2 = objSwitchAux[s].elementContainer + "-" + objSwitchAux[s].id;
+
 
     }
     // **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- ** **--** --** -- ** -- ** -- **
@@ -1771,6 +1884,7 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
     canvas.sendToBack(objPort0.line);
     canvas.sendToBack(objPort2.line);
     var l = makeLink([objPort0.line.get('x2'), objPort0.line.get('y2'), objPort2.line.get('x2'), objPort2.line.get('y2')], "link");
+
     objPort0.position = "terminal";
     objPort0.connection.push(l);
     objPort2.position = "initial";
@@ -1779,6 +1893,13 @@ function topologyMaker(numHost, topologyType, depth, fanout) {
     objPort2.state = "connected";
     objPort0.line = l;
     objPort2.line = l;
+
+
+    //Emparejamiento
+    l.connectionLink = objPort0.elementContainer + "," + objPort2.elementContainer;
+    l.intfName1 = objPort0.elementContainer + "-" + objPort0.id;
+    l.intfName2 = objPort2.elementContainer + "-" + objPort2.id;
+
 
     canvas.add(l);
     canvas.sendToBack(l);
@@ -2580,7 +2701,9 @@ function insertElementClick(x, y, image, tag,) {
     left: 22,
     fontFamily: 'arial',
     fill: '#15435d',
-    fontSize: 15
+    fontSize: 15,
+
+
   });
 
   if (tag.charAt(0) == 'h') {
@@ -2641,6 +2764,7 @@ function insertElementClick(x, y, image, tag,) {
           padding: 0,
           id: tag,
           connectionLine: [], // Contenedor de las lineas de conexión.
+
         });
         // Asignación de lineas por cada puerto  
         pt.connectionLine.push(elemento.connectionLine[i]);
@@ -2651,6 +2775,7 @@ function insertElementClick(x, y, image, tag,) {
           fontFamily: 'arial',
           fill: '#15435d',
           fontSize: 15
+
         });
 
         var groupHostPort = new fabric.Group([pt, label], {
@@ -2662,8 +2787,10 @@ function insertElementClick(x, y, image, tag,) {
           transparentCorners: false,
           selectable: true,
           elementContainer: tag,
+          identificator: 'Hp',
           id: "eth" + i,
           connection: [], // Contenedor de lineas de conexión del grupo.
+
 
         });
 
@@ -2763,6 +2890,7 @@ function insertElementClick(x, y, image, tag,) {
           transparentCorners: false,
           selectable: true,
           elementContainer: tag,
+          identificator: 'Sp',
           id: "eth" + i,
           connection: [], // Contenedor de lineas de conexión del grupo.
 
@@ -3148,8 +3276,6 @@ $('#GuardarButtonFancyPort').on('click', function () {
 
   if (action != "visor") {
 
-    // Bro el Port no Tiene la función Insert element, pero igual le hice el else para la edición.
-
     canvas.forEachObject(function (obj) {
 
       if (obj.id == tag) {
@@ -3462,7 +3588,29 @@ $('#CancelarButtonFancyController').on('click', function () {
 });
 
 
+$('.play').on('click', function () {
+  console.log("Play");
+  loadInfoElements();
+  console.log(JSON.stringify(elements));
 
+
+  // Variables JSON
+  var json = JSON.stringify(elements);
+  console.log('esto es un json: ' + json);
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+
+});
 
 /*------------------------------------------------------------------------------------------------------*/
 /* Parametrización de los tipos de Red */
