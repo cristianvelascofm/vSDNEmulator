@@ -60,6 +60,7 @@ var topologyType = "";
 
 
 var elements = [];//contiene todos los elementos de red y su configuración
+var elemento = {}
 
 
 //Variables para la ejecucion de las Topologías desde Templates
@@ -1267,6 +1268,7 @@ function loadInfoElements() {
   canvas.forEachObject(function (obj) {
     //Recopila la información de cada Host
     if (obj.id.charAt(0) == 'h') {
+      
       var element = {
         id: obj.id,
         rX: obj.left,
@@ -3591,12 +3593,15 @@ $('#CancelarButtonFancyController').on('click', function () {
 $('.play').on('click', function () {
   console.log("Play");
   loadInfoElements();
-  console.log(JSON.stringify(elements));
+  console.log("tipo: "+typeof(elements))
+  elemento['items']= elements
+  
+  console.log(JSON.stringify(elemento));
 
 
   // Variables JSON
-  var json = JSON.stringify(elements);
-  console.log('esto es un json: ' + json);
+  var json = JSON.stringify(elemento);
+  //console.log('esto es un json: ' + json);
 
   //Formato de Petición AJAX
   $.ajax({

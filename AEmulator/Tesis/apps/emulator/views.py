@@ -6,7 +6,6 @@ from django.utils.decorators import method_decorator
 from static.client.client import load_data
 
 
-
 class emulationView(View):
 
 
