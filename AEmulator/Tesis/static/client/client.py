@@ -3,8 +3,9 @@ import sys
 import json
 
 
-def load_data(d):
-    datatr = d
+def load_data(data_in):
+
+    datatr = data_in
     
     # Convierte en JSON el objeto python
     filejson = json.dumps(datatr)
@@ -41,8 +42,10 @@ def load_data(d):
             amount_received += len(data)
             print('received {!r}'.format(data))
 
+           
     finally:
         print('closing socket')
         sock.close()
+
 
 

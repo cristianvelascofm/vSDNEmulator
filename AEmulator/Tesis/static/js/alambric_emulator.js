@@ -1268,7 +1268,7 @@ function loadInfoElements() {
   canvas.forEachObject(function (obj) {
     //Recopila la información de cada Host
     if (obj.id.charAt(0) == 'h') {
-      
+
       var element = {
         id: obj.id,
         rX: obj.left,
@@ -3589,13 +3589,50 @@ $('#CancelarButtonFancyController').on('click', function () {
 
 });
 
+var ipClient= "192.168.1.101";
+
+$('.stop').on('click', function () {
+  console.log("Stop");
+  var actionDir = {}
+  actionDir['action']= 'stop'
+
+  // Variables JSON
+  var json = JSON.stringify(actionDir);
+  //console.log('esto es un json: ' + json);
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+
+});
+
+
 
 $('.play').on('click', function () {
+
   console.log("Play");
   loadInfoElements();
-  console.log("tipo: "+typeof(elements))
-  elemento['items']= elements
+  elemento['items'] = elements;
+  var divFancy = "fjdafksadjfklasdf"
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: true,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
   
+  elemento['IpClient'] = ipClient;
+
   console.log(JSON.stringify(elemento));
 
 
