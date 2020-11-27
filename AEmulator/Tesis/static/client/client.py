@@ -2,21 +2,18 @@ import socket
 import sys
 import json
 
+# Create a TCP/IP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 def load_data(data_in):
 
     datatr = data_in
-    
+
     # Convierte en JSON el objeto python
     filejson = json.dumps(datatr)
     print("Resutlado Final : ", filejson)
 
-    # Conexión con wireshark a través de Xming
-      
-
-
-    # Create a TCP/IP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #sock_w = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Connect the socket to the port where the server is listening
@@ -25,7 +22,7 @@ def load_data(data_in):
     print('connecting to {} port {}'.format(*server_address))
     #print('connecting to {} port {}'.format(*server_address_w))
     sock.connect(server_address)
-    #sock_w.connect(server_address_w)
+    # sock_w.connect(server_address_w)
 
     try:
         # Send data
@@ -42,10 +39,6 @@ def load_data(data_in):
             amount_received += len(data)
             print('received {!r}'.format(data))
 
-           
     finally:
         print('closing socket')
         sock.close()
-
-
-

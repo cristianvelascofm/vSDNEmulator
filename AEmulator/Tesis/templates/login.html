@@ -23,31 +23,55 @@
             <div class='box-login-tab'></div>
             <div class='box-login-title'>
                 <div class='i i-login'></div>
-                <h2>Login</h2>
+                <h2>Telco 2.0</h2>
             </div>
             <div class='box-login'>
                 <div class='fieldset-body' id='login_form'>
                     <button onclick="openLoginInfo();" class='b b-form i i-more' title='Más Información'></button>
-                    <p class='field'>
-                        <label for='user'>Correo</label>
-                        <input type='text' id='user' name='user' title='Usuario' />
-                        <span id='valida' class='i i-warning'></span>
-                    </p>
-                    <p class='field'>
-                        <label for='pass'>Contraseña</label>
-                        <input type='password' id='pass' name='pass' title='Contraseña' />
-                        <span id='valida' class='i i-close'></span>
-                    </p>
 
-                    <label class='checkbox'>
-                        <input type='checkbox' value='TRUE' title='Mantenerse Conectado' />
-                        <!--onclick="location.href='inicio.html';"-->
-                        Mantenerse Conectado
-                    </label>
-                    <!--El form lo uso para dar enlace al submit-->
-                    <form action="{% url 'home' %}">
-                        <input type='submit' id='do_login' value='INICIAR' title='Iniciar'/>
-                    </form>
+                    <div id="container-environment">
+
+                        <div id="div-alambric">
+
+                            <label id="env-description" for='alambric'>Entornos Alámbricos</label>
+                            <div id="container-mn">
+                                <button title="Mininet" href="{% url 'alambric_emulator' %} type="button" href="#" id="button-env"
+                                    class="btn-mn"><img src="{% static 'img/icon-mn.png' %}" id="panel_img"
+                                        alt="" width="70%" height="70%">
+                                </button>
+                            </div>
+                            <div id="container-mx">
+                                <button title="Maxinet" type="button" href="#" id="button-env"
+                                    class="btn-enviroment"><img src="{% static 'img/icon-mx.png' %}" id="panel_img"
+                                        alt="" width="70%" height="70%">
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="div-inalambric">
+                            <label id="env-description" for='pass'>Entornos Inalámbricos</label>
+                            <div id="container-mw">
+                                <button title="Mininet-Wifi" type="button" href="#" id="button-env"
+                                    class="btn-enviroment"><img src="{% static 'img/icon-mnw.png' %}" id="panel_img"
+                                        alt="" width="70%" height="70%">
+                                </button>
+                            </div>
+                            <div id="container-iot">
+                                <button title="Mininet-IOT" type="button" href="#" id="button-env"
+                                    class="btn-enviroment"><img src="{% static 'img/icon-iot.png' %}" id="panel_img"
+                                        alt="" width="70%" height="70%">
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="start">
+                        <!--El form lo uso para dar enlace al submit-->
+
+                        <input type='submit' id='do_login' value='INICIAR' title='Iniciar' />
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,12 +88,7 @@
     </div>
 
 
-    <div class='icon-credits'>Los íconos son tomados de <a href="http://www.freepik.com" title="Freepik">Freepik</a>, <a
-            href="http://www.flaticon.com/authors/budi-tanrim" title="Budi Tanrim">Budi Tanrim</a> & <a
-            href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from
-        <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a
-            href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0
-            BY</a>
+    <div class='icon-credits'> Telco 2.0 - <a title="Freepik">Entorno de Emulación vSDN - </a>FIET
     </div>
 
 

@@ -1409,3 +1409,54 @@
     border-radius: 15px;
     margin-left: 85px;
 }
+
+
+/* Fancy Box IP X Client */
+
+.divIP_xclient {
+    width: 400px;
+    height: 300px;    
+}
+
+#parameter_xclient {
+    text-align: center;
+}
+
+#labelIP {
+    text-align: center;
+    margin-left: 120px;
+}
+
+#formulario_IP_xclient {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#inputIP_xclient {
+    background-image: url(../img/host.png);
+    background-repeat: no-repeat;
+    font-size: 15px;
+    background-size: 22px;
+    background-position: 17px 3px;
+    letter-spacing: 3px;
+    height: 32px;
+    width: 65%;
+    border-radius: 15px;
+    border: #b8b9bb solid 2px;
+    padding-right: 8px;
+    text-align: right;
+    margin-left: 55px;
+}
+
+#inputIP_xclient:focus {
+    border: #88aefa solid 2px;
+    outline: none;
+}
+
+#saveIP_xclient {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 32px;
+    width: 45%;
+    border-radius: 15px;
+    margin-left: 95px;
+}

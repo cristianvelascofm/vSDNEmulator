@@ -3589,12 +3589,10 @@ $('#CancelarButtonFancyController').on('click', function () {
 
 });
 
-var ipClient= "192.168.1.101";
-
 $('.stop').on('click', function () {
   console.log("Stop");
   var actionDir = {}
-  actionDir['action']= 'stop'
+  actionDir['action'] = 'stop'
 
   // Variables JSON
   var json = JSON.stringify(actionDir);
@@ -3614,14 +3612,13 @@ $('.stop').on('click', function () {
 
 });
 
+var ipClient = "";
 
 
-$('.play').on('click', function () {
+function fancyIpClient() {
 
-  console.log("Play");
-  loadInfoElements();
-  elemento['items'] = elements;
-  var divFancy = "fjdafksadjfklasdf"
+  var divFancy = ".divIP_xclient";
+
   $.fancybox.open($(divFancy), {
     touch: false,
     modal: true,
@@ -3630,12 +3627,19 @@ $('.play').on('click', function () {
     clickOutside: false,
   });
 
-  
+}
+//Variables para Formulario IP X Client FancyBox
+$('#saveIP_xclient').on('click', function () {
+  ipClient = $('#inputIP_xclient').val();
   elemento['IpClient'] = ipClient;
 
+
+  parent.jQuery.fancybox.close();
+  // Restablecimiento por Defecto de los Input - Controller
+  $("#saveIP_xclient").val(null);
+
+  //Envío JSON al views 
   console.log(JSON.stringify(elemento));
-
-
   // Variables JSON
   var json = JSON.stringify(elemento);
   //console.log('esto es un json: ' + json);
@@ -3651,6 +3655,21 @@ $('.play').on('click', function () {
       alert(JSON.stringify(data));
     }
   });
+
+});
+
+$('.play').on('click', function () {
+
+  console.log("Play");
+  loadInfoElements();
+  elemento['items'] = elements;
+
+  fancyIpClient();
+
+
+
+
+
 
 });
 

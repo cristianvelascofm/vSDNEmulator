@@ -100,10 +100,10 @@
                                         width="18px" height="18px"></li>
                         <li title="Rehacer" id="option_tool_bar"> <img src="{% static 'img/redo.png' %}" alt=""
                                         width="18px" height="18px"></li>
-                        <li title="Modo: Emulación" id="option_tool_bar" class="play"> <img src="{% static 'img/play.png' %}" alt=""
-                                        width="18px" height="18px"></li>
-                        <li title="Stop" id="option_tool_bar" class ='stop'> <img src="{% static 'img/stop.png' %}" alt=""
-                                        width="18px" height="18px"></li>
+                        <li title="Modo: Emulación" id="option_tool_bar" class="play"> <img
+                                        src="{% static 'img/play.png' %}" alt="" width="18px" height="18px"></li>
+                        <li title="Stop" id="option_tool_bar" class='stop'> <img src="{% static 'img/stop.png' %}"
+                                        alt="" width="18px" height="18px"></li>
 
                 </ul>
         </div>
@@ -142,6 +142,18 @@
 </div>
 
 <div style="display: none;">
+        <div class="divIP_xclient">
+                <h2 id="parameter_xclient">Configuración IP</h2>
+
+                <form id="formulario_IP_xclient">
+                        <label id="labelIP"> IP Local: </label><br>
+                        <input type="text" id="inputIP_xclient" value=""><br><br>
+                        <input type="button" id="saveIP_xclient" value="Asignar IP">
+                </form>
+        </div>
+</div>
+
+<div style="display: none;">
         <div class="divFormTemplate">
                 <h2 id="parameter"> Parámetros de la Red</h2>
 
@@ -150,9 +162,7 @@
                         <input type="text" id="inputHostTemplate" name="fname"><br><br>
                         <input type="button" id="createButtonTemplate" value="Crear">
                 </form>
-
         </div>
-
 </div>
 
 <div style="display: none;">
@@ -244,7 +254,8 @@
                                         <label id="labelTypeFancyController"> Tipo: </label>
                                         <select id="optionTypeFancyController" data-default="Por defecto">
                                                 <option value="Por defecto" selected="selected">Por defecto</option>
-                                                <option value="OpenFlow Reference Implementation">OpenFlow Reference Implementation</option>
+                                                <option value="OpenFlow Reference Implementation">OpenFlow Reference
+                                                        Implementation</option>
                                                 <option value="NOX">NOX</option>
                                                 <option value="OVS Controller">OVS Controller</option>
                                                 <option value="OpenDayLigth">OpenDayLigth</option>
@@ -314,16 +325,15 @@
 
                                 <div id="containerCPULimitHost">
                                         <label id="labelFancyCpuLimitHost"> Limite CPU : </label>
-                                        <input type="number" id="inputFancyCpuLimitHost" step="0.01" min="0"
-                                                max="1">
+                                        <input type="number" id="inputFancyCpuLimitHost" step="0.01" min="0" max="1">
                                 </div>
-                                
+
                                 <div id="containerCPUCoresHost">
                                         <label id="labelFancyCPUCoreHost"> Núcleos CPU: </label>
                                         <input type="text" id="inputFancyCPUCoresHost" name="fname">
                                 </div>
 
-                                
+
 
                                 <!-- 
                                 <div id="containerStartUp">
@@ -373,7 +383,7 @@
                                 </div>
 
                                 <div id="containerSTPFancySwitch">
-                                        <input id="STPFancySwitch" type="checkbox" name="activado" value="activado" > STP
+                                        <input id="STPFancySwitch" type="checkbox" name="activado" value="activado"> STP
 
                                         <label id="labelFancySTPPriority"> STP Priority: </label>
                                         <input type="number" id="inputFancySTPPriority" step="4096" min="0" max="61440">

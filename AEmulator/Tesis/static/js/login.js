@@ -51,3 +51,8 @@ function closeLoginInfo() {
 $(window).on('resize', function(){
       closeLoginInfo();
 });
+
+$('#btn-mn').on('click', function () {
+
+    
+});
