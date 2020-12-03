@@ -3603,16 +3603,51 @@ $('.stop').on('click', function () {
     type: "post",//get- consutla post- se actualiza
     url: "http://127.0.0.1:8000/alambric_emulator/",
     dataType: "json",
+    
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
       alert(JSON.stringify(data));
     }
   });
+  actionDir={}
+});
+
+// Boton Generador de tráfico
+
+$('.traffic').on('click', function () {
+  console.log("Generador de tráfico activado");
+  var actionDir = {}
+  actionDir['action'] = 'pingall'
+
+  // Variables JSON
+  var json = JSON.stringify(actionDir);
+  //console.log('esto es un json: ' + json);
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+  actionDir={}
 
 });
 
 var ipClient = "";
+
+function clear_variables_action(){
+  elemento={}
+  elements=[]
+  ipClient=""
+}
+
 
 
 function fancyIpClient() {
@@ -3656,6 +3691,8 @@ $('#saveIP_xclient').on('click', function () {
     }
   });
 
+  clear_variables_action();
+
 });
 
 $('.play').on('click', function () {
@@ -3663,7 +3700,6 @@ $('.play').on('click', function () {
   console.log("Play");
   loadInfoElements();
   elemento['items'] = elements;
-
   fancyIpClient();
 
 

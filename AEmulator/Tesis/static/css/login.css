@@ -330,7 +330,7 @@ input[type=submit] {
   color: #fff;
   line-height: 40px;
   text-align: center;
-  background-color:rgb(0, 70, 150);
+  background-color:rgb(27, 51, 87);
   border: 1px #006696 solid;
   opacity: 1;
   cursor: pointer;
@@ -345,7 +345,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #793131;
+  background-color:  rgb(119, 23, 14);;
   border: 1px #b4fbf3 solid;
 }
 
@@ -432,6 +432,7 @@ Credits
 
 .icon-credits {
   width: 100%;
+  background-color:  rgba(119, 23, 14, 0.514);
   position: absolute;
   bottom: 4px;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;

@@ -1,7 +1,7 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans|Quicksand:400,700';
 nav {
     display: flex;
-    background-color: #009688; 
+    background-color: rgb(27, 51, 87); 
     font-family: 'Quicksand', sans-serif;
     font-size: 16px;
     line-height: 1.56;
@@ -142,7 +142,7 @@ a {
     width: 15px;
     height: 2px;
     margin-top: -1px;
-    background-color: #009688;
+    background-color:rgb(27, 51, 87);
     transform-origin: 50% 50%;
     transition: all 0.3s ease-out;
     
@@ -156,13 +156,13 @@ a {
 }
 
 .accordion-toggle.active-tab {
-    background: #E1F3F1;
+    background: #e1ebf3;
     transition: all 0.3s ease;
 }
 
 .accordion-toggle a.active:before {
     transform: rotate(0deg);
-    background: #009688 !important;
+    background: rgb(27, 51, 87) !important;
 }
 
 .accordion-toggle a.active:after {
