@@ -4,7 +4,7 @@
 
 .divFancySwitch {
     width: 500px;
-    height: 620px;    
+    height: 620px;
 }
 
 #containerInsertSwitch {
@@ -419,7 +419,6 @@
     text-align: right;
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
-    
 }
 
 #CancelarButtonFancySwitch {
@@ -1410,12 +1409,11 @@
     margin-left: 85px;
 }
 
-
 /* Fancy Box IP X Client */
 
 .divIP_xclient {
     width: 400px;
-    height: 300px;    
+    height: 300px;
 }
 
 #parameter_xclient {
@@ -1459,4 +1457,77 @@
     width: 45%;
     border-radius: 15px;
     margin-left: 95px;
+}
+
+/* Fancy Box IP X Client */
+
+.divTraffic {
+    width: 380px;
+    height: 380px;
+}
+
+#parameter_traffic {
+    text-align: center;
+}
+
+#labelTraffic {
+    text-align: center;
+    margin-left: 80px;
+}
+
+#formulario_IP_xclient {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#checkInputICMP {
+    margin-left: 142px;
+    margin-bottom: 10px;
+}
+
+#checkInputUDP {
+    margin-left: 147px;
+    margin-bottom: 10px;
+}
+
+#checkInputTCP {
+    margin-left: 150px;
+    margin-bottom: 10px;
+}
+
+#generateBtn:focus {
+    border: #5585e6 solid 2px;
+    background-color: #81a7f1;
+    outline: none;
+}
+
+#generateBtn:hover {
+    border: #81a7f1 solid 2px;
+    outline: none;
+}
+
+#containerCharge {
+    font-family: 'Quicksand', sans-serif;
+}
+#labelCharge{
+    margin-left: 40px;
+}
+#inputCharge{
+    margin-left: 80px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+}
+
+#generateBtn {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 32px;
+    width: 45%;
+    border-radius: 15px;
+    margin-left: 85px;
+    margin-top: 20px;
 }

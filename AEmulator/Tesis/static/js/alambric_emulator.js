@@ -3603,14 +3603,14 @@ $('.stop').on('click', function () {
     type: "post",//get- consutla post- se actualiza
     url: "http://127.0.0.1:8000/alambric_emulator/",
     dataType: "json",
-    
+
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
       alert(JSON.stringify(data));
     }
   });
-  actionDir={}
+  actionDir = {}
 });
 
 // Boton Generador de tráfico
@@ -3629,25 +3629,132 @@ $('.traffic').on('click', function () {
     type: "post",//get- consutla post- se actualiza
     url: "http://127.0.0.1:8000/alambric_emulator/",
     dataType: "json",
-    
+
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
       alert(JSON.stringify(data));
     }
   });
-  actionDir={}
+  actionDir = {}
 
 });
 
-var ipClient = "";
 
-function clear_variables_action(){
-  elemento={}
-  elements=[]
-  ipClient=""
+function fancyTrafficGenerator() {
+
+  var divFancy = ".divTraffic";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: true,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
 }
 
+//Variables para Formulario de Selección de Trafico
+$('#generateBtn').on('click', function () {
+
+  var trafficICMP = $('#checkInputICMP').is(':checked');
+  var trafficTCP = $('#checkInputTCP').is(':checked');
+  var trafficUDP = $('#checkInputUDP').is(':checked');
+  var charge = String($('#inputCharge').val());
+  
+
+  // Arreglo para el generador de tráfico
+  var trafficDir = {};
+
+
+  
+  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCP'] = charge;
+    trafficDir['pingall'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDP'] = charge;
+    trafficDir['pingall'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
+
+    trafficDir['pingall'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCP'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDP'] = charge;
+
+  } else {
+
+    parent.jQuery.fancybox.close();
+
+  }
+  
+  parent.jQuery.fancybox.close();
+
+  // Objeto JSON para envio de datos
+  var json = JSON.stringify(trafficDir);
+  console.log(json)
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+
+  //trafficDir = {}
+
+  // Restablecimiento por Defecto de los CheckBox
+  $('#checkInputICMP').prop('checked', false);
+  $('#checkInputTCP').prop('checked', false);
+  $('#checkInputUDP').prop('checked', false);
+
+
+
+});
+
+
+$('.generator').on('click', function () {
+
+  console.log("Selector Traffic");
+  loadInfoElements();
+  fancyTrafficGenerator();
+
+});
+
+
+
+var ipClient = "";
+
+function clear_variables_action() {
+  elemento = {}
+  elements = []
+  ipClient = ""
+}
 
 
 function fancyIpClient() {
@@ -3701,11 +3808,6 @@ $('.play').on('click', function () {
   loadInfoElements();
   elemento['items'] = elements;
   fancyIpClient();
-
-
-
-
-
 
 });
 
