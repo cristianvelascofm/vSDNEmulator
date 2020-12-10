@@ -384,6 +384,13 @@ ul {
     border: 2px solid #1c911cad;
     background-color: #350a0b75;
 }
+
+.wireShark , .stop , .generatorEspecifico , .generatorGlobal , .generator{
+    pointer-events: none;
+}
+
+
+
 .tool_panel {
     float: left;
     background-color: #ffffff;

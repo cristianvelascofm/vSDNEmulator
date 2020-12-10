@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from static.client.client_proof import executor
+from static.client.client import executor
 
 
 class emulationView(View):

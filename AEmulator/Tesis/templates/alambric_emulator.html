@@ -94,19 +94,28 @@
                                         width="18px" height="18px"> </li>
                         <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt=""
                                         width="18x" height="18px"></li>
-                        <li title="Pegar" id="option_tool_bar"> <img
-                                        src="{% static 'img/paste.png' %}" alt="" width="18px" height="18px"></li>
+                        <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt=""
+                                        width="18px" height="18px"></li>
                         <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt=""
                                         width="18px" height="18px"></li>
-                        <li title="Rehacer" id="option_tool_bar" class='traffic'> <img src="{% static 'img/redo.png' %}"
+                        <li title="Rehacer" id="option_tool_bar" class='rehacer'> <img src="{% static 'img/redo.png' %}"
                                         alt="" width="18px" height="18px"></li>
                         <li title="Iniciar Emulación" id="option_tool_bar" class="play"> <img
                                         src="{% static 'img/play.png' %}" alt="" width="18px" height="18px"></li>
-                        <li title="Detener Emulación" id="option_tool_bar" class='stop'> <img src="{% static 'img/stop.png' %}"
-                                        alt="" width="18px" height="18px"></li>
+                        <li title="Detener Emulación" id="option_tool_bar" class='stop'> <img
+                                        src="{% static 'img/stop.png' %}" alt="" width="18px" height="18px"></li>
 
-                        <li title="Generador de Tráfico" id="option_tool_bar" class='generator'> <img src="{% static 'img/check.png' %}"
-                                        alt="" width="18px" height="18px"></li>
+                        <li title="Generador de Tráfico Extremo a Extremo" id="option_tool_bar" class='generator'> <img
+                                        src="{% static 'img/check.png' %}" alt="" width="18px" height="18px"></li>
+
+                        <li title="Generador de Tráfico Global" id="option_tool_bar" class='generatorGlobal'> <img
+                                        src="{% static 'img/redes.png' %}" alt="" width="18px" height="18px"></li>
+
+                        <li title="Generador de Tráfico Especifico" id="option_tool_bar" class='generatorEspecifico'>
+                                <img src="{% static 'img/computadora.png' %}" alt="" width="18px" height="18px"></li>
+
+                        <li title="Analizador de Tráfico" id="option_tool_bar wireshark" class='wireShark'> <img
+                                        src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px"></li>
 
                 </ul>
         </div>
@@ -168,6 +177,9 @@
                                                 value="ICMP">
                                 </li>
                                 <li>
+                                        <label id="labelXtreme" for="xtreme"> Extremo a Extremo </label>
+                                </li>
+                                <li>
                                         <label for="TCP"> TCP </label>
                                         <input id='checkInputTCP' type="checkbox" id="TCP" name="traffic" value="TCP">
                                 </li>
@@ -180,13 +192,95 @@
 
                         <div id="containerCharge">
                                 <label id="labelCharge"> Carga: </label>
-                                <input type="number" id="inputCharge" step="1" min="1"
-                                        max="100">
+                                <input type="number" id="inputCharge" step="1" min="1" value="1" max="100">
                         </div>
                         <input type="button" id="generateBtn" value="Generar">
                 </form>
         </div>
 </div>
+
+
+<div style="display: none;">
+        <div class="divTrafficGlobal">
+                <h2 id="parameter_trafficGlobal"> Generador de Tráfico </h2>
+                <form id="formulario_trafficGlobal">
+
+                        <strong><label id="labelGlobal"> Barrido de la Red </label></strong>
+                        <label id="labelTrafficGlobal"> Seleccione el tipo: </label><br>
+
+                        <ul>
+                                <li>
+                                        <label for="ICMPGlobal"> ICMP </label>
+                                        <input id='checkInputICMPGlobal' type="checkbox" id="ICMP" name="traffic"
+                                                value="ICMP">
+                                </li>
+
+
+                                <li>
+                                        <label for="TCP"> TCP </label>
+                                        <input id='checkInputTCPGlobal' type="checkbox" id="TCP" name="traffic"
+                                                value="TCP">
+                                </li>
+                                <li>
+                                        <label for="UDP"> UDP </label>
+                                        <input id='checkInputUDPGlobal' type="checkbox" id="UDP" name="traffic"
+                                                value="UDP">
+                                </li>
+
+                        </ul>
+
+                        <div id="containerChargeGlobal">
+                                <label id="labelChargeGlobal"> Carga: </label>
+                                <input type="number" id="inputChargeGlobal" step="1" min="1" value="1" max="100">
+                        </div>
+                        <input type="button" id="generateBtnGlobal" value="Generar">
+                </form>
+        </div>
+</div>
+
+
+<div style="display: none;">
+        <div class="divTrafficSpecific">
+                <h2 id="parameter_trafficSpecific"> Generador de Tráfico </h2>
+                <form id="formulario_trafficSpecific">
+
+                        <strong><label id="labelSpecific"> Barrido de la Red </label></strong>
+                        <label id="labelTrafficSpecific"> Seleccione el tipo: </label><br>
+
+                        <ul>
+                                <li>
+                                        <label for="ICMPSpecific"> ICMP </label>
+                                        <input id='checkInputICMPSpecific' type="checkbox" id="ICMP" name="traffic"
+                                                value="ICMP">
+                                </li>
+
+
+                                <li>
+                                        <label for="TCP"> TCP </label>
+                                        <input id='checkInputTCPSpecific' type="checkbox" id="TCP" name="traffic"
+                                                value="TCP">
+                                </li>
+                                <li>
+                                        <label for="UDP"> UDP </label>
+                                        <input id='checkInputUDPSpecific' type="checkbox" id="UDP" name="traffic"
+                                                value="UDP">
+                                </li>
+
+                        </ul>
+
+                        <div id="containerChargeSpecific">
+                                <label id="labelChargeSpecific"> Carga: </label>
+                                <input type="number" id="inputChargeSpecific" step="1" min="1" value="1" max="100">
+                        </div>
+                        <input type="button" id="generateBtnSpecific" value="Generar">
+                </form>
+        </div>
+</div>
+
+
+
+
+
 
 <div style="display: none;">
         <div class="divFormTemplate">

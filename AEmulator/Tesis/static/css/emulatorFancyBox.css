@@ -1459,59 +1459,61 @@
     margin-left: 95px;
 }
 
-/* Fancy Box IP X Client */
+/* Fancy Box Carga Extremo a Extremo */
 
-.divTraffic {
+.divTraffic, .divTrafficGlobal {
     width: 380px;
-    height: 380px;
+    height: 400px;
 }
 
-#parameter_traffic {
+#parameter_traffic, #parameter_trafficGlobal {
     text-align: center;
 }
 
-#labelTraffic {
+#formulario_traffic, #formulario_trafficGlobal {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#labelTraffic, #labelTrafficGlobal {
     text-align: center;
     margin-left: 80px;
 }
 
-#formulario_IP_xclient {
-    font-family: 'Quicksand', sans-serif;
+#labelXtreme {
+    text-align: center;
+    margin-left: 30px;
 }
 
-#checkInputICMP {
+#labelGlobal {
+    text-align: center;
+    margin-left: 75px;
+}
+
+#checkInputICMP, #checkInputICMPGlobal {
     margin-left: 142px;
     margin-bottom: 10px;
 }
 
-#checkInputUDP {
+#checkInputUDP, #checkInputUDPGlobal {
     margin-left: 147px;
     margin-bottom: 10px;
 }
 
-#checkInputTCP {
+#checkInputTCP, #checkInputTCPGlobal {
     margin-left: 150px;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
-#generateBtn:focus {
-    border: #5585e6 solid 2px;
-    background-color: #81a7f1;
-    outline: none;
-}
-
-#generateBtn:hover {
-    border: #81a7f1 solid 2px;
-    outline: none;
-}
-
-#containerCharge {
+#containerCharge, #containerChargeGlobal {
     font-family: 'Quicksand', sans-serif;
 }
-#labelCharge{
+
+#labelCharge, #labelChargeGlobal {
     margin-left: 40px;
 }
-#inputCharge{
+
+#inputCharge, #inputChargeGlobal {
     margin-left: 80px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
@@ -1522,7 +1524,18 @@
     background-color: white;
 }
 
-#generateBtn {
+#generateBtn:focus, #generateBtnGlobal:focus {
+    border: #5585e6 solid 2px;
+    background-color: #81a7f1;
+    outline: none;
+}
+
+#generateBtn:hover, #generateBtnGlobal:hover {
+    border: #81a7f1 solid 2px;
+    outline: none;
+}
+
+#generateBtn, #generateBtnGlobal {
     border: #b8b9bb solid 2px;
     outline: none;
     height: 32px;

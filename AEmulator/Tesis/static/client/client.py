@@ -1,77 +1,69 @@
 import socket
 import sys
 import json
+from static.client.client_socket import *
 
 
-
-mariquita = True
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-def executor(data_in):
-    global mariquita
+connection = Connection()
+bandera = False
 
 
-    if mariquita:
-        # Create a TCP/IP socket
-
-
-        datatr = data_in
-
-        # Convierte en JSON el objeto python
-        filejson = json.dumps(datatr)
-        print("Peticion : ", filejson)
-        dict_data = eval(filejson)
-        json_data = json.loads(dict_data)
-
-        #CConectar el socket al pyerto donde el servidor está escuchando
-        server_address = ('192.168.56.104', 10000)
-        print('Conectoándose a {} puerto {}'.format(*server_address))
-        sock.connect(server_address)
-        mariquita = False
-        print("Tipo: ", type(json_data))
+def run_client_connection():
+    connection.run_connection()
+    bandera = True
+    
+def executor(action):
+    json_code = json.dumps(action)
+    dict_data = eval(json_code)
+    json_data = json.loads(dict_data)
+    global bandera
+    print("Conexión Establecida: ", bandera)
+    if bandera:
+        try:
         
-            #action = json_data['action']
+            if 'action' in json_data:
 
-        if 'action' in json_data:
-            print(json_data['action'])
+                print("Detener Emulacion")
+                bandera = False
+                message = json_code
+                connection.send_message(message)
+                print('Mensaje Enviado: ', json_data)
+                data_server = connection.recive_message() 
+                answer_server = data_server.decode()
+                dict_data_server = eval(answer_server)
+                json_data_server = json.dumps(dict_data_server)
+                print('Servidor: {!r}'.format(json_data_server))
+               
+                
+            else:
 
-            try:
-                # Send data
-                message = filejson
-                print('sending {!r}', message)
-                sock.sendall(message.encode())
-            finally:
-                mariquita = True
-                sock.close()
-
-        else:
-            print("Enviar Red")
-            try:
-                # Send data
-                message = filejson
-                print('sending {!r}', message)
-                sock.sendall(message.encode())
-
-                # Look for the response
-                amount_received = 0
-                amount_expected = len(message)
-
-                while amount_received < amount_expected:
-                    data = sock.recv(2048)
-                    amount_received += len(data)
-                    resp_data = data.decode()          
-                    dict_data = eval(resp_data)
-                    print('Tipo:! ',type(dict))
-                    json_data = json.dumps(dict_data)
-                    print('received {!r}'.format(json_data))
-
-                    for x in json_data:
-                        answer = x[0]
-                        if answer == 'creada':
-                            print('Creada!!')
-                            #sock.sendall() 
-
-            finally:
-                mariquita = True
-                print('closing socket')
-                sock.close()
+                message = json_code
+                connection.send_message(message)
+                print('Mensaje Enviado: ', json_data)
+                data_server = connection.recive_message() 
+                answer_server = data_server.decode()
+                dict_data_server = eval(answer_server)
+                json_data_server = json.dumps(dict_data_server)
+                print('Servidor: {!r}'.format(json_data_server))
+        finally:
+            
+            if bandera == False:
+                connection.stop_connection()
+                
+            else:
+                print("Conexión sigue Habilitada")
+                pass
+    else:
+        try:
+            run_client_connection()
+            message = json_code
+            connection.send_message(message)
+            print('Mensaje Enviado: ', json_data)
+            data_server = connection.recive_message() 
+            answer_server = data_server.decode()
+            dict_data_server = eval(answer_server)
+            json_data_server = json.dumps(dict_data_server)
+            print('Servidor: {!r}'.format(json_data_server))
+            bandera = True
+        finally:
+            pass

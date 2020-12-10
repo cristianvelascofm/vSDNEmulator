@@ -3589,11 +3589,17 @@ $('#CancelarButtonFancyController').on('click', function () {
 
 });
 
-$('.stop').on('click', function () {
+function stopEmulation() {
   console.log("Stop");
   var actionDir = {}
   actionDir['action'] = 'stop'
 
+  $('.wireShark').css({ 'pointer-events': 'none' });
+  $('.stop').css({ 'pointer-events': 'none' });
+  $('.generator').css({ 'pointer-events': 'none' });
+  $('.generatorGlobal').css({ 'pointer-events': 'none' });
+  $('.generatorEspecifico').css({ 'pointer-events': 'none' });
+
   // Variables JSON
   var json = JSON.stringify(actionDir);
   //console.log('esto es un json: ' + json);
@@ -3611,14 +3617,18 @@ $('.stop').on('click', function () {
     }
   });
   actionDir = {}
+}
+
+$('.stop').on('click', function () {
+  stopEmulation();
 });
 
-// Boton Generador de tráfico
+// Boton WireShark
 
-$('.traffic').on('click', function () {
-  console.log("Generador de tráfico activado");
+function openWireshark() {
+  console.log("WireShark");
   var actionDir = {}
-  actionDir['action'] = 'pingall'
+  actionDir['wireshark'] = 'wireshark'
 
   // Variables JSON
   var json = JSON.stringify(actionDir);
@@ -3637,9 +3647,10 @@ $('.traffic').on('click', function () {
     }
   });
   actionDir = {}
-
+}
+$('.wireShark').on('click', function () {
+  openWireshark();
 });
-
 
 function fancyTrafficGenerator() {
 
@@ -3647,7 +3658,7 @@ function fancyTrafficGenerator() {
 
   $.fancybox.open($(divFancy), {
     touch: false,
-    modal: true,
+    modal: false,
     infobar: false,
     clickSlide: false,
     clickOutside: false,
@@ -3662,13 +3673,13 @@ $('#generateBtn').on('click', function () {
   var trafficTCP = $('#checkInputTCP').is(':checked');
   var trafficUDP = $('#checkInputUDP').is(':checked');
   var charge = String($('#inputCharge').val());
-  
+
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
 
 
-  
+
   if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
 
     trafficDir['pingall'] = charge;
@@ -3707,7 +3718,7 @@ $('#generateBtn').on('click', function () {
     parent.jQuery.fancybox.close();
 
   }
-  
+
   parent.jQuery.fancybox.close();
 
   // Objeto JSON para envio de datos
@@ -3732,17 +3743,117 @@ $('#generateBtn').on('click', function () {
   $('#checkInputICMP').prop('checked', false);
   $('#checkInputTCP').prop('checked', false);
   $('#checkInputUDP').prop('checked', false);
-
-
-
 });
-
 
 $('.generator').on('click', function () {
 
   console.log("Selector Traffic");
   loadInfoElements();
   fancyTrafficGenerator();
+
+});
+
+
+// Fancy Box Generador Trafico Global
+function fancyTrafficGeneratorGlobal() {
+
+  var divFancy = ".divTrafficGlobal";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+}
+
+//Variables para Formulario de Selección de Trafico
+$('#generateBtnGlobal').on('click', function () {
+
+  var trafficICMP = $('#checkInputICMPGlobal').is(':checked');
+  var trafficTCP = $('#checkInputTCPGlobal').is(':checked');
+  var trafficUDP = $('#checkInputUDPGlobal').is(':checked');
+  var charge = String($('#inputChargeGlobal').val());
+
+
+  // Arreglo para el generador de tráfico
+  var trafficDir = {};
+
+  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCPG'] = charge;
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDPG'] = charge;
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
+
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCPG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDPG'] = charge;
+
+  } else {
+
+    parent.jQuery.fancybox.close();
+
+  }
+
+  parent.jQuery.fancybox.close();
+
+  // Objeto JSON para envio de datos
+  var json = JSON.stringify(trafficDir);
+  console.log(json)
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+
+  //trafficDir = {}
+
+  // Restablecimiento por Defecto de los CheckBox
+  $('#checkInputICMPGlobal').prop('checked', false);
+  $('#checkInputTCPGlobal').prop('checked', false);
+  $('#checkInputUDPGlobal').prop('checked', false);
+
+
+
+});
+
+$('.generatorGlobal').on('click', function () {
+
+  console.log("Selector Traffic Global");
+  loadInfoElements();
+  fancyTrafficGeneratorGlobal();
 
 });
 
@@ -3801,14 +3912,22 @@ $('#saveIP_xclient').on('click', function () {
   clear_variables_action();
 
 });
-
-$('.play').on('click', function () {
+function startEmulation() {
 
   console.log("Play");
   loadInfoElements();
   elemento['items'] = elements;
   fancyIpClient();
 
+  $('.wireShark').css({ 'pointer-events': 'visible' });
+  $('.stop').css({ 'pointer-events': 'visible' });
+  $('.generator').css({ 'pointer-events': 'visible' });
+  $('.generatorGlobal').css({ 'pointer-events': 'visible' });
+  $('.generatorEspecifico').css({ 'pointer-events': 'visible' });
+
+}
+$('.play').on('click', function () {
+  startEmulation()
 });
 
 /*------------------------------------------------------------------------------------------------------*/
