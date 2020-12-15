@@ -3613,7 +3613,8 @@ function stopEmulation() {
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
+      $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
     }
   });
   actionDir = {}
@@ -3643,7 +3644,8 @@ function openWireshark() {
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
+      $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
     }
   });
   actionDir = {}
@@ -3733,7 +3735,10 @@ $('#generateBtn').on('click', function () {
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
+      $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
+
+
     }
   });
 
@@ -3834,7 +3839,8 @@ $('#generateBtnGlobal').on('click', function () {
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
+
     }
   });
 
@@ -3857,7 +3863,161 @@ $('.generatorGlobal').on('click', function () {
 
 });
 
+// Fancy Box Generador Trafico Especifico
+function fancyTrafficGeneratorSpecific() {
 
+  var divFancy = ".divTrafficSpecific";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+}
+
+//Variables para Formulario de Selección de Trafico
+$('#generateBtnSpecific').on('click', function () {
+
+  var trafficICMP = $('#checkInputICMPSpecific').is(':checked');
+  var trafficICMPFULL = $('#checkInputICMPFULSpecific').is(':checked');
+  var trafficTCP = $('#checkInputTCPSpecific').is(':checked');
+  var trafficUDP = $('#checkInputUDPSpecific').is(':checked');
+  var bwUDP = String($('#inputBWUDP').val())
+  var time = String($('#inputTime').val())
+  var hostA = String($('#inputHostA').val());
+  var hostB = String($('#inputHostB').val());
+  var charge = String($('#inputChargeSpecific').val());
+
+
+  // Arreglo para el generador de tráfico
+  var trafficDir = {};
+
+  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCPG'] = charge;
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDPG'] = charge;
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
+
+    trafficDir['pingallG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
+
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
+
+    trafficDir['TCPG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
+
+    trafficDir['UDPG'] = charge;
+
+  } else {
+
+    parent.jQuery.fancybox.close();
+
+  }
+
+  parent.jQuery.fancybox.close();
+
+  // Objeto JSON para envio de datos
+  var json = JSON.stringify(trafficDir);
+  console.log(json)
+
+  //Formato de Petición AJAX
+  $.ajax({
+    type: "post",//get- consutla post- se actualiza
+    url: "http://127.0.0.1:8000/alambric_emulator/",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    data: json,
+    success: function (data) {
+      alert(JSON.stringify(data));
+    }
+  });
+
+  // Restablecimiento por Defecto de los CheckBox
+  $('#checkInputICMPGlobal').prop('checked', false);
+  $('#checkInputICMPFULSpecific').prop('checked', false);
+  $('#checkInputTCPGlobal').prop('checked', false);
+  $('#checkInputUDPGlobal').prop('checked', false);
+
+  // Restablecimiento por Defecto de los Input
+  $('#inputBWUDP').val(null)
+  $('#inputTime').val(null)
+  $('#inputHostA').val(null)
+  $('#inputHostB').val(null)
+  $("#inputChargeSpecific").val(null);
+
+});
+
+$('.generatorEspecifico').on('click', function () {
+
+  console.log("Selector Traffic Specific");
+  loadInfoElements();
+  fancyTrafficGeneratorSpecific();
+
+  /*var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
+  var valTrafficUDP = $('#checkInputUDPSpecific').is(':checked');
+  
+  console.log("estato: TCP" + valTrafficTCP);
+  if (valTrafficTCP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTime').css({ 'pointer-events': 'visible' });
+  }
+
+  console.log("estato UDP: " + valTrafficUDP);
+  if (valTrafficUDP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputBWUDP').css({ 'pointer-events': 'visible' });
+  }*/
+
+});
+
+// Display Opciones de los Fancy Generadores
+
+$('#checkInputTCPSpecific').on('click', function () {
+
+  var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
+  console.log("estato: " + valTrafficTCP);
+  if (valTrafficTCP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTime').css({ 'pointer-events': 'visible' });
+
+  } else {
+    $('#inputTime').css({ 'pointer-events': 'none' });
+  }
+});
+
+$('#checkInputUDPSpecific').on('click', function () {
+  var valTrafficTCP = $('checkInputUDPSpecific').prop('checked');
+  console.log("estato: " + valTrafficTCP);
+  if (valTrafficTCP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTime').css({ 'pointer-events': 'visible' });
+    $('#inputBWUDP').css({ 'pointer-events': 'visible' });
+
+  } else {
+    $('#inputTime').css({ 'pointer-events': 'none' });
+    $('#inputBWUDP').css({ 'pointer-events': 'none' });
+  }
+});
 
 var ipClient = "";
 
@@ -3866,7 +4026,6 @@ function clear_variables_action() {
   elements = []
   ipClient = ""
 }
-
 
 function fancyIpClient() {
 
@@ -3881,13 +4040,66 @@ function fancyIpClient() {
   });
 
 }
+
+//********************************************************************************************************** */
+$('.new').on('click', function () {
+  var divFancy = ".divFancyGraphic";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+  var graph = $('#graphic');
+
+  var graphics = new Chart(graph, {
+    type: 'line',
+    data: {
+      labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+      datasets: [{
+        label: 'Ancho de Banda Entre Host - Servidor',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+});
+
 //Variables para Formulario IP X Client FancyBox
 $('#saveIP_xclient').on('click', function () {
   ipClient = $('#inputIP_xclient').val();
   elemento['IpClient'] = ipClient;
-
-
   parent.jQuery.fancybox.close();
+
   // Restablecimiento por Defecto de los Input - Controller
   $("#saveIP_xclient").val(null);
 
@@ -3933,7 +4145,6 @@ $('.play').on('click', function () {
 /*------------------------------------------------------------------------------------------------------*/
 /* Parametrización de los tipos de Red */
 /*------------------------------------------------------------------------------------------------------*/
-
 
 /* Envio parametros (FancyBox) para crear Topologia */
 $('#createButtonTemplate').on('click', function () {

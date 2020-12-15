@@ -1459,62 +1459,145 @@
     margin-left: 95px;
 }
 
-/* Fancy Box Carga Extremo a Extremo */
+/* Fancy Box Generaor de Tráfico */
 
-.divTraffic, .divTrafficGlobal {
-    width: 380px;
-    height: 400px;
-}
-
-#parameter_traffic, #parameter_trafficGlobal {
-    text-align: center;
-}
-
-#formulario_traffic, #formulario_trafficGlobal {
+.divTraffic, .divTrafficGlobal{
+    width: 450px;
+    height: 510px;
     font-family: 'Quicksand', sans-serif;
 }
 
-#labelTraffic, #labelTrafficGlobal {
-    text-align: center;
-    margin-left: 80px;
+.divTrafficSpecific {
+    width: 460px;
+    height: 480px;
+    font-family: 'Quicksand', sans-serif;
 }
 
-#labelXtreme {
+
+#parameter_traffic, #parameter_trafficGlobal, #parameter_trafficSpecific {
     text-align: center;
-    margin-left: 30px;
+    margin-top: 5px;
 }
 
 #labelGlobal {
+    font-size: 20px;
+    font-weight: bolder;
     text-align: center;
-    margin-left: 75px;
+    margin-left: 65px;
+}
+
+#labelXtreme {
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    margin-left: 50px;
+}
+
+#labelSpecific {
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    margin-left: 50px;
+}
+
+#labelTrafficGlobal, #labelTraffic {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 115px;
+}
+
+#labelTrafficSpecific {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 120px;
+}
+
+#optionTraffic {
+    font-size: 15px;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+#optionTrafficSpecific {
+    font-size: 15px;
+    margin-left: 2px;
+}
+
+#optionSpecificTraffic {
+    font-size: 15px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#labelUnidadBW {
+    font-size: 12px;
+}
+
+#labelTimeSeg {
+    font-size: 12px;
 }
 
 #checkInputICMP, #checkInputICMPGlobal {
-    margin-left: 142px;
+    margin-left: 185px;
+    margin-bottom: 10px;
+}
+
+#checkInputICMPFULLGlobal {
+    margin-left: 146px;
     margin-bottom: 10px;
 }
 
 #checkInputUDP, #checkInputUDPGlobal {
-    margin-left: 147px;
+    margin-left: 190px;
     margin-bottom: 10px;
 }
 
 #checkInputTCP, #checkInputTCPGlobal {
-    margin-left: 150px;
+    margin-left: 193px;
     margin-bottom: 10px;
-    margin-top: 10px;
+}
+
+#inputBWUDP, #inputTime {
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 50px;
+    pointer-events: none;
+}
+
+#inputBWUDP {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+#inputTime {
+    margin-left: 10px;
 }
 
 #containerCharge, #containerChargeGlobal {
-    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin-left: 60px;
 }
 
-#labelCharge, #labelChargeGlobal {
+#containerChargeSpecific {
+    font-size: 15px;
     margin-left: 40px;
 }
 
-#inputCharge, #inputChargeGlobal {
-    margin-left: 80px;
+#containerChargeSpelection{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#inputHostAS , #inputHostBS {
+    width: 50px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
     border-left: none;
@@ -1524,23 +1607,127 @@
     background-color: white;
 }
 
-#generateBtn:focus, #generateBtnGlobal:focus {
+#labelHostA{
+    margin-left: 40px;
+    margin-right: 30px;
+}
+#labelHostB{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+#inputCharge, #inputChargeGlobal {
+    width: 50px;
+    margin-left: 130px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+}
+
+#inputChargeSpecific {
+    width: 50px;
+    margin-left: 180px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+}
+
+#generateBtn:focus, #generateBtnGlobal:focus , #generateBtnSpecific:focus {
     border: #5585e6 solid 2px;
     background-color: #81a7f1;
     outline: none;
 }
 
-#generateBtn:hover, #generateBtnGlobal:hover {
+#generateBtn:hover, #generateBtnGlobal:hover , #generateBtnSpecific:hover {
     border: #81a7f1 solid 2px;
     outline: none;
 }
 
-#generateBtn, #generateBtnGlobal {
+#generateBtn, #generateBtnGlobal , #generateBtnSpecific{
     border: #b8b9bb solid 2px;
     outline: none;
     height: 32px;
-    width: 45%;
+    width: 35%;
     border-radius: 15px;
-    margin-left: 85px;
+    margin-left: 125px;
     margin-top: 20px;
+    font-weight: bolder;
+}
+
+
+
+
+/*-------------------------------------------------------------*/
+
+/* Fancy Box Graphics */
+
+
+#containerGraphic {
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+    
+    width: 880px;
+    height: 460px;
+}
+
+#containerCanvaGraphic{
+    
+    width: auto;
+    height: 460px;
+    margin: 0px;
+}
+
+#graphic{
+    
+    height: 450px;
+    width: 880px;
+}
+/* Contenedor de los Botones del Fancy Graphic */
+
+#containerFancyButtonGraphic {
+    margin-top: 20px;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    margin-left: 70px;
+}
+
+#CancelarButtonFancyGraphic {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#CancelarButtonFancyGraphic:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
+}
+
+#GuardarButtonFancyGraphic {
+    border: #b8b9bb solid 2px;
+    outline: none;
+    height: 22px;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+    color: #2AC176;
+}
+
+#GuardarButtonFancyGraphic:focus {
+    border: #2AC176 solid 2px;
+    outline: none;
+    background-color: #2AC176;
+    color: white;
 }

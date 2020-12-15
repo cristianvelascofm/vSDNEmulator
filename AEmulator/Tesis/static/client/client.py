@@ -24,7 +24,6 @@ def executor(action):
             if 'action' in json_data:
 
                 print("Detener Emulacion")
-                bandera = False
                 message = json_code
                 connection.send_message(message)
                 print('Mensaje Enviado: ', json_data)
@@ -33,7 +32,7 @@ def executor(action):
                 dict_data_server = eval(answer_server)
                 json_data_server = json.dumps(dict_data_server)
                 print('Servidor: {!r}'.format(json_data_server))
-               
+                bandera = False
                 
             else:
 

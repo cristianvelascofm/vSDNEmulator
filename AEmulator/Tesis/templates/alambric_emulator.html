@@ -16,9 +16,9 @@
 {% block title %}SDN - Emulator{% endblock title %}
 
 {% block content %}
-<div id="menu_bar">
+<div class="menujq" id="menu_bar">
         <ul id="menu_option_bar">
-                <li id="menu_archivo_bar"> <a>Archivo</a>
+                <li id="menu_archivo_bar"> <a href="javascript:void();">Archivo</a>
                         <ul id="menu_archivo">
                                 <li id="nuevo"><a href="#">Nuevo</a></li>
                                 <li id="abrir"><a href="#">Abrir</a></li>
@@ -58,7 +58,7 @@
                                 <li id="salir"><a href="#">Salir</a></li>
                         </ul>
                 </li>
-                <li id="menu_edicion_bar" href="#"> <a>Edición</a>
+                <li id="menu_edicion_bar" href="javascript:void();"> <a>Edición</a>
                         <ul id="menu_edicion">
                                 <li id="deshacer"><a href=" ">Deshacer</a></li>
                                 <li id="rehacer"><a href=" ">Rehacer</a></li>
@@ -68,14 +68,30 @@
                                 <li id="seleccion"><a onclick="clearAll()">Seleccionar Todo</a></li>
                         </ul>
                 </li>
-                <li id="menu_emulacion_bar" href="#"> <a>Emulación</a>
+                <li id="menu_emulacion_bar" href="javascript:void();"> <a>Emulación</a>
                         <ul id="menu_emulacion">
-                                <li id="iniciarE"><a href=" ">Iniciar Emulación</a></li>
-                                <li id="detenerE"><a href=" ">Detener Emulación</a></li>
-                                <li id="preferenciasE"><a href=" ">Preferencias</a></li>
+                                <li id="iniciarE"><a href="#">Iniciar Emulación</a></li>
+                                <li id="detenerE"><a href="#">Detener Emulación</a></li>
+                                <li id="wireshark"><a href="#">wireShark</a></li>
+                                <li id="genTraffic"><a href="#">Generador de Tráfico</a>
+                                        <ul id="sub_menu_genT">
+                                                <li id="xtreme">
+                                                        <a id="genXtreme" onclick="topologyTemplate(this)">
+                                                                Extremo a Extremo</a>
+                                                </li>
+                                                <li id="global">
+                                                        <a id="genGlobal" onclick="topologyTemplate(this)"> 
+                                                                Barrido Global</a>
+                                                <li id="specific">
+                                                        <a id="genSpecific" onclick="topologyTemplate(this)">
+                                                                Barrido Especifico</a>
+                                                </li>
+                                        </ul>
+                                
+                                </li>
                         </ul>
                 </li>
-                <li id="menu_ayuda_bar" href="#"> <a>Ayuda</a>
+                <li id="menu_ayuda_bar" href="javascript:void();"> <a>Ayuda</a>
                         <ul id="menu_ayuda">
                                 <li id="doc"><a href=" ">Documentación</a></li>
                                 <li id="guie"><a href=" ">Guias de Usuario</a></li>
@@ -85,10 +101,29 @@
         </ul>
 </div>
 
+<script type="text/javascript">
+        $(document).ready(function () {
+                $('.menujq > ul > li:has(ul)').addClass('desplegable');
+                $('.menujq > ul > li > a').click(function () {
+                        var comprobar = $(this).next();
+                        $('.menujq li').removeClass('activa');
+                        $(this).closest('li').addClass('activa');
+                        if ((comprobar.is('ul')) && (comprobar.is(':visible'))) {
+                                $(this).closest('li').removeClass('activa');
+                                comprobar.slideUp('normal');
+                        }
+                        if ((comprobar.is('ul')) && (!comprobar.is(':visible'))) {
+                                $('.menujq ul ul:visible').slideUp('normal');
+                                comprobar.slideDown('normal');
+                        }
+                });
+        });
+</script>
+
 <div class="emulator">
         <div class="tool_bar">
                 <ul id="menu_option__tool_bar">
-                        <li title="Nuevo" id="option_tool_bar" href="#"> <img src="{% static 'img/new_document.png' %}"
+                        <li title="Nuevo" id="option_tool_bar" href="#" class = "new"> <img src="{% static 'img/new_document.png' %}"
                                         alt="" width="18px" height="18px"></li>
                         <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
                                         width="18px" height="18px"> </li>
@@ -167,31 +202,46 @@
 
 <div style="display: none;">
         <div class="divTraffic">
-                <h2 id="parameter_traffic"> Generador de Tráfico </h2>
+                <h2 id="parameter_traffic">Generador de Tráfico</h2>
                 <form id="formulario_traffic">
-                        <label id="labelTraffic"> Seleccione el tipo: </label><br>
-                        <ul>
+
+                        <label id="labelXtreme">Barrido Extremo a Extremo</label>
+                        <label id="labelTraffic">Seleccione el tipo:</label><br>
+
+                        <ul id="optionTraffic">
                                 <li>
-                                        <label for="ICMP"> ICMP </label>
+                                        <label for="ICMP">ICMP</label>
                                         <input id='checkInputICMP' type="checkbox" id="ICMP" name="traffic"
                                                 value="ICMP">
                                 </li>
                                 <li>
-                                        <label id="labelXtreme" for="xtreme"> Extremo a Extremo </label>
+                                        <label id="ICMPFULLGlobal"> ICMP FULL </label>
+                                        <input id='checkInputICMPFULLGlobal' type="checkbox" name="traffic"
+                                                value="ICMP">
                                 </li>
                                 <li>
-                                        <label for="TCP"> TCP </label>
+                                        <label for="TCP">TCP</label>
                                         <input id='checkInputTCP' type="checkbox" id="TCP" name="traffic" value="TCP">
                                 </li>
                                 <li>
-                                        <label for="UDP"> UDP </label>
+                                        <label for="UDP">UDP</label>
                                         <input id='checkInputUDP' type="checkbox" id="UDP" name="traffic" value="UDP">
+                                </li>
+                                <li id="BWUDP">
+                                        <span id="labelBWUDP"> Ancho de Banda: </span>
+                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
+                                        <span id="labelUnidadBW">M Bit/Seg</span>
+                                </li>
+                                <li id="time">
+                                        <span id="labelTime"> Tiempo de Transmisión: </span>
+                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
+                                        <span id="labelTime">Seg</span>
                                 </li>
 
                         </ul>
 
                         <div id="containerCharge">
-                                <label id="labelCharge"> Carga: </label>
+                                <label id="labelCharge">Carga:</label>
                                 <input type="number" id="inputCharge" step="1" min="1" value="1" max="100">
                         </div>
                         <input type="button" id="generateBtn" value="Generar">
@@ -205,26 +255,39 @@
                 <h2 id="parameter_trafficGlobal"> Generador de Tráfico </h2>
                 <form id="formulario_trafficGlobal">
 
-                        <strong><label id="labelGlobal"> Barrido de la Red </label></strong>
+                        <label id="labelGlobal"> Barrido Global de la Red </label><br>
                         <label id="labelTrafficGlobal"> Seleccione el tipo: </label><br>
 
-                        <ul>
+                        <ul id="optionTraffic">
                                 <li>
                                         <label for="ICMPGlobal"> ICMP </label>
-                                        <input id='checkInputICMPGlobal' type="checkbox" id="ICMP" name="traffic"
+                                        <input id='checkInputICMPGlobal' type="checkbox" name="traffic" value="ICMP">
+                                </li>
+                                <li>
+                                        <label id="ICMPFULLGlobal"> ICMP FULL </label>
+                                        <input id='checkInputICMPFULLGlobal' type="checkbox" name="traffic"
                                                 value="ICMP">
                                 </li>
 
 
                                 <li>
                                         <label for="TCP"> TCP </label>
-                                        <input id='checkInputTCPGlobal' type="checkbox" id="TCP" name="traffic"
-                                                value="TCP">
+                                        <input id='checkInputTCPGlobal' type="checkbox" name="traffic" value="TCP">
                                 </li>
                                 <li>
                                         <label for="UDP"> UDP </label>
-                                        <input id='checkInputUDPGlobal' type="checkbox" id="UDP" name="traffic"
-                                                value="UDP">
+                                        <input id='checkInputUDPGlobal' type="checkbox" name="traffic" value="UDP">
+                                </li>
+
+                                <li id="BWUDP">
+                                        <span id="labelBWUDP"> Ancho de Banda: </span>
+                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
+                                        <span id="labelUnidadBW">M Bit/Seg</span>
+                                </li>
+                                <li id="time">
+                                        <span id="labelTime"> Tiempo de Transmisión: </span>
+                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
+                                        <span id="labelTime">Seg</span>
                                 </li>
 
                         </ul>
@@ -241,32 +304,43 @@
 
 <div style="display: none;">
         <div class="divTrafficSpecific">
-                <h2 id="parameter_trafficSpecific"> Generador de Tráfico </h2>
+                <h2 id="parameter_trafficSpecific">Generador de Tráfico</h2>
                 <form id="formulario_trafficSpecific">
 
-                        <strong><label id="labelSpecific"> Barrido de la Red </label></strong>
-                        <label id="labelTrafficSpecific"> Seleccione el tipo: </label><br>
+                        <label id="labelSpecific">Barrido especifico de la Red</label><br>
+                        <label id="labelTrafficSpecific">Seleccione el tipo:</label><br>
 
-                        <ul>
-                                <li>
-                                        <label for="ICMPSpecific"> ICMP </label>
+                        <ul id="optionTrafficSpecific">
+                                <li id="optionSpecificTraffic">
+                                        <label id="ICMPSpecific"> ICMP </label>
                                         <input id='checkInputICMPSpecific' type="checkbox" id="ICMP" name="traffic"
                                                 value="ICMP">
-                                </li>
-
-
-                                <li>
+                                        <label id="ICMPFULLSpecific"> ICMP FULL </label>
+                                        <input id='checkInputICMPFULSpecific' type="checkbox" name="traffic"
+                                                value="ICMP">
                                         <label for="TCP"> TCP </label>
-                                        <input id='checkInputTCPSpecific' type="checkbox" id="TCP" name="traffic"
-                                                value="TCP">
-                                </li>
-                                <li>
+                                        <input id='checkInputTCPSpecific' type="checkbox" name="traffic" value="TCP">
                                         <label for="UDP"> UDP </label>
-                                        <input id='checkInputUDPSpecific' type="checkbox" id="UDP" name="traffic"
-                                                value="UDP">
+                                        <input id='checkInputUDPSpecific' type="checkbox" name="traffic" value="UDP">
                                 </li>
-
+                                <li id="BWUDP">
+                                        <span id="labelBWUDP"> Ancho de Banda: </span>
+                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
+                                        <span id="labelUnidadBW">M Bit/Seg</span>
+                                </li>
+                                <li id="time">
+                                        <span id="labelTime"> Tiempo de Transmisión: </span>
+                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
+                                        <span id="labelTimeSeg">Seg</span>
+                                </li>
                         </ul>
+                        <label id="labelTrafficSpecific">Seleccione los Host:</label><br>
+                        <div id="containerChargeSpelection">
+                                <span id="labelHostA">Desde:</span>
+                                <input type="text" id="inputHostAS">
+                                <span id="labelHostB">a:</span>
+                                <input type="text" id="inputHostBS">
+                        </div>
 
                         <div id="containerChargeSpecific">
                                 <label id="labelChargeSpecific"> Carga: </label>
@@ -276,6 +350,7 @@
                 </form>
         </div>
 </div>
+
 
 
 
@@ -662,8 +737,28 @@
 
 </div>
 
+
+<div class="divFancyGraphic" style="display: none;">
+
+        <div id="containerGraphic">
+
+                <div id="containerTittleFancyGraphic">
+                        <label id="labelFancyGraphic"> GRAPH </label>
+                </div>
+
+                <div id="containerCanvaGraphic">
+                        <canvas id="graphic"></canvas>
+                </div>
+
+                
+        </div>
+
+
+</div>
+
 <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
 <script src="{% static 'js/jquery.fancybox.js'%}"></script>
+<script src="{% static 'js/Chart.js' %}"></script>
 
 {% endblock content %}
