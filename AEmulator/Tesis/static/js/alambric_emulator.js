@@ -3675,12 +3675,13 @@ $('#generateBtn').on('click', function () {
   var trafficTCP = $('#checkInputTCP').is(':checked');
   var trafficUDP = $('#checkInputUDP').is(':checked');
   var charge = String($('#inputCharge').val());
-
+  var bwUDP = String($('#inputBWUDP').val())
+  var time = String($('#inputTime').val())
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-
-
+  trafficDir['udpBw']= bwUDP+'M';
+  trafficDir['time']= time;
 
   if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
 
@@ -3781,11 +3782,13 @@ $('#generateBtnGlobal').on('click', function () {
   var trafficTCP = $('#checkInputTCPGlobal').is(':checked');
   var trafficUDP = $('#checkInputUDPGlobal').is(':checked');
   var charge = String($('#inputChargeGlobal').val());
-
+  var bwUDP = String($('#inputBWUDP').val())
+  var time = String($('#inputTime').val())
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-
+  trafficDir['udpBw']= bwUDP +'M';
+  trafficDir['time']= time;
   if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
 
     trafficDir['pingallG'] = charge;
@@ -3824,6 +3827,7 @@ $('#generateBtnGlobal').on('click', function () {
     parent.jQuery.fancybox.close();
 
   }
+
 
   parent.jQuery.fancybox.close();
 
@@ -3891,42 +3895,45 @@ $('#generateBtnSpecific').on('click', function () {
   var hostB = String($('#inputHostB').val());
   var charge = String($('#inputChargeSpecific').val());
 
-
+  
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-
+  trafficDir['udpBw']= bwUDP +'M';
+  trafficDir['time']= time;
+  trafficDir['hInitial']=hostA;
+  trafficDir['hFinal']= hostB;
   if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
 
-    trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
+    trafficDir['pingallP'] = charge;
+    trafficDir['TCPP'] = charge;
+    trafficDir['UDPP'] = charge;
 
   } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
 
-    trafficDir['TCPG'] = charge;
-    trafficDir['pingallG'] = charge;
+    trafficDir['TCPP'] = charge;
+    trafficDir['pingallP'] = charge;
 
   } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
 
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingallG'] = charge;
+    trafficDir['UDPP'] = charge;
+    trafficDir['pingallP'] = charge;
 
   } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
 
-    trafficDir['pingallG'] = charge;
+    trafficDir['pingallP'] = charge;
 
   } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
 
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
+    trafficDir['TCPP'] = charge;
+    trafficDir['UDPP'] = charge;
 
   } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
 
-    trafficDir['TCPG'] = charge;
+    trafficDir['TCPP'] = charge;
 
   } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
 
-    trafficDir['UDPG'] = charge;
+    trafficDir['UDPP'] = charge;
 
   } else {
 
@@ -3973,20 +3980,6 @@ $('.generatorEspecifico').on('click', function () {
   loadInfoElements();
   fancyTrafficGeneratorSpecific();
 
-  /*var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
-  var valTrafficUDP = $('#checkInputUDPSpecific').is(':checked');
-  
-  console.log("estato: TCP" + valTrafficTCP);
-  if (valTrafficTCP == true) {
-    console.log("Checkbox seleccionado");
-    $('#inputTime').css({ 'pointer-events': 'visible' });
-  }
-
-  console.log("estato UDP: " + valTrafficUDP);
-  if (valTrafficUDP == true) {
-    console.log("Checkbox seleccionado");
-    $('#inputBWUDP').css({ 'pointer-events': 'visible' });
-  }*/
 
 });
 
@@ -4042,7 +4035,7 @@ function fancyIpClient() {
 }
 
 //********************************************************************************************************** */
-$('.new').on('click', function () {
+$('.graphic').on('click', function () {
   var divFancy = ".divFancyGraphic";
 
   $.fancybox.open($(divFancy), {
@@ -4136,6 +4129,8 @@ function startEmulation() {
   $('.generator').css({ 'pointer-events': 'visible' });
   $('.generatorGlobal').css({ 'pointer-events': 'visible' });
   $('.generatorEspecifico').css({ 'pointer-events': 'visible' });
+  $('.graphic').css({ 'pointer-events': 'visible' });
+  $('.opendayligth').css({ 'pointer-events': 'visible' });
 
 }
 $('.play').on('click', function () {

@@ -449,7 +449,7 @@ body, html {
     background-color: #350a0b75;
 }
 
-.wireShark, .stop, .generatorEspecifico, .generatorGlobal, .generator {
+.wireShark, .stop, .generatorEspecifico, .generatorGlobal, .generator , .opendayligth , .graphic {
     pointer-events: none;
 }
 

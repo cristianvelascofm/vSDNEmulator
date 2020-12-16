@@ -73,21 +73,21 @@
                                 <li id="iniciarE"><a href="#">Iniciar Emulación</a></li>
                                 <li id="detenerE"><a href="#">Detener Emulación</a></li>
                                 <li id="wireshark"><a href="#">wireShark</a></li>
-                                <li id="genTraffic"><a href="#">Generador de Tráfico</a>
+                                <li id="genTraffic" class="genTr"><a href="#">Generador de Tráfico</a>
                                         <ul id="sub_menu_genT">
                                                 <li id="xtreme">
                                                         <a id="genXtreme" onclick="topologyTemplate(this)">
                                                                 Extremo a Extremo</a>
                                                 </li>
                                                 <li id="global">
-                                                        <a id="genGlobal" onclick="topologyTemplate(this)"> 
+                                                        <a id="genGlobal" onclick="topologyTemplate(this)">
                                                                 Barrido Global</a>
                                                 <li id="specific">
                                                         <a id="genSpecific" onclick="topologyTemplate(this)">
                                                                 Barrido Especifico</a>
                                                 </li>
                                         </ul>
-                                
+
                                 </li>
                         </ul>
                 </li>
@@ -105,9 +105,12 @@
         $(document).ready(function () {
                 $('.menujq > ul > li:has(ul)').addClass('desplegable');
                 $('.menujq > ul > li > a').click(function () {
+                        
                         var comprobar = $(this).next();
+                        
                         $('.menujq li').removeClass('activa');
                         $(this).closest('li').addClass('activa');
+                        
                         if ((comprobar.is('ul')) && (comprobar.is(':visible'))) {
                                 $(this).closest('li').removeClass('activa');
                                 comprobar.slideUp('normal');
@@ -117,14 +120,16 @@
                                 comprobar.slideDown('normal');
                         }
                 });
+                close($('.menujq'));
         });
 </script>
 
 <div class="emulator">
         <div class="tool_bar">
                 <ul id="menu_option__tool_bar">
-                        <li title="Nuevo" id="option_tool_bar" href="#" class = "new"> <img src="{% static 'img/new_document.png' %}"
-                                        alt="" width="18px" height="18px"></li>
+                        <li title="Nuevo" id="option_tool_bar" href="#" class="new"> <img
+                                        src="{% static 'img/new_document.png' %}" alt="" width="18px" height="18px">
+                        </li>
                         <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
                                         width="18px" height="18px"> </li>
                         <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt=""
@@ -147,10 +152,14 @@
                                         src="{% static 'img/redes.png' %}" alt="" width="18px" height="18px"></li>
 
                         <li title="Generador de Tráfico Especifico" id="option_tool_bar" class='generatorEspecifico'>
-                                <img src="{% static 'img/computadora.png' %}" alt="" width="18px" height="18px"></li>
-
+                                <img src="{% static 'img/computadora.png' %}" alt="" width="18px" height="18px">
+                        </li>
                         <li title="Analizador de Tráfico" id="option_tool_bar wireshark" class='wireShark'> <img
                                         src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px"></li>
+                        <li title="Graficos" id="option_tool_bar graphic" class='graphic'> <img
+                                        src="{% static 'img/diagram.png' %}" alt="" width="18px" height="18px"></li>
+                        <li title="Controller OpenDayLigth" id="option_tool_bar opendayligth" class='opendayligth'> <img
+                                        src="{% static 'img/vagueness.png' %}" alt="" width="20px" height="20px"></li>
 
                 </ul>
         </div>
@@ -312,9 +321,7 @@
 
                         <ul id="optionTrafficSpecific">
                                 <li id="optionSpecificTraffic">
-                                        <label id="ICMPSpecific"> ICMP </label>
-                                        <input id='checkInputICMPSpecific' type="checkbox" id="ICMP" name="traffic"
-                                                value="ICMP">
+                                        
                                         <label id="ICMPFULLSpecific"> ICMP FULL </label>
                                         <input id='checkInputICMPFULSpecific' type="checkbox" name="traffic"
                                                 value="ICMP">
@@ -750,7 +757,7 @@
                         <canvas id="graphic"></canvas>
                 </div>
 
-                
+
         </div>
 
 
