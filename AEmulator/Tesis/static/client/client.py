@@ -33,6 +33,7 @@ def executor(action):
                 json_data_server = json.dumps(dict_data_server)
                 print('Servidor: {!r}'.format(json_data_server))
                 bandera = False
+                return eval(json_data_server)
                 
             else:
 
@@ -44,6 +45,7 @@ def executor(action):
                 dict_data_server = eval(answer_server)
                 json_data_server = json.dumps(dict_data_server)
                 print('Servidor: {!r}'.format(json_data_server))
+                return eval(json_data_server)
         finally:
             
             if bandera == False:
@@ -64,5 +66,6 @@ def executor(action):
             json_data_server = json.dumps(dict_data_server)
             print('Servidor: {!r}'.format(json_data_server))
             bandera = True
+            return eval(json_data_server)
         finally:
             pass

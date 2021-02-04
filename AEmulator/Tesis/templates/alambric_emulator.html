@@ -70,25 +70,26 @@
                 </li>
                 <li id="menu_emulacion_bar" href="javascript:void();"> <a>Emulación</a>
                         <ul id="menu_emulacion">
-                                <li id="iniciarE"><a href="#">Iniciar Emulación</a></li>
-                                <li id="detenerE"><a href="#">Detener Emulación</a></li>
-                                <li id="wireshark"><a href="#">wireShark</a></li>
+                                <li id="iniciarE"><a href="#" class="playDesp">Iniciar Emulación</a></li>
+                                <li id="detenerE"><a href="#" class="stopDesp">Detener Emulación</a></li>
+                                <li id="wireshark" class="wSharkDesp"><a href="#">wireShark</a></li>
                                 <li id="genTraffic" class="genTr"><a href="#">Generador de Tráfico</a>
                                         <ul id="sub_menu_genT">
                                                 <li id="xtreme">
-                                                        <a id="genXtreme" onclick="topologyTemplate(this)">
+                                                        <a id="genXtreme" class="genxtremeDespl">
                                                                 Extremo a Extremo</a>
                                                 </li>
                                                 <li id="global">
-                                                        <a id="genGlobal" onclick="topologyTemplate(this)">
+                                                        <a id="genGlobal" class="genglobalDespl">
                                                                 Barrido Global</a>
                                                 <li id="specific">
-                                                        <a id="genSpecific" onclick="topologyTemplate(this)">
+                                                        <a id="genSpecific" class="genspecificDespl" >
                                                                 Barrido Especifico</a>
                                                 </li>
                                         </ul>
-
                                 </li>
+                                <li id="graf" class="grafDesp"><a href="#">Generador de Graficas</a></li>
+                                <li id="odl" class="odlDesp"><a href="#">Controlador Externo OpenDayLigth</a></li>
                         </ul>
                 </li>
                 <li id="menu_ayuda_bar" href="javascript:void();"> <a>Ayuda</a>
@@ -144,13 +145,10 @@
                                         src="{% static 'img/play.png' %}" alt="" width="18px" height="18px"></li>
                         <li title="Detener Emulación" id="option_tool_bar" class='stop'> <img
                                         src="{% static 'img/stop.png' %}" alt="" width="18px" height="18px"></li>
-
                         <li title="Generador de Tráfico Extremo a Extremo" id="option_tool_bar" class='generator'> <img
                                         src="{% static 'img/check.png' %}" alt="" width="18px" height="18px"></li>
-
                         <li title="Generador de Tráfico Global" id="option_tool_bar" class='generatorGlobal'> <img
                                         src="{% static 'img/redes.png' %}" alt="" width="18px" height="18px"></li>
-
                         <li title="Generador de Tráfico Especifico" id="option_tool_bar" class='generatorEspecifico'>
                                 <img src="{% static 'img/computadora.png' %}" alt="" width="18px" height="18px">
                         </li>
@@ -214,7 +212,7 @@
                 <h2 id="parameter_traffic">Generador de Tráfico</h2>
                 <form id="formulario_traffic">
 
-                        <label id="labelXtreme">Barrido Extremo a Extremo</label>
+                        <label id="labelXtreme">Barrido Extremo a Extremo</label><br>
                         <label id="labelTraffic">Seleccione el tipo:</label><br>
 
                         <ul id="optionTraffic">
@@ -224,8 +222,8 @@
                                                 value="ICMP">
                                 </li>
                                 <li>
-                                        <label id="ICMPFULLGlobal"> ICMP FULL </label>
-                                        <input id='checkInputICMPFULLGlobal' type="checkbox" name="traffic"
+                                        <label id="ICMPFULL"> ICMP FULL </label>
+                                        <input id='checkInputICMPFULL' type="checkbox" name="traffic"
                                                 value="ICMP">
                                 </li>
                                 <li>
@@ -244,7 +242,7 @@
                                 <li id="time">
                                         <span id="labelTime"> Tiempo de Transmisión: </span>
                                         <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
-                                        <span id="labelTime">Seg</span>
+                                        <span id="labelTimeSeg">Seg</span>
                                 </li>
 
                         </ul>
@@ -277,8 +275,6 @@
                                         <input id='checkInputICMPFULLGlobal' type="checkbox" name="traffic"
                                                 value="ICMP">
                                 </li>
-
-
                                 <li>
                                         <label for="TCP"> TCP </label>
                                         <input id='checkInputTCPGlobal' type="checkbox" name="traffic" value="TCP">
@@ -287,16 +283,15 @@
                                         <label for="UDP"> UDP </label>
                                         <input id='checkInputUDPGlobal' type="checkbox" name="traffic" value="UDP">
                                 </li>
-
                                 <li id="BWUDP">
                                         <span id="labelBWUDP"> Ancho de Banda: </span>
-                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
+                                        <input type="number" id="inputBWUDPGlobal" step="1" min="10" value="10" max="1000">
                                         <span id="labelUnidadBW">M Bit/Seg</span>
                                 </li>
                                 <li id="time">
                                         <span id="labelTime"> Tiempo de Transmisión: </span>
-                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
-                                        <span id="labelTime">Seg</span>
+                                        <input type="number" id="inputTimeGlobal" step="1" min="1" value="1" max="1000">
+                                        <span id="labelTimeSeg">Seg</span>
                                 </li>
 
                         </ul>
@@ -332,21 +327,23 @@
                                 </li>
                                 <li id="BWUDP">
                                         <span id="labelBWUDP"> Ancho de Banda: </span>
-                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
+                                        <input type="number" id="inputBWUDPSpecific" step="1" min="10" value="10" max="1000">
                                         <span id="labelUnidadBW">M Bit/Seg</span>
                                 </li>
                                 <li id="time">
                                         <span id="labelTime"> Tiempo de Transmisión: </span>
-                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
+                                        <input type="number" id="inputTimeSpecific" step="1" min="1" value="1" max="1000">
                                         <span id="labelTimeSeg">Seg</span>
                                 </li>
                         </ul>
                         <label id="labelTrafficSpecific">Seleccione los Host:</label><br>
                         <div id="containerChargeSpelection">
                                 <span id="labelHostA">Desde:</span>
-                                <input type="text" id="inputHostAS">
+                                <span id="labelHA">h</span>
+                                <input type="number" step="1" min="1" max="10000"id="inputHostAS">
                                 <span id="labelHostB">a:</span>
-                                <input type="text" id="inputHostBS">
+                                <span id="labelHB">h</span>
+                                <input type="number" step="1" min="1"  max="10000" id="inputHostBS">
                         </div>
 
                         <div id="containerChargeSpecific">

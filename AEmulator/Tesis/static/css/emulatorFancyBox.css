@@ -1461,7 +1461,7 @@
 
 /* Fancy Box Generaor de Tráfico */
 
-.divTraffic, .divTrafficGlobal{
+.divTraffic, .divTrafficGlobal {
     width: 450px;
     height: 510px;
     font-family: 'Quicksand', sans-serif;
@@ -1472,7 +1472,6 @@
     height: 480px;
     font-family: 'Quicksand', sans-serif;
 }
-
 
 #parameter_traffic, #parameter_trafficGlobal, #parameter_trafficSpecific {
     text-align: center;
@@ -1529,6 +1528,7 @@
     font-size: 15px;
     margin-top: 25px;
     margin-bottom: 10px;
+    margin-left: 40px;
 }
 
 #labelUnidadBW {
@@ -1540,26 +1540,26 @@
 }
 
 #checkInputICMP, #checkInputICMPGlobal {
-    margin-left: 185px;
+    margin-left: 175px;
     margin-bottom: 10px;
 }
 
-#checkInputICMPFULLGlobal {
-    margin-left: 146px;
+#checkInputICMPFULLGlobal, #checkInputICMPFULL {
+    margin-left: 136px;
     margin-bottom: 10px;
 }
 
 #checkInputUDP, #checkInputUDPGlobal {
-    margin-left: 190px;
+    margin-left: 180px;
     margin-bottom: 10px;
 }
 
 #checkInputTCP, #checkInputTCPGlobal {
-    margin-left: 193px;
+    margin-left: 183px;
     margin-bottom: 10px;
 }
 
-#inputBWUDP, #inputTime {
+#inputBWUDP, #inputTime, #inputBWUDPGlobal, #inputTimeGlobal, #inputBWUDPSpecific, #inputTimeSpecific {
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
     border-left: none;
@@ -1570,16 +1570,21 @@
     width: 50px;
     pointer-events: none;
 }
-
-#inputBWUDP {
-    margin-left: 50px;
+#inputBWUDPSpecific{
+    margin-left: 70px;
+    margin-bottom: 10px;
+}
+#inputBWUDP, #inputBWUDPGlobal {
+    margin-left: 70px;
     margin-bottom: 10px;
 }
 
-#inputTime {
-    margin-left: 10px;
+#inputTime, #inputTimeGlobal {
+    margin-left: 25px;
 }
-
+#inputTimeSpecific{
+    margin-left: 25px;
+}
 #containerCharge, #containerChargeGlobal {
     font-size: 15px;
     margin-left: 60px;
@@ -1587,16 +1592,16 @@
 
 #containerChargeSpecific {
     font-size: 15px;
-    margin-left: 40px;
+    margin-left: 110px;
 }
 
-#containerChargeSpelection{
+#containerChargeSpelection {
     font-size: 15px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-#inputHostAS , #inputHostBS {
+#inputHostAS, #inputHostBS {
     width: 50px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
@@ -1607,17 +1612,19 @@
     background-color: white;
 }
 
-#labelHostA{
+#labelHostA {
     margin-left: 40px;
-    margin-right: 30px;
+    margin-right: 10px;
 }
-#labelHostB{
-    margin-left: 40px;
-    margin-right: 40px;
+
+#labelHostB {
+    margin-left: 20px;
+    margin-right: 20px;
 }
+
 #inputCharge, #inputChargeGlobal {
     width: 50px;
-    margin-left: 130px;
+    margin-left: 145px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
     border-left: none;
@@ -1629,7 +1636,7 @@
 
 #inputChargeSpecific {
     width: 50px;
-    margin-left: 180px;
+    margin-left: 75px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
     border-left: none;
@@ -1639,18 +1646,18 @@
     background-color: white;
 }
 
-#generateBtn:focus, #generateBtnGlobal:focus , #generateBtnSpecific:focus {
+#generateBtn:focus, #generateBtnGlobal:focus, #generateBtnSpecific:focus {
     border: #5585e6 solid 2px;
     background-color: #81a7f1;
     outline: none;
 }
 
-#generateBtn:hover, #generateBtnGlobal:hover , #generateBtnSpecific:hover {
+#generateBtn:hover, #generateBtnGlobal:hover, #generateBtnSpecific:hover {
     border: #81a7f1 solid 2px;
     outline: none;
 }
 
-#generateBtn, #generateBtnGlobal , #generateBtnSpecific{
+#generateBtn, #generateBtnGlobal, #generateBtnSpecific {
     border: #b8b9bb solid 2px;
     outline: none;
     height: 32px;
@@ -1661,34 +1668,28 @@
     font-weight: bolder;
 }
 
-
-
-
 /*-------------------------------------------------------------*/
 
 /* Fancy Box Graphics */
 
-
 #containerGraphic {
     font-size: 25px;
     font-family: 'Quicksand', sans-serif;
-    
     width: 880px;
     height: 460px;
 }
 
-#containerCanvaGraphic{
-    
+#containerCanvaGraphic {
     width: auto;
     height: 460px;
     margin: 0px;
 }
 
-#graphic{
-    
+#graphic {
     height: 450px;
     width: 880px;
 }
+
 /* Contenedor de los Botones del Fancy Graphic */
 
 #containerFancyButtonGraphic {

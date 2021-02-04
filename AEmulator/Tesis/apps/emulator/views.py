@@ -16,8 +16,9 @@ class emulationView(View):
     def post(self, request, *args, **kwargs):
         data = request.body
         #print(data.decode(encoding='utf-8'))
-        executor(data.decode(encoding='utf-8'))
-        return JsonResponse({'Mensaje': 'Información Enviada al Servidor'})
+        data_server = executor(data.decode(encoding='utf-8'))
+        return JsonResponse(data_server)
+        #return JsonResponse({'Mensaje': 'Información Enviada al Servidor'})
 
     def get(self, request, *args, **kwargs):
         #return JsonResponse({'que contas': 'nada'})

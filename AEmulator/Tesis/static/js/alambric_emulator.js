@@ -3620,7 +3620,11 @@ function stopEmulation() {
   actionDir = {}
 }
 
+//Detiene la emulación
 $('.stop').on('click', function () {
+  stopEmulation();
+});
+$('.stopDesp').on('click', function () {
   stopEmulation();
 });
 
@@ -3668,55 +3672,136 @@ function fancyTrafficGenerator() {
 
 }
 
-//Variables para Formulario de Selección de Trafico
+//Variables para Formulario de Selección de Trafico Extremo
 $('#generateBtn').on('click', function () {
 
   var trafficICMP = $('#checkInputICMP').is(':checked');
+  var trafficICMPFULL = $('#checkInputICMPFULL').is(':checked');
   var trafficTCP = $('#checkInputTCP').is(':checked');
   var trafficUDP = $('#checkInputUDP').is(':checked');
+
   var charge = String($('#inputCharge').val());
-  var bwUDP = String($('#inputBWUDP').val())
-  var time = String($('#inputTime').val())
+  var bwUDP = String($('#inputBWUDP').val());
+  var time = String($('#inputTime').val());
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-  trafficDir['udpBw']= bwUDP+'M';
-  trafficDir['time']= time;
+  trafficDir['udpBw'] = bwUDP + 'M';
+  trafficDir['time'] = time;
 
-  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
+  if (trafficICMP == false && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    //trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
+
+    //trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    //trafficDir['pingfull'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
+
+    //trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
+
+    //trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    //trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
+
+    //trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
+
+    //trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    //trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
+
+    //trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == false) {
+
+    trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    //trafficDir['pingallfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
+
+    trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    //trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
+
+    trafficDir['pingall'] = charge;
+    //trafficDir['TCP'] = charge;
+    trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
+
+    trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    //trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
+
+    trafficDir['pingall'] = charge;
+    trafficDir['TCP'] = charge;
+    //trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
+
+  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
 
     trafficDir['pingall'] = charge;
     trafficDir['TCP'] = charge;
     trafficDir['UDP'] = charge;
+    trafficDir['pingfull'] = charge;
 
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCP'] = charge;
-    trafficDir['pingall'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDP'] = charge;
-    trafficDir['pingall'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
-
-    trafficDir['pingall'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
-
-    trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCP'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDP'] = charge;
-
-  } else {
+  }else {
 
     parent.jQuery.fancybox.close();
 
@@ -3738,8 +3823,6 @@ $('#generateBtn').on('click', function () {
     success: function (data) {
       //alert(JSON.stringify(data));
       $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
-
-
     }
   });
 
@@ -3747,8 +3830,14 @@ $('#generateBtn').on('click', function () {
 
   // Restablecimiento por Defecto de los CheckBox
   $('#checkInputICMP').prop('checked', false);
+  $('#checkInputICMPFULL').prop('checked', false);
   $('#checkInputTCP').prop('checked', false);
   $('#checkInputUDP').prop('checked', false);
+
+  $('#inputCharge').val(1);
+  $('#inputBWUDP').val(10);
+  $('#inputTime').val(1);
+
 });
 
 $('.generator').on('click', function () {
@@ -3759,6 +3848,13 @@ $('.generator').on('click', function () {
 
 });
 
+$('.genxtremeDespl').on('click', function () {
+
+  console.log("Selector Traffic");
+  loadInfoElements();
+  fancyTrafficGenerator();
+
+});
 
 // Fancy Box Generador Trafico Global
 function fancyTrafficGeneratorGlobal() {
@@ -3779,48 +3875,129 @@ function fancyTrafficGeneratorGlobal() {
 $('#generateBtnGlobal').on('click', function () {
 
   var trafficICMP = $('#checkInputICMPGlobal').is(':checked');
+  var trafficICMPFULL = $('#checkInputICMPFULLGlobal').is(':checked');
   var trafficTCP = $('#checkInputTCPGlobal').is(':checked');
   var trafficUDP = $('#checkInputUDPGlobal').is(':checked');
   var charge = String($('#inputChargeGlobal').val());
-  var bwUDP = String($('#inputBWUDP').val())
-  var time = String($('#inputTime').val())
+  var bwUDP = String($('#inputBWUDPGlobal').val());
+  var time = String($('#inputTimeGlobal').val());
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-  trafficDir['udpBw']= bwUDP +'M';
-  trafficDir['time']= time;
-  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
+  trafficDir['udpBw'] = bwUDP + 'M';
+  trafficDir['time'] = time;
+
+  if (trafficICMP == false && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    //trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
+
+    //trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    //trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
+
+    //trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
+
+    //trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    //trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
+
+    //trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
+
+    //trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    //trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
+
+    //trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == false) {
+
+    trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    //trafficDir['pingallfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
+
+    trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    //trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
+
+    trafficDir['pingallG'] = charge;
+    //trafficDir['TCPG'] = charge;
+    trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
+
+    trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    //trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
+
+    trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
+
+    trafficDir['pingallG'] = charge;
+    trafficDir['TCPG'] = charge;
+    //trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
+
+  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
 
     trafficDir['pingallG'] = charge;
     trafficDir['TCPG'] = charge;
     trafficDir['UDPG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCPG'] = charge;
-    trafficDir['pingallG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingallG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
-
-    trafficDir['pingallG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
-
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCPG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDPG'] = charge;
+    trafficDir['pingfullG'] = charge;
 
   } else {
 
@@ -3852,14 +4029,27 @@ $('#generateBtnGlobal').on('click', function () {
 
   // Restablecimiento por Defecto de los CheckBox
   $('#checkInputICMPGlobal').prop('checked', false);
+  $('#checkInputICMPFULLGlobal').prop('checked', false);
   $('#checkInputTCPGlobal').prop('checked', false);
   $('#checkInputUDPGlobal').prop('checked', false);
+
+  $('#inputChargeGlobal').val(1);
+  $('#inputBWUDPGlobal').val(10);
+  $('#inputTimeGlobal').val(1);
 
 
 
 });
 
 $('.generatorGlobal').on('click', function () {
+
+  console.log("Selector Traffic Global");
+  loadInfoElements();
+  fancyTrafficGeneratorGlobal();
+
+});
+
+$('.genglobalDespl').on('click', function () {
 
   console.log("Selector Traffic Global");
   loadInfoElements();
@@ -3885,23 +4075,22 @@ function fancyTrafficGeneratorSpecific() {
 //Variables para Formulario de Selección de Trafico
 $('#generateBtnSpecific').on('click', function () {
 
-  var trafficICMP = $('#checkInputICMPSpecific').is(':checked');
-  var trafficICMPFULL = $('#checkInputICMPFULSpecific').is(':checked');
+  var trafficICMP = $('#checkInputICMPFULSpecific').is(':checked');
   var trafficTCP = $('#checkInputTCPSpecific').is(':checked');
   var trafficUDP = $('#checkInputUDPSpecific').is(':checked');
-  var bwUDP = String($('#inputBWUDP').val())
-  var time = String($('#inputTime').val())
-  var hostA = String($('#inputHostA').val());
-  var hostB = String($('#inputHostB').val());
+  var bwUDP = String($('#inputBWUDPSpecific').val());
+  var time = String($('#inputTimeSpecific').val());
+  var hostA = String($('#inputHostAS').val());
+  var hostB = String($('#inputHostBS').val());
   var charge = String($('#inputChargeSpecific').val());
 
-  
+
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-  trafficDir['udpBw']= bwUDP +'M';
-  trafficDir['time']= time;
-  trafficDir['hInitial']=hostA;
-  trafficDir['hFinal']= hostB;
+  trafficDir['udpBw'] = bwUDP + 'M';
+  trafficDir['time'] = time;
+  trafficDir['hInitial'] = hostA;
+  trafficDir['hFinal'] = hostB;
   if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
 
     trafficDir['pingallP'] = charge;
@@ -3911,16 +4100,16 @@ $('#generateBtnSpecific').on('click', function () {
   } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
 
     trafficDir['TCPP'] = charge;
-    trafficDir['pingallP'] = charge;
+    trafficDir['pingfullP'] = charge;
 
   } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
 
     trafficDir['UDPP'] = charge;
-    trafficDir['pingallP'] = charge;
+    trafficDir['pingfullP'] = charge;
 
   } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
 
-    trafficDir['pingallP'] = charge;
+    trafficDir['pingfullP'] = charge;
 
   } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
 
@@ -3960,18 +4149,16 @@ $('#generateBtnSpecific').on('click', function () {
   });
 
   // Restablecimiento por Defecto de los CheckBox
-  $('#checkInputICMPGlobal').prop('checked', false);
   $('#checkInputICMPFULSpecific').prop('checked', false);
-  $('#checkInputTCPGlobal').prop('checked', false);
-  $('#checkInputUDPGlobal').prop('checked', false);
+  $('#checkInputTCPSpecific').prop('checked', false);
+  $('#checkInputUDPSpecific').prop('checked', false);
 
   // Restablecimiento por Defecto de los Input
-  $('#inputBWUDP').val(null)
-  $('#inputTime').val(null)
-  $('#inputHostA').val(null)
-  $('#inputHostB').val(null)
-  $("#inputChargeSpecific").val(null);
-
+  $('#inputBWUDPSpecific').val(10);
+  $('#inputTimeSpecific').val(1);
+  $('#inputHostAS').val(null);
+  $('#inputHostBS').val(null);
+  $('#inputChargeSpecific').val(1);
 });
 
 $('.generatorEspecifico').on('click', function () {
@@ -3980,35 +4167,87 @@ $('.generatorEspecifico').on('click', function () {
   loadInfoElements();
   fancyTrafficGeneratorSpecific();
 
+});
+
+$('.genspecificDespl').on('click', function () {
+
+  console.log("Selector Traffic Specific");
+  loadInfoElements();
+  fancyTrafficGeneratorSpecific();
 
 });
 
-// Display Opciones de los Fancy Generadores
-
-$('#checkInputTCPSpecific').on('click', function () {
-
-  var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
+// Display Opciones de los Fancy Generadores de trafico extremo a extremo
+$('#checkInputTCP').on('click', function () {
+  var valTrafficTCP = $('#checkInputTCP').prop('checked');
   console.log("estato: " + valTrafficTCP);
   if (valTrafficTCP == true) {
     console.log("Checkbox seleccionado");
     $('#inputTime').css({ 'pointer-events': 'visible' });
-
   } else {
     $('#inputTime').css({ 'pointer-events': 'none' });
   }
 });
 
-$('#checkInputUDPSpecific').on('click', function () {
-  var valTrafficTCP = $('checkInputUDPSpecific').prop('checked');
-  console.log("estato: " + valTrafficTCP);
-  if (valTrafficTCP == true) {
+$('#checkInputUDP').on('click', function () {
+  var valTrafficUDP = $('#checkInputUDP').prop('checked');
+  console.log("estato: " + valTrafficUDP);
+  if (valTrafficUDP == true) {
     console.log("Checkbox seleccionado");
     $('#inputTime').css({ 'pointer-events': 'visible' });
     $('#inputBWUDP').css({ 'pointer-events': 'visible' });
-
   } else {
     $('#inputTime').css({ 'pointer-events': 'none' });
     $('#inputBWUDP').css({ 'pointer-events': 'none' });
+  }
+});
+
+// Display Opciones de los Fancy Generadores de trafico global
+$('#checkInputTCPGlobal').on('click', function () {
+  var valTrafficTCP = $('#checkInputTCPGlobal').prop('checked');
+  console.log("estato: " + valTrafficTCP);
+  if (valTrafficTCP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTimeGlobal').css({ 'pointer-events': 'visible' });
+  } else {
+    $('#inputTimeGlobal').css({ 'pointer-events': 'none' });
+  }
+});
+
+$('#checkInputUDPGlobal').on('click', function () {
+  var valTrafficUDP = $('#checkInputUDPGlobal').prop('checked');
+  console.log("estato: " + valTrafficUDP);
+  if (valTrafficUDP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTimeGlobal').css({ 'pointer-events': 'visible' });
+    $('#inputBWUDPGlobal').css({ 'pointer-events': 'visible' });
+  } else {
+    $('#inputTimeGlobal').css({ 'pointer-events': 'none' });
+    $('#inputBWUDPGlobal').css({ 'pointer-events': 'none' });
+  }
+});
+
+// Display Opciones de los Fancy Generadores de trafico especifico
+$('#checkInputTCPSpecific').on('click', function () {
+  var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
+  console.log("estato: " + valTrafficTCP);
+  if (valTrafficTCP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTimeSpecific').css({ 'pointer-events': 'visible' });
+  } else {
+    $('#inputTimeSpecific').css({ 'pointer-events': 'none' });
+  }
+});
+$('#checkInputUDPSpecific').on('click', function () {
+  var valTrafficUDP = $('#checkInputUDPSpecific').prop('checked');
+  console.log("estato: " + valTrafficUDP);
+  if (valTrafficUDP == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputTimeSpecific').css({ 'pointer-events': 'visible' });
+    $('#inputBWUDPSpecific').css({ 'pointer-events': 'visible' });
+  } else {
+    $('#inputTimeSpecific').css({ 'pointer-events': 'none' });
+    $('#inputBWUDPSpecific').css({ 'pointer-events': 'none' });
   }
 });
 
@@ -4071,6 +4310,59 @@ $('.graphic').on('click', function () {
           'rgba(153, 102, 255, 1)',
           'rgba(255, 159, 64, 1)'
         ],
+        borderWidth: 1,
+        steppedLine: true
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+});
+
+$('#graf').on('click', function () {
+  var divFancy = ".divFancyGraphic";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+  var graph = $('#graphic');
+
+  var graphics = new Chart(graph, {
+    type: 'line',
+    data: {
+      labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+      datasets: [{
+        label: 'Ancho de Banda Entre Host - Servidor',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
         borderWidth: 1
       }]
     },
@@ -4086,6 +4378,8 @@ $('.graphic').on('click', function () {
   });
 
 });
+
+
 
 //Variables para Formulario IP X Client FancyBox
 $('#saveIP_xclient').on('click', function () {
@@ -4117,6 +4411,8 @@ $('#saveIP_xclient').on('click', function () {
   clear_variables_action();
 
 });
+
+// Inicia la Emulación
 function startEmulation() {
 
   console.log("Play");
@@ -4130,10 +4426,18 @@ function startEmulation() {
   $('.generatorGlobal').css({ 'pointer-events': 'visible' });
   $('.generatorEspecifico').css({ 'pointer-events': 'visible' });
   $('.graphic').css({ 'pointer-events': 'visible' });
-  $('.opendayligth').css({ 'pointer-events': 'visible' });
-
+  $('.genTr').css({ 'pointer-events': 'visible' });
+  $('.wSharkDesp').css({ 'pointer-events': 'visible' });
+  $('.grafDesp').css({ 'pointer-events': 'visible' });
+  $('.odlDesp').css({ 'pointer-events': 'visible' });
+  $('.stopDesp').css({ 'pointer-events': 'visible' });
 }
+
 $('.play').on('click', function () {
+  startEmulation()
+});
+
+$('.playDesp').on('click', function () {
   startEmulation()
 });
 
