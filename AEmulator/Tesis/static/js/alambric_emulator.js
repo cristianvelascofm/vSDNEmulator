@@ -63,6 +63,13 @@ var elements = [];//contiene todos los elementos de red y su configuración
 var elemento = {}
 
 
+//variables necesarias para la gestion del grafico del trafico generado
+
+var labelsGraphic = [];
+var datosY = [];
+
+
+
 //Variables para la ejecucion de las Topologías desde Templates
 
 var numHostTemplate = 0;
@@ -3594,11 +3601,21 @@ function stopEmulation() {
   var actionDir = {}
   actionDir['action'] = 'stop'
 
-  $('.wireShark').css({ 'pointer-events': 'none' });
+
+  $('.playDesp').css({ 'pointer-events': 'visible' });
+  $('.stopDesp').css({ 'pointer-events': 'none' });
+  $('.wSharkDesp').css({ 'pointer-events': 'none' });
+  $('.genTr').css({ 'pointer-events': 'none' });
+  $('.grafDesp').css({ 'pointer-events': 'none' });
+  $('.odlDesp').css({ 'pointer-events': 'none' });
+
+  $('.play').css({ 'pointer-events': 'visible' });
   $('.stop').css({ 'pointer-events': 'none' });
   $('.generator').css({ 'pointer-events': 'none' });
-  $('.generatorGlobal').css({ 'pointer-events': 'none' });
-  $('.generatorEspecifico').css({ 'pointer-events': 'none' });
+  $('.wireShark').css({ 'pointer-events': 'none' });
+  $('.graphic').css({ 'pointer-events': 'none' });
+  $('.opendayligth').css({ 'pointer-events': 'none' });
+
 
   // Variables JSON
   var json = JSON.stringify(actionDir);
@@ -3658,6 +3675,7 @@ $('.wireShark').on('click', function () {
   openWireshark();
 });
 
+// Fancy Generator Traffic
 function fancyTrafficGenerator() {
 
   var divFancy = ".divTraffic";
@@ -3672,139 +3690,148 @@ function fancyTrafficGenerator() {
 
 }
 
-//Variables para Formulario de Selección de Trafico Extremo
+//Variables para Formulario de Selección de Tráfico
 $('#generateBtn').on('click', function () {
+  labelsGraphic = [];
+  datosY = [];
+  var typeTraffic = $('#selectorTraffic option:selected').text();
 
-  var trafficICMP = $('#checkInputICMP').is(':checked');
-  var trafficICMPFULL = $('#checkInputICMPFULL').is(':checked');
-  var trafficTCP = $('#checkInputTCP').is(':checked');
-  var trafficUDP = $('#checkInputUDP').is(':checked');
+  // Opcion -i
+  var checkBoxRange = $('#checkBoxRange').prop("checked");
+  var range = String($('#inputRange').val());
 
-  var charge = String($('#inputCharge').val());
-  var bwUDP = String($('#inputBWUDP').val());
-  var time = String($('#inputTime').val());
+  // Opcion -b
+  var checkBoxRate = $('#checkBoxRate').prop("checked");
+  var valorRate = String($('#inputRange').val());
+  var kUnitRate = $('#radioKBit:radio:checked').val();
+  var mUnitRate = $('#radioMBit:radio:checked').val();
+
+
+  // Opcion -w
+  var checkBoxWindow = $('#checkBoxWindow').prop("checked");
+  var valorWindow = String($('#inputWindow').val());
+  var kUnitWindow = $('#radioKByteW:radio:checked').val();
+  var mUnitWindow = $('#radioMByteW:radio:checked').val();
+
+  // Opcion -l
+  var checkBoxLong = $('#checkBoxLong').prop("checked");
+  var valorLong = String($('#inputLong').val());
+  var kUnitLong = $('#radioKByteL:radio:checked').val();
+  var mUnitLong = $('#radioMByteL:radio:checked').val();
+
+  // Opcion -t
+  var radioTime = $('#radioTime:radio:checked').val();
+  var valorTime = String($('#inputTime').val());
+
+  // Opcion -n
+  var radioPacket = $('#radioPacket:radio:checked').val();
+  var valorPacket = String($('#inputPacket').val());
+  var kUnitPacket = $('#radioKByteP:radio:checked').val();
+  var mUnitPacket = $('#radioMByteP:radio:checked').val();
+
+  // Opcion -k
+  var radioBlock = $('#radioBlock:radio:checked').val();
+  var valorBlock = String($('#inputBlock').val());
+  var kUnitBlock = $('#radioKByteB:radio:checked').val();
+  var mUnitBlock = $('#radioMByteB:radio:checked').val();
+
+  // Opciones de Funcionamiento del Generador
+  var radioXtreme = $('#radioXtreme:radio:checked').val();
+  var radioGlobal = $('#radioGlobal:radio:checked').val();
+  var radioSpecific = $('#radioSpecific:radio:checked').val();
+
+  // Hosts para el modo espeifico
+  // Host A Inicial
+  var inputHostAS = String($('#inputHostAS').val());
+  // Host B Final
+  var inputHostBS = String($('#inputHostBS').val());
 
   // Arreglo para el generador de tráfico
   var trafficDir = {};
-  trafficDir['udpBw'] = bwUDP + 'M';
-  trafficDir['time'] = time;
+  console.log("valores mierditas: " + radioTime + ' l: ' + checkBoxLong + ' i: ' + checkBoxRange + ' bw: ' + checkBoxRate + ' w: ' + checkBoxWindow);
 
-  if (trafficICMP == false && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
+  //Trafico TCP
+  if (typeTraffic == 'TCP') {
+    trafficDir['TCP'] = 'true';
+  } else {
+    trafficDir['UDP'] = 'true';
+  }
+  //Emulacion de trafico por Tiempo
+  if (radioTime) {
+    console.log("Tiempo");
+    trafficDir['t'] = valorTime.toString();
+    if (checkBoxRange) {
+      trafficDir['i'] = range.toString();
+    }
 
-    //trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
+    //Emulacion de trafico por Tamaño de Bloque
+  } else if (radioBlock) {
 
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
+    console.log("bloque");
+    if (kUnitBlock) {
+      trafficDir['k'] = valorBlock.toString() + 'k';
 
-    //trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    //trafficDir['pingfull'] = charge;
+    } else if (mUnitBlock) {
+      trafficDir['k'] = valorBlock.toString() + 'm';
+    }
 
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
+    //Emulacion de trafico por Numero de Paquetes
+  } else if (radioPacket) {
+    console.log("Pquete");
+    if (kUnitPacket) {
+      trafficDir['n'] = valorPacket.toString() + 'k';
+    } else if (mUnitPacket) {
+      trafficDir['n'] = valorPacket.toString() + 'm';
+    }
+  }
 
-    //trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
+  //Definicion de la Longitud del Packete
+  if (checkBoxLong) {
+    console.log("Longitud");
+    if (!radioPacket && !radioBlock && checkBoxRange) {
+      trafficDir['i'] = range.toString();
+    }
+    if (kUnitLong) {
+      trafficDir['l'] = valorLong.toString() + 'k';
+    } else if (mUnitLong) {
+      trafficDir['l'] = valorLong.toString() + 'm';
+    }
+  }
 
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
+  //Definicion del ancho de banda de destino 
+  if (checkBoxRate) {
+    console.log("BW");
+    if (kUnitRate) {
+      trafficDir['b'] = valorRate.toString() + 'k';
+    } else if (mUnitRate) {
+      trafficDir['b'] = valorRate.toString() + 'm';
+    }
+  }
 
-    //trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    //trafficDir['pingfull'] = charge;
+  //Definicion del tamaño ventana (buffer de socket)
+  if (checkBoxWindow) {
+    console.log("Windows");
+    if (kUnitWindow) {
+      trafficDir['w'] = valorWindow.toString() + 'k';
+    } else if (mUnitWindow) {
+      trafficDir['w'] = valorWindow.toString() + 'k';
+    }
+  }
 
-  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
-
-    //trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
-
-    //trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    //trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
-
-    //trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == false) {
-
-    trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    //trafficDir['pingallfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
-
-    trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    //trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
-
-    trafficDir['pingall'] = charge;
-    //trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
-
-    trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    //trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
-
-    trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    //trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
-
-    trafficDir['pingall'] = charge;
-    trafficDir['TCP'] = charge;
-    trafficDir['UDP'] = charge;
-    trafficDir['pingfull'] = charge;
-
-  }else {
-
-    parent.jQuery.fancybox.close();
-
+  //Definicion modo de emulacion del trafico en la red
+  var modeOp = '';
+  if (radioXtreme) {
+    trafficDir['xtreme'] = 'true';
+    modeOp = 'Xtreme';
+  } else if (radioSpecific) {
+    trafficDir['specific'] = 'true';
+    trafficDir['host_client'] = inputHostAS.toString();
+    trafficDir['host_server'] = inputHostBS.toString();
+    modeOp = 'Speciffic: '+ inputHostAS.toString()+' to '+inputHostBS.toString();
+  } else if (radioGlobal) {
+    console.log("global");
+    trafficDir['global'] = 'true';
+    modeOp = 'Global';
   }
 
   parent.jQuery.fancybox.close();
@@ -3822,21 +3849,186 @@ $('#generateBtn').on('click', function () {
     data: json,
     success: function (data) {
       //alert(JSON.stringify(data));
-      $.fancybox.open('<div class="message"><h2>Hello!</h2><p>You are awesome!</p></div>');
-    }
-  });
+      $.fancybox.open('<div class="message"><h2>¡Realizado!</h2><p>Tráfico Generado con Éxito.</p></div>');
 
-  //trafficDir = {}
+      var trafficValues = {};
+      var counter = 0;
+      var interval = 0;
+      var protocol = '';
+      var time_e = 0;
+      var blocks = '';
+      var tcpMssDefault = '';
+      var blkSize = '';
+      var sockBufSize = '';
+      var rcvBufActual = '';
+      var sndBufActual = '';
+
+
+
+      var totalBytesTx = 0;
+      var bitsPerSecond = 0;
+      var promTotalBytesTx = 0;
+      var promBitsPerSecond = 0;
+      var sndCwnd = 0;
+      var promSndCwnd = 0;
+      var rtt = 0;
+      var promRtt = 0;
+      var retransmits = 0;
+      var promRetransmits = 0;
+      var rttVar = 0;
+      var promRttVar = 0;
+      var pmtu = 0;
+      var promPmtu = 0;
+      var contador = 0;
+      var auxList = ['null'];
+      //trafficValues['null'] = 'null';
+
+
+      var claves = Object.keys(data);
+
+      for (var k in data) {
+
+        for (var t in data[k]['speciffic']) {
+
+          totalBytesTx = totalBytesTx + parseInt(data[k]['speciffic'][t]['n_bytes']);
+          bitsPerSecond = bitsPerSecond + parseInt(data[k]['speciffic'][t]['bits_per_second']);
+          sndCwnd = sndCwnd + parseInt(data[k]['speciffic'][t]['snd_cwnd']);
+          rtt = rtt + parseInt(data[k]['speciffic'][t]['rtt']);
+          retransmits = retransmits + parseInt(data[k]['speciffic'][t]['retransmits']);
+          rttVar = rttVar + parseInt(data[k]['speciffic'][t]['rttvar']);
+          pmtu = pmtu + parseInt(data[k]['speciffic'][t]['pmtu']);
+          counter = counter + 1;
+          var llave = String(t);
+
+          //console.log('HOST ' + String(k));
+          //console.log('Trafico: ' + JSON.stringify(trafficValues));
+
+          if (Object.keys(trafficValues).includes(String(t))) {
+
+            var valAux = parseInt(trafficValues[llave]);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['n_bytes']);
+            //console.log('Almacenado ' + String(valAux));
+            //console.log('Actual ' + String(valorSumar));
+            var total = valAux + valorSumar;
+            trafficValues[llave] = total;
+
+          } else {
+            trafficValues[llave] = parseInt(data[k]['speciffic'][t]['n_bytes']);
+
+          }
+
+        }
+
+          protocol = String(data[k]['general']['protocol']);
+          time_e = data[k]['general']['duration'];
+          blocks = String(data[k]['general']['blocks']);
+          tcpMssDefault = String(data[k]['general']['tcp_mss_default']);
+          blkSize = String(data[k]['general']['blksize']);
+          sockBufSize = String(data[k]['general']['sock_bufsize']);
+          rcvBufActual = String(data[k]['general']['rcvbuf_actual']);
+          sndBufActual = String(data[k]['general']['sndbuf_actual']);
+
+        }
+
+
+        //Promedio de Bytes Transmitidos en la Emulacion del Trafico
+        promTotalBytesTx = totalBytesTx / counter;
+        promBitsPerSecond = bitsPerSecond / counter;
+        promSndCwnd = sndCwnd / counter;
+        promRtt = rtt / counter;
+        promRetransmits = retransmits / counter;
+        promRttVar = rttVar / counter;
+        promPmtu = pmtu / counter;
+        interval = range;
+        console.log('Trafico Tiempo ' + JSON.stringify(trafficValues));
+        //Parametros para la generacion de la grafica 
+
+        //Eje X 
+        var numLabels = time_e / interval;
+        
+
+        for (var i = 0; i <= numLabels; i++) {
+          labelsGraphic.push('t '+String(i));
+        }
+
+        for(var o in trafficValues){
+          for(var q =0; q<numLabels;q++){
+            if(String(o)== ('t_'+String(q))){
+              datosY[q] = trafficValues[o];
+            }
+          }
+        }
+
+        
+/*
+        for (var y in trafficValues){
+          datosY.push(parseInt(trafficValues[y]));
+        }*/
+        console.log("Labels " + labelsGraphic);
+        console.log("Datos " + datosY);
+
+        $('#modo_op').text(String(modeOp));
+        $('#protocol').text(String(protocol));
+        $('#duration').text(String(time_e));
+        $('#size_block').text(String(blkSize));
+        $('#bloque').text(String(blocks));
+        $('#tcp_mss').text(String(tcpMssDefault));
+        $('#snd_buffer').text(String(sndBufActual));
+        $('#rcv_buffer').text(String(rcvBufActual));
+        $('#total_bytes').text(String(totalBytesTx));
+        $('#prom_tbytes').text(String(promTotalBytesTx));
+        $('#prom_bit').text(String(promBitsPerSecond));
+        $('#prom_sndcwnd').text(String(promSndCwnd));
+        $('#prom_rtt').text(String(promRtt));
+        $('#prom_rtx').text(String(promRetransmits ));
+        $('#prom_rttvar').text(String(promRttVar));
+        $('#prom_pmtu').text(String(promPmtu));
+
+      }
+    });
+
 
   // Restablecimiento por Defecto de los CheckBox
-  $('#checkInputICMP').prop('checked', false);
-  $('#checkInputICMPFULL').prop('checked', false);
-  $('#checkInputTCP').prop('checked', false);
-  $('#checkInputUDP').prop('checked', false);
 
-  $('#inputCharge').val(1);
-  $('#inputBWUDP').val(10);
+  $('#selectorTraffic').val("TCP");
+
+  $('#radioTime').prop('checked', false);
   $('#inputTime').val(1);
+
+  $('#checkBoxLong').prop('checked', false);
+  $('#inputLong').val(1);
+  $('#radioKByteL').prop('checked', true);
+  $('#radioMByteL').prop('checked', false);
+
+  $('#checkBoxRange').prop('checked', false);
+  $('#inputRange').val(1);
+
+  $('#checkBoxRate').prop('checked', false);
+  $('#inpuRate').val(1);
+  $('#radioKBit').prop('checked', true);
+  $('#radioMBit').prop('checked', false);
+
+  $('#checkBoxWindow').prop('checked', false);
+  $('#inputWindow').val(1);
+  $('#radioKByteW').prop('checked', true);
+  $('#radioMByteW').prop('checked', false);
+
+  $('#radioPacket').prop('checked', false);
+  $('#inputPacket').val(1);
+  $('#radioKByteP').prop('checked', false);
+  $('#radioMByteP').prop('checked', false);
+
+  $('#radioBlock').prop('checked', false);
+  $('#inputBlock').val(1);
+  $('#radioKByteB').prop('checked', false);
+  $('#radioMByteB').prop('checked', false);
+
+  $('#radioXtreme').prop('checked', false);
+  $('#radioGlobal').prop('checked', true);
+  $('#radioSpecific').prop('checked', false);
+
+  $('#inputHostAS').val(null);
+  $('#inputHostBS').val(null);
 
 });
 
@@ -3844,412 +4036,342 @@ $('.generator').on('click', function () {
 
   console.log("Selector Traffic");
   loadInfoElements();
+  // Restablecimiento por Defecto de los CheckBox
+
+  $('#selectorTraffic').val("TCP");
+
+  $('#radioTime').prop('checked', false);
+  $('#inputTime').val(1);
+
+  $('#checkBoxLong').prop('checked', false);
+  $('#inputLong').val(1);
+  $('#radioKByteL').prop('checked', true);
+  $('#radioMByteL').prop('checked', false);
+
+  $('#checkBoxRange').prop('checked', false);
+  $('#inputRange').val(1);
+
+  $('#checkBoxRate').prop('checked', false);
+  $('#inpuRate').val(1);
+  $('#radioKBit').prop('checked', true);
+  $('#radioMBit').prop('checked', false);
+
+  $('#checkBoxWindow').prop('checked', false);
+  $('#inputWindow').val(1);
+  $('#radioKByteW').prop('checked', true);
+  $('#radioMByteW').prop('checked', false);
+
+  $('#radioPacket').prop('checked', false);
+  $('#inputPacket').val(1);
+  $('#radioKByteP').prop('checked', false);
+  $('#radioMByteP').prop('checked', false);
+
+  $('#radioBlock').prop('checked', false);
+  $('#inputBlock').val(1);
+  $('#radioKByteB').prop('checked', false);
+  $('#radioMByteB').prop('checked', false);
+
+  $('#radioXtreme').prop('checked', false);
+  $('#radioGlobal').prop('checked', true);
+  $('#radioSpecific').prop('checked', false);
+
+  $('#inputHostAS').val(null);
+  $('#inputHostBS').val(null);
+
   fancyTrafficGenerator();
 
 });
 
-$('.genxtremeDespl').on('click', function () {
+$('.genTr').on('click', function () {
 
   console.log("Selector Traffic");
   loadInfoElements();
+  // Restablecimiento por Defecto de los CheckBox
+
+  $('#selectorTraffic').val("TCP");
+
+  $('#radioTime').prop('checked', false);
+  $('#inputTime').val(1);
+
+  $('#checkBoxLong').prop('checked', false);
+  $('#inputLong').val(1);
+  $('#radioKByteL').prop('checked', true);
+  $('#radioMByteL').prop('checked', false);
+
+  $('#checkBoxRange').prop('checked', false);
+  $('#inputRange').val(1);
+
+  $('#checkBoxRate').prop('checked', false);
+  $('#inpuRate').val(1);
+  $('#radioKBit').prop('checked', true);
+  $('#radioMBit').prop('checked', false);
+
+  $('#checkBoxWindow').prop('checked', false);
+  $('#inputWindow').val(1);
+  $('#radioKByteW').prop('checked', true);
+  $('#radioMByteW').prop('checked', false);
+
+  $('#radioPacket').prop('checked', false);
+  $('#inputPacket').val(1);
+  $('#radioKByteP').prop('checked', false);
+  $('#radioMByteP').prop('checked', false);
+
+  $('#radioBlock').prop('checked', false);
+  $('#inputBlock').val(1);
+  $('#radioKByteB').prop('checked', false);
+  $('#radioMByteB').prop('checked', false);
+
+  $('#radioXtreme').prop('checked', false);
+  $('#radioGlobal').prop('checked', true);
+  $('#radioSpecific').prop('checked', false);
+
+  $('#inputHostAS').val(null);
+  $('#inputHostBS').val(null);
+
   fancyTrafficGenerator();
 
 });
 
-// Fancy Box Generador Trafico Global
-function fancyTrafficGeneratorGlobal() {
+// Habilitar Intervalo de tiempo
+$('#checkBoxLong').on('click', function () {
+  var valTraffic = $('#checkBoxLong').prop('checked');
 
-  var divFancy = ".divTrafficGlobal";
 
-  $.fancybox.open($(divFancy), {
-    touch: false,
-    modal: false,
-    infobar: false,
-    clickSlide: false,
-    clickOutside: false,
-  });
+  if (valTraffic == true) {
+    if ($('#inputBlock').prop('checked') == false && $('#inputPacket').prop('checked') == false) {
 
-}
+      $('#inputTime').css({ 'pointer-events': 'visible' });
+      $('#checkBoxRange').css({ 'pointer-events': 'visible' }); //Nuevo
+      $('#inputRange').css({ 'pointer-events': 'visible' });  // Nuevo
+      $('#inputPacket').css({ 'pointer-events': 'none' });
+      $('#radioKByteP').css({ 'pointer-events': 'none' });
+      $('#radioMByteP').css({ 'pointer-events': 'none' });
+      $('#inputBlock').css({ 'pointer-events': 'none' });
+      $('#radioKByteB').css({ 'pointer-events': 'none' });
+      $('#radioMByteB').css({ 'pointer-events': 'none' });
 
-//Variables para Formulario de Selección de Trafico
-$('#generateBtnGlobal').on('click', function () {
+    } else {
+      $('#inputTime').css({ 'pointer-events': 'none' });
+      $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+      $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+      $('#inputPacket').css({ 'pointer-events': 'none' });
+      $('#radioKByteP').css({ 'pointer-events': 'none' });
+      $('#radioMByteP').css({ 'pointer-events': 'none' });
+      $('#inputBlock').css({ 'pointer-events': 'none' });
+      $('#radioKByteB').css({ 'pointer-events': 'none' });
+      $('#radioMByteB').css({ 'pointer-events': 'none' });
+    }
 
-  var trafficICMP = $('#checkInputICMPGlobal').is(':checked');
-  var trafficICMPFULL = $('#checkInputICMPFULLGlobal').is(':checked');
-  var trafficTCP = $('#checkInputTCPGlobal').is(':checked');
-  var trafficUDP = $('#checkInputUDPGlobal').is(':checked');
-  var charge = String($('#inputChargeGlobal').val());
-  var bwUDP = String($('#inputBWUDPGlobal').val());
-  var time = String($('#inputTimeGlobal').val());
+  }
+});
 
-  // Arreglo para el generador de tráfico
-  var trafficDir = {};
-  trafficDir['udpBw'] = bwUDP + 'M';
-  trafficDir['time'] = time;
+// Habilitar Longitud
+//Nuevo
+$('#checkBoxLong').on('click', function () {
+  var valTraffic = $('#checkBoxLong').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
 
-  if (trafficICMP == false && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
-
-    //trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
-
-    //trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    //trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
-
-    //trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
-
-    //trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    //trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
-
-    //trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
-
-    //trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    //trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
-
-    //trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == false) {
-
-    trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    //trafficDir['pingallfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == false) {
-
-    trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    //trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true && trafficICMPFULL == true) {
-
-    trafficDir['pingallG'] = charge;
-    //trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == false) {
-
-    trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    //trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false && trafficICMPFULL == true) {
-
-    trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == false) {
-
-    trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    //trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == true && trafficICMPFULL == true) {
-
-    trafficDir['pingallG'] = charge;
-    trafficDir['TCPG'] = charge;
-    trafficDir['UDPG'] = charge;
-    trafficDir['pingfullG'] = charge;
+    $('#inputLong').css({ 'pointer-events': 'visible' });
+    $('#radioKByteL').css({ 'pointer-events': 'visible' });
+    $('#radioMByteL').css({ 'pointer-events': 'visible' });
 
   } else {
 
-    parent.jQuery.fancybox.close();
-
+    $('#inputLong').css({ 'pointer-events': 'none' });
+    $('#radioKByteL').css({ 'pointer-events': 'none' });
+    $('#radioMByteL').css({ 'pointer-events': 'none' });
   }
-
-
-  parent.jQuery.fancybox.close();
-
-  // Objeto JSON para envio de datos
-  var json = JSON.stringify(trafficDir);
-  console.log(json)
-
-  //Formato de Petición AJAX
-  $.ajax({
-    type: "post",//get- consutla post- se actualiza
-    url: "http://127.0.0.1:8000/alambric_emulator/",
-    dataType: "json",
-    contentType: 'application/json; charset=utf-8',
-    data: json,
-    success: function (data) {
-      //alert(JSON.stringify(data));
-
-    }
-  });
-
-  //trafficDir = {}
-
-  // Restablecimiento por Defecto de los CheckBox
-  $('#checkInputICMPGlobal').prop('checked', false);
-  $('#checkInputICMPFULLGlobal').prop('checked', false);
-  $('#checkInputTCPGlobal').prop('checked', false);
-  $('#checkInputUDPGlobal').prop('checked', false);
-
-  $('#inputChargeGlobal').val(1);
-  $('#inputBWUDPGlobal').val(10);
-  $('#inputTimeGlobal').val(1);
-
-
-
 });
 
-$('.generatorGlobal').on('click', function () {
+// Habilitar BW
+//Nuevo
+$('#checkBoxRate').on('click', function () {
+  var valTraffic = $('#checkBoxRate').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
 
-  console.log("Selector Traffic Global");
-  loadInfoElements();
-  fancyTrafficGeneratorGlobal();
-
-});
-
-$('.genglobalDespl').on('click', function () {
-
-  console.log("Selector Traffic Global");
-  loadInfoElements();
-  fancyTrafficGeneratorGlobal();
-
-});
-
-// Fancy Box Generador Trafico Especifico
-function fancyTrafficGeneratorSpecific() {
-
-  var divFancy = ".divTrafficSpecific";
-
-  $.fancybox.open($(divFancy), {
-    touch: false,
-    modal: false,
-    infobar: false,
-    clickSlide: false,
-    clickOutside: false,
-  });
-
-}
-
-//Variables para Formulario de Selección de Trafico
-$('#generateBtnSpecific').on('click', function () {
-
-  var trafficICMP = $('#checkInputICMPFULSpecific').is(':checked');
-  var trafficTCP = $('#checkInputTCPSpecific').is(':checked');
-  var trafficUDP = $('#checkInputUDPSpecific').is(':checked');
-  var bwUDP = String($('#inputBWUDPSpecific').val());
-  var time = String($('#inputTimeSpecific').val());
-  var hostA = String($('#inputHostAS').val());
-  var hostB = String($('#inputHostBS').val());
-  var charge = String($('#inputChargeSpecific').val());
-
-
-  // Arreglo para el generador de tráfico
-  var trafficDir = {};
-  trafficDir['udpBw'] = bwUDP + 'M';
-  trafficDir['time'] = time;
-  trafficDir['hInitial'] = hostA;
-  trafficDir['hFinal'] = hostB;
-  if (trafficICMP == true && trafficTCP == true && trafficUDP == true) {
-
-    trafficDir['pingallP'] = charge;
-    trafficDir['TCPP'] = charge;
-    trafficDir['UDPP'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCPP'] = charge;
-    trafficDir['pingfullP'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDPP'] = charge;
-    trafficDir['pingfullP'] = charge;
-
-  } else if (trafficICMP == true && trafficTCP == false && trafficUDP == false) {
-
-    trafficDir['pingfullP'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == true) {
-
-    trafficDir['TCPP'] = charge;
-    trafficDir['UDPP'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == true && trafficUDP == false) {
-
-    trafficDir['TCPP'] = charge;
-
-  } else if (trafficICMP == false && trafficTCP == false && trafficUDP == true) {
-
-    trafficDir['UDPP'] = charge;
+    $('#inpuRate').css({ 'pointer-events': 'visible' });
+    $('#radioKBit').css({ 'pointer-events': 'visible' });
+    $('#radioMBit').css({ 'pointer-events': 'visible' });
 
   } else {
 
-    parent.jQuery.fancybox.close();
+    $('#inpuRate').css({ 'pointer-events': 'none' });
+    $('#radioKBit').css({ 'pointer-events': 'none' });
+    $('#radioMBit').css({ 'pointer-events': 'none' });
+  }
+});
+
+// Habilitar Window
+//Nuevo
+$('#checkBoxWindow').on('click', function () {
+  var valTraffic = $('#checkBoxWindow').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
+
+    $('#inputWindow').css({ 'pointer-events': 'visible' });
+    $('#radioKByteW').css({ 'pointer-events': 'visible' });
+    $('#radioMByteW').css({ 'pointer-events': 'visible' });
+
+  } else {
+
+    $('#inputWindow').css({ 'pointer-events': 'none' });
+    $('#radioKByteW').css({ 'pointer-events': 'none' });
+    $('#radioMByteW').css({ 'pointer-events': 'none' });
+  }
+});
+
+// Habilitar Intervalo
+//Nuevo
+$('#checkBoxRange').on('click', function () {
+  var valTraffic = $('#checkBoxRange').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
+
+    $('#inputRange').css({ 'pointer-events': 'visible' });
+
+
+  } else {
+
+    $('#inputRange').css({ 'pointer-events': 'none' });
 
   }
-
-  parent.jQuery.fancybox.close();
-
-  // Objeto JSON para envio de datos
-  var json = JSON.stringify(trafficDir);
-  console.log(json)
-
-  //Formato de Petición AJAX
-  $.ajax({
-    type: "post",//get- consutla post- se actualiza
-    url: "http://127.0.0.1:8000/alambric_emulator/",
-    dataType: "json",
-    contentType: 'application/json; charset=utf-8',
-    data: json,
-    success: function (data) {
-      alert(JSON.stringify(data));
-    }
-  });
-
-  // Restablecimiento por Defecto de los CheckBox
-  $('#checkInputICMPFULSpecific').prop('checked', false);
-  $('#checkInputTCPSpecific').prop('checked', false);
-  $('#checkInputUDPSpecific').prop('checked', false);
-
-  // Restablecimiento por Defecto de los Input
-  $('#inputBWUDPSpecific').val(10);
-  $('#inputTimeSpecific').val(1);
-  $('#inputHostAS').val(null);
-  $('#inputHostBS').val(null);
-  $('#inputChargeSpecific').val(1);
 });
 
-$('.generatorEspecifico').on('click', function () {
-
-  console.log("Selector Traffic Specific");
-  loadInfoElements();
-  fancyTrafficGeneratorSpecific();
-
-});
-
-$('.genspecificDespl').on('click', function () {
-
-  console.log("Selector Traffic Specific");
-  loadInfoElements();
-  fancyTrafficGeneratorSpecific();
-
-});
-
-// Display Opciones de los Fancy Generadores de trafico extremo a extremo
-$('#checkInputTCP').on('click', function () {
-  var valTrafficTCP = $('#checkInputTCP').prop('checked');
-  console.log("estato: " + valTrafficTCP);
-  if (valTrafficTCP == true) {
+// Display Opciones de los Fancy Generadores de trafico
+$('#radioTime').on('click', function () {
+  var valTraffic = $('#radioTime').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
     console.log("Checkbox seleccionado");
     $('#inputTime').css({ 'pointer-events': 'visible' });
+    $('#checkBoxRange').css({ 'pointer-events': 'visible' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'visible' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'none' });
+    $('#radioKByteP').css({ 'pointer-events': 'none' });
+    $('#radioMByteP').css({ 'pointer-events': 'none' });
+    $('#inputBlock').css({ 'pointer-events': 'none' });
+    $('#radioKByteB').css({ 'pointer-events': 'none' });
+    $('#radioMByteB').css({ 'pointer-events': 'none' });
+
   } else {
     $('#inputTime').css({ 'pointer-events': 'none' });
+    $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'none' });
+    $('#radioKByteP').css({ 'pointer-events': 'none' });
+    $('#radioMByteP').css({ 'pointer-events': 'none' });
+    $('#inputBlock').css({ 'pointer-events': 'none' });
+    $('#radioKByteB').css({ 'pointer-events': 'none' });
+    $('#radioMByteB').css({ 'pointer-events': 'none' });
   }
 });
 
-$('#checkInputUDP').on('click', function () {
-  var valTrafficUDP = $('#checkInputUDP').prop('checked');
-  console.log("estato: " + valTrafficUDP);
-  if (valTrafficUDP == true) {
+$('#radioPacket').on('click', function () {
+  var valTraffic = $('#radioPacket').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
     console.log("Checkbox seleccionado");
-    $('#inputTime').css({ 'pointer-events': 'visible' });
-    $('#inputBWUDP').css({ 'pointer-events': 'visible' });
+    $('#inputTime').css({ 'pointer-events': 'none' });
+    $("#checkBoxRange").prop("checked", false); //Nuevo
+    $("#radioKByteP").prop("checked", true); //Nuevo
+    $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'visible' });
+    $('#radioKByteP').css({ 'pointer-events': 'visible' });
+    $('#radioMByteP').css({ 'pointer-events': 'visible' });
+    $('#inputBlock').css({ 'pointer-events': 'none' });
+    $('#radioKByteB').css({ 'pointer-events': 'none' });
+    $('#radioMByteB').css({ 'pointer-events': 'none' });
+
   } else {
     $('#inputTime').css({ 'pointer-events': 'none' });
-    $('#inputBWUDP').css({ 'pointer-events': 'none' });
+    $("#radioKByteP").prop("checked", true); //Nuevo
+    $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'none' });
+    $('#radioKByteP').css({ 'pointer-events': 'none' });
+    $('#radioMByteP').css({ 'pointer-events': 'none' });
+    $('#inputBlock').css({ 'pointer-events': 'none' });
+    $('#radioKByteB').css({ 'pointer-events': 'none' });
+    $('#radioMByteB').css({ 'pointer-events': 'none' });
   }
 });
 
-// Display Opciones de los Fancy Generadores de trafico global
-$('#checkInputTCPGlobal').on('click', function () {
-  var valTrafficTCP = $('#checkInputTCPGlobal').prop('checked');
-  console.log("estato: " + valTrafficTCP);
-  if (valTrafficTCP == true) {
+$('#radioBlock').on('click', function () {
+  var valTraffic = $('#radioBlock').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
     console.log("Checkbox seleccionado");
-    $('#inputTimeGlobal').css({ 'pointer-events': 'visible' });
+    $('#inputTime').css({ 'pointer-events': 'none' });
+    $("#radioKByteB").prop("checked", true); //Nuevo
+    $("#checkBoxRange").prop("checked", false); //Nuevo
+    $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'none' });
+    $('#radioKByteP').css({ 'pointer-events': 'none' });
+    $('#radioMByteP').css({ 'pointer-events': 'none' });
+    $('#inputBlock').css({ 'pointer-events': 'visible' });
+    $('#radioKByteB').css({ 'pointer-events': 'visible' });
+    $('#radioMByteB').css({ 'pointer-events': 'visible' });
+
   } else {
-    $('#inputTimeGlobal').css({ 'pointer-events': 'none' });
+    $('#inputTime').css({ 'pointer-events': 'none' });
+    $("#radioKByteB").prop("checked", true); //Nuevo
+    $('#checkBoxRange').css({ 'pointer-events': 'none' }); //Nuevo
+    $('#inputRange').css({ 'pointer-events': 'none' });  // Nuevo
+    $('#inputPacket').css({ 'pointer-events': 'none' });
+    $('#radioKByteP').css({ 'pointer-events': 'none' });
+    $('#radioMByteP').css({ 'pointer-events': 'none' });
+    $('#inputBlock').css({ 'pointer-events': 'none' });
+    $('#radioKByteB').css({ 'pointer-events': 'none' });
+    $('#radioMByteB').css({ 'pointer-events': 'none' });
   }
 });
 
-$('#checkInputUDPGlobal').on('click', function () {
-  var valTrafficUDP = $('#checkInputUDPGlobal').prop('checked');
-  console.log("estato: " + valTrafficUDP);
-  if (valTrafficUDP == true) {
+// Display Opciones de los Fancy Generadores de trafico
+$('#radioSpecific').on('click', function () {
+  var valTraffic = $('#radioSpecific').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
     console.log("Checkbox seleccionado");
-    $('#inputTimeGlobal').css({ 'pointer-events': 'visible' });
-    $('#inputBWUDPGlobal').css({ 'pointer-events': 'visible' });
+    $('#inputHostAS').css({ 'pointer-events': 'visible' });
+    $('#inputHostBS').css({ 'pointer-events': 'visible' });
   } else {
-    $('#inputTimeGlobal').css({ 'pointer-events': 'none' });
-    $('#inputBWUDPGlobal').css({ 'pointer-events': 'none' });
+    $('#inputHostAS').css({ 'pointer-events': 'none' });
+    $('#inputHostBS').css({ 'pointer-events': 'none' });
+  }
+});
+$('#radioXtreme').on('click', function () {
+  var valTraffic = $('#radioXtreme').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputHostAS').css({ 'pointer-events': 'none' });
+    $('#inputHostBS').css({ 'pointer-events': 'none' });
+  } else {
+    $('#inputHostAS').css({ 'pointer-events': 'none' });
+    $('#inputHostBS').css({ 'pointer-events': 'none' });
+  }
+});
+$('#radioGlobal').on('click', function () {
+  var valTraffic = $('#radioGlobal').prop('checked');
+  console.log("estato: " + valTraffic);
+  if (valTraffic == true) {
+    console.log("Checkbox seleccionado");
+    $('#inputHostAS').css({ 'pointer-events': 'none' });
+    $('#inputHostBS').css({ 'pointer-events': 'none' });
+  } else {
+    $('#inputHostAS').css({ 'pointer-events': 'none' });
+    $('#inputHostBS').css({ 'pointer-events': 'none' });
   }
 });
 
-// Display Opciones de los Fancy Generadores de trafico especifico
-$('#checkInputTCPSpecific').on('click', function () {
-  var valTrafficTCP = $('#checkInputTCPSpecific').prop('checked');
-  console.log("estato: " + valTrafficTCP);
-  if (valTrafficTCP == true) {
-    console.log("Checkbox seleccionado");
-    $('#inputTimeSpecific').css({ 'pointer-events': 'visible' });
-  } else {
-    $('#inputTimeSpecific').css({ 'pointer-events': 'none' });
-  }
-});
-$('#checkInputUDPSpecific').on('click', function () {
-  var valTrafficUDP = $('#checkInputUDPSpecific').prop('checked');
-  console.log("estato: " + valTrafficUDP);
-  if (valTrafficUDP == true) {
-    console.log("Checkbox seleccionado");
-    $('#inputTimeSpecific').css({ 'pointer-events': 'visible' });
-    $('#inputBWUDPSpecific').css({ 'pointer-events': 'visible' });
-  } else {
-    $('#inputTimeSpecific').css({ 'pointer-events': 'none' });
-    $('#inputBWUDPSpecific').css({ 'pointer-events': 'none' });
-  }
-});
 
 var ipClient = "";
 
@@ -4259,13 +4381,41 @@ function clear_variables_action() {
   ipClient = ""
 }
 
+// Fancy tráfico especifico por Host
+function fancyHostTrafficSpecific() {
+
+  var divFancy = ".divTrafficHost";
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+}
+// Función pasar datos al textArea
+function copiarTrafficHost() {
+  var prueba = "prueba 2";
+  var prueba2 = "contnuacion prueba";
+  var txtArea = prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
+  $("#txtAreaTrafficSpecific").html(txtArea);
+}
+
+$('.copiar').on('click', function () {
+  copiarTrafficHost();
+  fancyHostTrafficSpecific();
+});
+
+// Fancy IP 
 function fancyIpClient() {
 
   var divFancy = ".divIP_xclient";
 
   $.fancybox.open($(divFancy), {
     touch: false,
-    modal: true,
+    modal: false,
     infobar: false,
     clickSlide: false,
     clickOutside: false,
@@ -4287,28 +4437,29 @@ $('.graphic').on('click', function () {
 
   var graph = $('#graphic');
 
+  datosY.push(0);
+
+
   var graphics = new Chart(graph, {
     type: 'line',
     data: {
-      labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+
+      labels: labelsGraphic,
       datasets: [{
-        label: 'Ancho de Banda Entre Host - Servidor',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'Total de Bytes Transmitidos',
+        data: datosY,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
+          
+          'rgba(54, 162, 235, 0.2)'
+          
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
+          /*'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
           'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          'rgba(255, 159, 64, 1)'*/
         ],
         borderWidth: 1,
         steppedLine: true
@@ -4326,7 +4477,7 @@ $('.graphic').on('click', function () {
   });
 
 });
-
+/*
 $('#graf').on('click', function () {
   var divFancy = ".divFancyGraphic";
 
@@ -4377,7 +4528,7 @@ $('#graf').on('click', function () {
     }
   });
 
-});
+});*/
 
 
 
@@ -4388,7 +4539,7 @@ $('#saveIP_xclient').on('click', function () {
   parent.jQuery.fancybox.close();
 
   // Restablecimiento por Defecto de los Input - Controller
-  $("#saveIP_xclient").val(null);
+  $("#inputIP_xclient").val(null);
 
   //Envío JSON al views 
   console.log(JSON.stringify(elemento));
@@ -4404,7 +4555,7 @@ $('#saveIP_xclient').on('click', function () {
     contentType: 'application/json; charset=utf-8',
     data: json,
     success: function (data) {
-      alert(JSON.stringify(data));
+      $.fancybox.open('<div class="message"><h2>¡Realizado!</h2><p>Red Emulada con Éxito.</p></div>');
     }
   });
 
@@ -4420,24 +4571,29 @@ function startEmulation() {
   elemento['items'] = elements;
   fancyIpClient();
 
-  $('.wireShark').css({ 'pointer-events': 'visible' });
-  $('.stop').css({ 'pointer-events': 'visible' });
-  $('.generator').css({ 'pointer-events': 'visible' });
-  $('.generatorGlobal').css({ 'pointer-events': 'visible' });
-  $('.generatorEspecifico').css({ 'pointer-events': 'visible' });
-  $('.graphic').css({ 'pointer-events': 'visible' });
-  $('.genTr').css({ 'pointer-events': 'visible' });
+  $('.stopDesp').css({ 'pointer-events': 'visible' });
   $('.wSharkDesp').css({ 'pointer-events': 'visible' });
+  $('.genTr').css({ 'pointer-events': 'visible' });
   $('.grafDesp').css({ 'pointer-events': 'visible' });
   $('.odlDesp').css({ 'pointer-events': 'visible' });
-  $('.stopDesp').css({ 'pointer-events': 'visible' });
+
+  $('.stop').css({ 'pointer-events': 'visible' });
+  $('.generator').css({ 'pointer-events': 'visible' });
+  $('.wireShark').css({ 'pointer-events': 'visible' });
+  $('.graphic').css({ 'pointer-events': 'visible' });
+  $('.opendayligth').css({ 'pointer-events': 'visible' });
+
 }
 
 $('.play').on('click', function () {
+  $('.play').css({ 'pointer-events': 'none' });
+  $('.playDesp').css({ 'pointer-events': 'none' });
   startEmulation()
 });
 
 $('.playDesp').on('click', function () {
+  $('.playDesp').css({ 'pointer-events': 'none' });
+  $('.play').css({ 'pointer-events': 'none' });
   startEmulation()
 });
 

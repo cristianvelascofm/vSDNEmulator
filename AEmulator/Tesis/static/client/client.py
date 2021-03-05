@@ -27,7 +27,8 @@ def executor(action):
                 message = json_code
                 connection.send_message(message)
                 print('Mensaje Enviado: ', json_data)
-                data_server = connection.recive_message() 
+                data_server = connection.recive_message()
+                print(type(data_server))
                 answer_server = data_server.decode()
                 dict_data_server = eval(answer_server)
                 json_data_server = json.dumps(dict_data_server)
@@ -40,7 +41,9 @@ def executor(action):
                 message = json_code
                 connection.send_message(message)
                 print('Mensaje Enviado: ', json_data)
-                data_server = connection.recive_message() 
+                data_server = connection.recive_message()
+                print(type(data_server))
+
                 answer_server = data_server.decode()
                 dict_data_server = eval(answer_server)
                 json_data_server = json.dumps(dict_data_server)

@@ -327,35 +327,13 @@ body, html {
     padding-left: 30px;
 }
 
-#genTraffic>ul {
-    display: none;
-}
-
 #genTraffic {
-    background-image: url(../img/rigth_arrow.png);
-    background-size: 15px;
-    background-position: 220px 16px;
+    background-image: url(../img/check.png);
+    background-size: 28px;
+    background-position: 5px 8px;
     background-repeat: no-repeat;
-    padding-left: 5px;
+    padding-left: 35px;
     border-bottom: dashed 1px black;
-}
-
-#genTraffic:hover {
-    background-image: url(../img/rigth_arrow_blue.png);
-    background-size: 15px;
-    background-position: 220px 16px;
-    background-repeat: no-repeat;
-}
-
-#genTraffic:hover>ul {
-    margin-left: 245px;
-    position: absolute;
-    display: block;
-    height: 140px;
-    width: 240px;
-    background-color: #9fd6d6;
-    padding-left: 8px;
-    margin-top: -45px;
 }
 
 #genXtreme {

@@ -1459,107 +1459,30 @@
     margin-left: 95px;
 }
 
-/* Fancy Box Generaor de Tráfico */
+/* Fancy Box Generador de Tráfico */
 
-.divTraffic, .divTrafficGlobal {
-    width: 450px;
-    height: 510px;
+.divTrafficTCP {
+    width: 590px;
+    height: 620px;
     font-family: 'Quicksand', sans-serif;
 }
 
-.divTrafficSpecific {
-    width: 460px;
-    height: 480px;
-    font-family: 'Quicksand', sans-serif;
-}
-
-#parameter_traffic, #parameter_trafficGlobal, #parameter_trafficSpecific {
+#parameter_traffic {
     text-align: center;
-    margin-top: 5px;
+    margin-top: 3px;
 }
 
-#labelGlobal {
-    font-size: 20px;
-    font-weight: bolder;
+#formulario_traffic {
+    font-size: 14px;
+}
+
+#labelTraffic {
     text-align: center;
-    margin-left: 65px;
-}
-
-#labelXtreme {
-    font-size: 20px;
-    font-weight: bolder;
-    text-align: center;
-    margin-left: 50px;
-}
-
-#labelSpecific {
-    font-size: 20px;
-    font-weight: bolder;
-    text-align: center;
-    margin-left: 50px;
-}
-
-#labelTrafficGlobal, #labelTraffic {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    margin-left: 115px;
-}
-
-#labelTrafficSpecific {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    margin-left: 120px;
-}
-
-#optionTraffic {
-    font-size: 15px;
-    margin-left: 20px;
-    margin-top: 40px;
-}
-
-#optionTrafficSpecific {
-    font-size: 15px;
-    margin-left: 2px;
-}
-
-#optionSpecificTraffic {
-    font-size: 15px;
-    margin-top: 25px;
-    margin-bottom: 10px;
     margin-left: 40px;
 }
 
-#labelUnidadBW {
-    font-size: 12px;
-}
-
-#labelTimeSeg {
-    font-size: 12px;
-}
-
-#checkInputICMP, #checkInputICMPGlobal {
-    margin-left: 175px;
-    margin-bottom: 10px;
-}
-
-#checkInputICMPFULLGlobal, #checkInputICMPFULL {
-    margin-left: 136px;
-    margin-bottom: 10px;
-}
-
-#checkInputUDP, #checkInputUDPGlobal {
-    margin-left: 180px;
-    margin-bottom: 10px;
-}
-
-#checkInputTCP, #checkInputTCPGlobal {
-    margin-left: 183px;
-    margin-bottom: 10px;
-}
-
-#inputBWUDP, #inputTime, #inputBWUDPGlobal, #inputTimeGlobal, #inputBWUDPSpecific, #inputTimeSpecific {
+#selectorTraffic {
+    margin-left: 130px;
     border-bottom: #81a7f1 solid 2px;
     border-top: none;
     border-left: none;
@@ -1568,37 +1491,140 @@
     text-align: right;
     background-color: white;
     width: 50px;
+}
+
+#divParameterTraffic {
+    margin-left: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#labelParameterTraffic, #labelModeTraffic {
+    font-weight: bold;
+    text-align: center;
+}
+
+#inputRange {
+    margin-left: 83px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 70px;
+}
+
+#inpuRate {
+    margin-left: 45px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 70px;
     pointer-events: none;
 }
-#inputBWUDPSpecific{
-    margin-left: 70px;
-    margin-bottom: 10px;
+
+#radioKBit, #radioMBit{
+    pointer-events: none;
 }
-#inputBWUDP, #inputBWUDPGlobal {
-    margin-left: 70px;
+#inputWindow {
+    margin-left: 10px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 70px;
+    pointer-events: none;
+}
+
+#radioKByteW, #radioMByteW{
+    pointer-events: none;
+}
+
+#inputLong {
+    margin-left: 89px;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 70px;
+    pointer-events: none;
+}
+
+#radioKByteL {
+    pointer-events: none;
+}
+
+#inputTime, #inputPacket, #inputBlock {
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    text-align: right;
+    background-color: white;
+    width: 70px;
+    pointer-events: none;
+}
+
+#range, #rate, #window, #long, #time, #packet, #block {
     margin-bottom: 10px;
 }
 
-#inputTime, #inputTimeGlobal {
-    margin-left: 25px;
-}
-#inputTimeSpecific{
-    margin-left: 25px;
-}
-#containerCharge, #containerChargeGlobal {
-    font-size: 15px;
-    margin-left: 60px;
+#inputBlock {
+    margin-left: 101px;
 }
 
-#containerChargeSpecific {
-    font-size: 15px;
-    margin-left: 110px;
+#inputPacket {
+    margin-left: 85px;
 }
 
-#containerChargeSpelection {
-    font-size: 15px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+#inputTime {
+    margin-left: 88px;
+}
+
+#radioTime {
+    margin-left: 3px;
+}
+
+#radioPacket {
+    margin-left: 3px;
+}
+
+#radioBlock {
+    margin-left: 3px;
+}
+
+#radioXtreme {
+    margin-left: 160px;
+}
+
+#radioGlobal {
+    margin-left: 245px;
+}
+
+#radioSpecific {
+    margin-left: 222px;
+}
+
+#kbit, #mbit, #labelUnidadRange, #kbytes, #mbytes, #labelTimeSeg {
+    font-size: 10px;
+}
+
+#radioMByteL {
+    margin-left: 15px;
+    pointer-events: none;
 }
 
 #inputHostAS, #inputHostBS {
@@ -1610,10 +1636,19 @@
     outline: none;
     text-align: right;
     background-color: white;
+    pointer-events: none;
+}
+
+#checkBoxRange, #inputRange {
+    pointer-events: none;
+}
+
+#radioKByteP, #radioMByteP, #radioKByteB, #radioMByteB {
+    pointer-events: none;
 }
 
 #labelHostA {
-    margin-left: 40px;
+    margin-left: 60px;
     margin-right: 10px;
 }
 
@@ -1622,50 +1657,26 @@
     margin-right: 20px;
 }
 
-#inputCharge, #inputChargeGlobal {
-    width: 50px;
-    margin-left: 145px;
-    border-bottom: #81a7f1 solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+#generateBtn {
+    border: #b8b9bb solid 2px;
     outline: none;
-    text-align: right;
-    background-color: white;
+    height: 25px;
+    width: 35%;
+    border-radius: 15px;
+    margin-left: 165px;
+    margin-top: 10px;
+    font-weight: bolder;
 }
 
-#inputChargeSpecific {
-    width: 50px;
-    margin-left: 75px;
-    border-bottom: #81a7f1 solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-    text-align: right;
-    background-color: white;
-}
-
-#generateBtn:focus, #generateBtnGlobal:focus, #generateBtnSpecific:focus {
+#generateBtn:focus {
     border: #5585e6 solid 2px;
     background-color: #81a7f1;
     outline: none;
 }
 
-#generateBtn:hover, #generateBtnGlobal:hover, #generateBtnSpecific:hover {
+#generateBtn:hover {
     border: #81a7f1 solid 2px;
     outline: none;
-}
-
-#generateBtn, #generateBtnGlobal, #generateBtnSpecific {
-    border: #b8b9bb solid 2px;
-    outline: none;
-    height: 32px;
-    width: 35%;
-    border-radius: 15px;
-    margin-left: 125px;
-    margin-top: 20px;
-    font-weight: bolder;
 }
 
 /*-------------------------------------------------------------*/
@@ -1679,15 +1690,51 @@
     height: 460px;
 }
 
+#containerTittleFancyGraphic {
+    text-align: center;
+}
+
 #containerCanvaGraphic {
-    width: auto;
-    height: 460px;
-    margin: 0px;
+    width: 590px;
+    height: 450px;
+    border: 0px;
+    float: left;
+    margin-top: 20px;
 }
 
 #graphic {
+    width: 590px;
     height: 450px;
-    width: 880px;
+}
+
+#containerFancyInfoGraphic {
+    float: left;
+    width: 270px;
+    height: 450px;
+    margin-top: 20px;
+    padding: 5px;
+}
+
+/* Tabla */
+#tableInfo {
+    font-size: 11px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-spacing: 1px;
+}
+
+.labelparameter {
+    text-align: left;
+    
+}
+
+.parameter {
+    text-align: right;
+    border-bottom: #81a7f1 solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    color: #81a7f1;
 }
 
 /* Contenedor de los Botones del Fancy Graphic */
@@ -1731,4 +1778,31 @@
     outline: none;
     background-color: #2AC176;
     color: white;
+}
+
+/* Fancy HOST Traffic Specific*/
+
+.divTrafficHost {
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#txtAreaTrafficSpecific {
+    width: 700px;
+    height: 400px;
+    overflow-y: scroll;
+    pointer-events: none;
+    border: #b8b9bb solid 2px;
+}
+
+#tittleHostTraffic {
+    text-align: center;
+}
+
+#idenHost {
+    text-align: center;
+    background-image: url(../img/host.png);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 200px 3px;
 }

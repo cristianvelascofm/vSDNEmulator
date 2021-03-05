@@ -73,21 +73,7 @@
                                 <li id="iniciarE"><a href="#" class="playDesp">Iniciar Emulación</a></li>
                                 <li id="detenerE"><a href="#" class="stopDesp">Detener Emulación</a></li>
                                 <li id="wireshark" class="wSharkDesp"><a href="#">wireShark</a></li>
-                                <li id="genTraffic" class="genTr"><a href="#">Generador de Tráfico</a>
-                                        <ul id="sub_menu_genT">
-                                                <li id="xtreme">
-                                                        <a id="genXtreme" class="genxtremeDespl">
-                                                                Extremo a Extremo</a>
-                                                </li>
-                                                <li id="global">
-                                                        <a id="genGlobal" class="genglobalDespl">
-                                                                Barrido Global</a>
-                                                <li id="specific">
-                                                        <a id="genSpecific" class="genspecificDespl" >
-                                                                Barrido Especifico</a>
-                                                </li>
-                                        </ul>
-                                </li>
+                                <li id="genTraffic" class="genTr"><a href="#">Generador de Tráfico</a></li>
                                 <li id="graf" class="grafDesp"><a href="#">Generador de Graficas</a></li>
                                 <li id="odl" class="odlDesp"><a href="#">Controlador Externo OpenDayLigth</a></li>
                         </ul>
@@ -106,12 +92,12 @@
         $(document).ready(function () {
                 $('.menujq > ul > li:has(ul)').addClass('desplegable');
                 $('.menujq > ul > li > a').click(function () {
-                        
+
                         var comprobar = $(this).next();
-                        
+
                         $('.menujq li').removeClass('activa');
                         $(this).closest('li').addClass('activa');
-                        
+
                         if ((comprobar.is('ul')) && (comprobar.is(':visible'))) {
                                 $(this).closest('li').removeClass('activa');
                                 comprobar.slideUp('normal');
@@ -134,7 +120,7 @@
                         <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
                                         width="18px" height="18px"> </li>
                         <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt=""
-                                        width="18x" height="18px"></li>
+                                        width="18x" height="18px" class="copiar"></li>
                         <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt=""
                                         width="18px" height="18px"></li>
                         <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt=""
@@ -145,13 +131,8 @@
                                         src="{% static 'img/play.png' %}" alt="" width="18px" height="18px"></li>
                         <li title="Detener Emulación" id="option_tool_bar" class='stop'> <img
                                         src="{% static 'img/stop.png' %}" alt="" width="18px" height="18px"></li>
-                        <li title="Generador de Tráfico Extremo a Extremo" id="option_tool_bar" class='generator'> <img
+                        <li title="Generador de Tráfico" id="option_tool_bar" class='generator'> <img
                                         src="{% static 'img/check.png' %}" alt="" width="18px" height="18px"></li>
-                        <li title="Generador de Tráfico Global" id="option_tool_bar" class='generatorGlobal'> <img
-                                        src="{% static 'img/redes.png' %}" alt="" width="18px" height="18px"></li>
-                        <li title="Generador de Tráfico Especifico" id="option_tool_bar" class='generatorEspecifico'>
-                                <img src="{% static 'img/computadora.png' %}" alt="" width="18px" height="18px">
-                        </li>
                         <li title="Analizador de Tráfico" id="option_tool_bar wireshark" class='wireShark'> <img
                                         src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px"></li>
                         <li title="Graficos" id="option_tool_bar graphic" class='graphic'> <img
@@ -212,154 +193,135 @@
                 <h2 id="parameter_traffic">Generador de Tráfico</h2>
                 <form id="formulario_traffic">
 
-                        <label id="labelXtreme">Barrido Extremo a Extremo</label><br>
-                        <label id="labelTraffic">Seleccione el tipo:</label><br>
+                        <label id="labelTraffic">Seleccione el tipo de tráfico:</label>
+                        <select name="selectorTraffic" id="selectorTraffic">
+                                <option id="tcp">TCP</option>
+                                <option id="udp">UDP</option>
+                        </select>
+
+                        <!--
+                        <label id="labelTraffic">Seleccione el tipo de tráfico:</label>
+                        <select name="selectorTraffic" id="selectorTraffic">
+                                <option id="tcp">TCP</option>
+                                <option id="udp">UDP</option>
+                        </select>
+                        -->
+                        <div id="divParameterTraffic">
+                                <label id="labelParameterTraffic">Establezca los parametros de tráfico:</label>
+                        </div>
+
+                        <ul id="parameterTraffic">
+
+                                <li id="time">
+                                        <!-- Opcion -t -->
+                                        <input type="radio" id="radioTime" name="option">
+                                        <label id="optionT">Tiempo de emulación:</label>
+                                        <input type="number" id="inputTime" step="0.1" min="1" value="1" max="100000">
+                                        <span id="labelTimeSeg">Seg</span>
+
+                                </li>
+
+                                <li id="long">
+                                        <!-- Opcion -l -->
+                                        <input type="checkbox" id="checkBoxLong" name="optionL" value="a">
+                                        <span id="optionL">Longitud del paquete:</span>
+                                        <input type="number" id="inputLong" step="0.01" min="1" value="1" max="1000">
+                                        <input type="radio" id="radioKByteL" name="optionLong" checked>
+                                        <label id="kbytes">KBytes</label>
+                                        <input type="radio" id="radioMByteL" name="optionLong">
+                                        <label id="mbytes">MBytes</label>
+                                </li>
+
+                                <li id="range">
+                                        <!-- Opcion -i -->
+                                        <input type="checkbox" id="checkBoxRange" name="optionI" value="a">
+                                        <span id="optionI">Intervalo de muestreo:</span>
+                                        <input type="number" id="inputRange" step="0.01" min="1" value="1" max="1000">
+                                        <span id="labelUnidadRange">Seg</span>
+                                </li>
+                                <li id="rate">
+                                        <!-- Opcion -b -->
+                                        <input type="checkbox" id="checkBoxRate" name="optionB" value="a">
+                                        <span id="optionB">Ancho de Banda del destino:</span>
+                                        <input type="number" id="inpuRate" step="0.01" min="1" value="1" max="1000000">
+                                        <input type="radio" id="radioKBit" name="optionRate" checked>
+                                        <label id="kbit">Kbit/Seg</label>
+                                        <input type="radio" id="radioMBit" name="optionRate">
+                                        <label id="mbit">Mbit/Seg</label>
+
+                                </li>
+                                <li id="window">
+                                        <!-- Opcion -w -->
+                                        <input type="checkbox" id="checkBoxWindow" name="optionW" value="a">
+                                        <span id="optionW">Tamaño de la Ventana Deslizante:</span>
+                                        <input type="number" id="inputWindow" step="0.01" min="1" value="1" max="1000">
+                                        <input type="radio" id="radioKByteW" name="optionWindows" checked>
+                                        <label id="kbytes">KBytes</label>
+                                        <input type="radio" id="radioMByteW" name="optionWindows">
+                                        <label id="mbytes">MBytes</label>
+                                </li>
+                               
+
+                                <li id="packet">
+                                        <!-- Opcion -n -->
+                                        <input type="radio" id="radioPacket" name="option">
+                                        <label id="optionN">Cantidad de paquetes:</label>
+                                        <input type="number" id="inputPacket" step="0.001" min="1" value="1"
+                                                max="1000000">
+                                        <input type="radio" id="radioKByteP" name="optionUnityPacket">
+                                        <label id="kbytes">KBytes</label>
+                                        <input type="radio" id="radioMByteP" name="optionUnityPacket">
+                                        <label id="mbytes">MBytes</label>
+                                </li>
+
+
+                                <li id="block">
+                                        <!-- Opcion -k -->
+                                        <input type="radio" id="radioBlock" name="option">
+                                        <label id="optionW">Número de bloques:</label>
+                                        <input type="number" id="inputBlock" step="0.001" min="1" value="1"
+                                                max="1000000">
+                                        <input type="radio" id="radioKByteB" name="optionUnityBlock">
+                                        <label id="kbytes">KBytes</label>
+                                        <input type="radio" id="radioMByteB" name="optionUnityBlock">
+                                        <label id="mbytes">MBytes</label>
+
+                                </li>
+
+
+                        </ul>
+                        <div id="labelModeTraffic">
+                                <label>Seleccione el modo de operación:</label>
+                        </div>
 
                         <ul id="optionTraffic">
                                 <li>
-                                        <label for="ICMP">ICMP</label>
-                                        <input id='checkInputICMP' type="checkbox" id="ICMP" name="traffic"
-                                                value="ICMP">
+                                        <label for="xtreme">Barrido Extremo a Extremo</label>
+                                        <input id='radioXtreme' type="radio" id="xtreme" name="traffic" value="xtreme"
+                                                checked>
                                 </li>
                                 <li>
-                                        <label id="ICMPFULL"> ICMP FULL </label>
-                                        <input id='checkInputICMPFULL' type="checkbox" name="traffic"
-                                                value="ICMP">
+                                        <label id="global">Barrido Global</label>
+                                        <input id='radioGlobal' type="radio" name="traffic" value="global">
                                 </li>
                                 <li>
-                                        <label for="TCP">TCP</label>
-                                        <input id='checkInputTCP' type="checkbox" id="TCP" name="traffic" value="TCP">
+                                        <label for="specific">Barrido especifico</label>
+                                        <input id='radioSpecific' type="radio" name="traffic" value="specific">
                                 </li>
-                                <li>
-                                        <label for="UDP">UDP</label>
-                                        <input id='checkInputUDP' type="checkbox" id="UDP" name="traffic" value="UDP">
-                                </li>
-                                <li id="BWUDP">
-                                        <span id="labelBWUDP"> Ancho de Banda: </span>
-                                        <input type="number" id="inputBWUDP" step="1" min="10" value="10" max="1000">
-                                        <span id="labelUnidadBW">M Bit/Seg</span>
-                                </li>
-                                <li id="time">
-                                        <span id="labelTime"> Tiempo de Transmisión: </span>
-                                        <input type="number" id="inputTime" step="1" min="1" value="1" max="1000">
-                                        <span id="labelTimeSeg">Seg</span>
+                                <li id="hostSpecific">
+                                        <span id="labelHostA">Desde el Host:</span>
+                                        <span id="labelHA">h</span>
+                                        <input type="number" step="1" min="1" max="10000" id="inputHostAS">
+                                        <span id="labelHostB">a:</span>
+                                        <span id="labelHB">h</span>
+                                        <input type="number" step="1" min="1" max="10000" id="inputHostBS">
                                 </li>
 
                         </ul>
-
-                        <div id="containerCharge">
-                                <label id="labelCharge">Carga:</label>
-                                <input type="number" id="inputCharge" step="1" min="1" value="1" max="100">
-                        </div>
                         <input type="button" id="generateBtn" value="Generar">
                 </form>
         </div>
 </div>
-
-
-<div style="display: none;">
-        <div class="divTrafficGlobal">
-                <h2 id="parameter_trafficGlobal"> Generador de Tráfico </h2>
-                <form id="formulario_trafficGlobal">
-
-                        <label id="labelGlobal"> Barrido Global de la Red </label><br>
-                        <label id="labelTrafficGlobal"> Seleccione el tipo: </label><br>
-
-                        <ul id="optionTraffic">
-                                <li>
-                                        <label for="ICMPGlobal"> ICMP </label>
-                                        <input id='checkInputICMPGlobal' type="checkbox" name="traffic" value="ICMP">
-                                </li>
-                                <li>
-                                        <label id="ICMPFULLGlobal"> ICMP FULL </label>
-                                        <input id='checkInputICMPFULLGlobal' type="checkbox" name="traffic"
-                                                value="ICMP">
-                                </li>
-                                <li>
-                                        <label for="TCP"> TCP </label>
-                                        <input id='checkInputTCPGlobal' type="checkbox" name="traffic" value="TCP">
-                                </li>
-                                <li>
-                                        <label for="UDP"> UDP </label>
-                                        <input id='checkInputUDPGlobal' type="checkbox" name="traffic" value="UDP">
-                                </li>
-                                <li id="BWUDP">
-                                        <span id="labelBWUDP"> Ancho de Banda: </span>
-                                        <input type="number" id="inputBWUDPGlobal" step="1" min="10" value="10" max="1000">
-                                        <span id="labelUnidadBW">M Bit/Seg</span>
-                                </li>
-                                <li id="time">
-                                        <span id="labelTime"> Tiempo de Transmisión: </span>
-                                        <input type="number" id="inputTimeGlobal" step="1" min="1" value="1" max="1000">
-                                        <span id="labelTimeSeg">Seg</span>
-                                </li>
-
-                        </ul>
-
-                        <div id="containerChargeGlobal">
-                                <label id="labelChargeGlobal"> Carga: </label>
-                                <input type="number" id="inputChargeGlobal" step="1" min="1" value="1" max="100">
-                        </div>
-                        <input type="button" id="generateBtnGlobal" value="Generar">
-                </form>
-        </div>
-</div>
-
-
-<div style="display: none;">
-        <div class="divTrafficSpecific">
-                <h2 id="parameter_trafficSpecific">Generador de Tráfico</h2>
-                <form id="formulario_trafficSpecific">
-
-                        <label id="labelSpecific">Barrido especifico de la Red</label><br>
-                        <label id="labelTrafficSpecific">Seleccione el tipo:</label><br>
-
-                        <ul id="optionTrafficSpecific">
-                                <li id="optionSpecificTraffic">
-                                        
-                                        <label id="ICMPFULLSpecific"> ICMP FULL </label>
-                                        <input id='checkInputICMPFULSpecific' type="checkbox" name="traffic"
-                                                value="ICMP">
-                                        <label for="TCP"> TCP </label>
-                                        <input id='checkInputTCPSpecific' type="checkbox" name="traffic" value="TCP">
-                                        <label for="UDP"> UDP </label>
-                                        <input id='checkInputUDPSpecific' type="checkbox" name="traffic" value="UDP">
-                                </li>
-                                <li id="BWUDP">
-                                        <span id="labelBWUDP"> Ancho de Banda: </span>
-                                        <input type="number" id="inputBWUDPSpecific" step="1" min="10" value="10" max="1000">
-                                        <span id="labelUnidadBW">M Bit/Seg</span>
-                                </li>
-                                <li id="time">
-                                        <span id="labelTime"> Tiempo de Transmisión: </span>
-                                        <input type="number" id="inputTimeSpecific" step="1" min="1" value="1" max="1000">
-                                        <span id="labelTimeSeg">Seg</span>
-                                </li>
-                        </ul>
-                        <label id="labelTrafficSpecific">Seleccione los Host:</label><br>
-                        <div id="containerChargeSpelection">
-                                <span id="labelHostA">Desde:</span>
-                                <span id="labelHA">h</span>
-                                <input type="number" step="1" min="1" max="10000"id="inputHostAS">
-                                <span id="labelHostB">a:</span>
-                                <span id="labelHB">h</span>
-                                <input type="number" step="1" min="1"  max="10000" id="inputHostBS">
-                        </div>
-
-                        <div id="containerChargeSpecific">
-                                <label id="labelChargeSpecific"> Carga: </label>
-                                <input type="number" id="inputChargeSpecific" step="1" min="1" value="1" max="100">
-                        </div>
-                        <input type="button" id="generateBtnSpecific" value="Generar">
-                </form>
-        </div>
-</div>
-
-
-
-
-
-
 
 <div style="display: none;">
         <div class="divFormTemplate">
@@ -745,18 +707,107 @@
 <div class="divFancyGraphic" style="display: none;">
 
         <div id="containerGraphic">
-
                 <div id="containerTittleFancyGraphic">
-                        <label id="labelFancyGraphic"> GRAPH </label>
+                        <label id="labelFancyGraphic"> Analizador Grafico de Red </label>
                 </div>
 
                 <div id="containerCanvaGraphic">
                         <canvas id="graphic"></canvas>
                 </div>
 
+                <div id="containerFancyInfoGraphic">
+                        <table id="tableInfo">
+
+
+                                <tr>
+                                        <th class="labelparameter">Modo de Operación:</th>
+                                        <th id="modo_op" class="parameter" > </th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Protocolo:</th>
+                                        <th id="protocol" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Duración:</th>
+                                        <th id="duration" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Tamaño Bloque:</th>
+                                        <th id="size_block" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Bloques:</th>
+                                        <th id="bloque" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <!--TCP_mss-->
+                                        <th class="labelparameter">TCP MSS:</th>
+                                        <th id="tcp_mss" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <!--snd_buffer-->
+                                        <th class="labelparameter">Buffer de Envío:</th>
+                                        <th id="snd_buffer" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <!--rcv_buffer-->
+                                        <th class="labelparameter">Buffer de Recepción:</th>
+                                        <th id="rcv_buffer" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Total Bytes:</th>
+                                        <th id="total_bytes" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom Total Bytes:</th>
+                                        <th id="prom_tbytes" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom Bit por Seg:</th>
+                                        <th id="prom_bit" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom SND CWND :</th>
+                                        <th id="prom_sndcwnd" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom RTT:</th>
+                                        <th id="prom_rtt" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom Retransmitidos:</th>
+                                        <th id="prom_rtx" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom RTTVAR:</th>
+                                        <th id="prom_rttvar" class="parameter"> Aqui va la info</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameter">Prom PMTU:</th>
+                                        <th id="prom_pmtu" class="parameter"> Aqui va la info</th>
+                                </tr>
+
+                        </table>
+                </div>
 
         </div>
 
+
+
+
+
+
+</div>
+
+<div class="divTrafficHost" style="display: none;">
+
+        <div id="containerTrafficHost">
+                <h2 id="tittleHostTraffic">ANALIZADOR DE TRAFICO ESPECIFICO</h2>
+                <h3 id="idenHost">HOST h</h3>
+                <textarea id="txtAreaTrafficSpecific">
+                        prueba
+                </textarea>
+        </div>
 
 </div>
 
