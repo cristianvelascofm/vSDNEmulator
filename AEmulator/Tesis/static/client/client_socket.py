@@ -19,7 +19,7 @@ class Connection():
         self.__sock.sendall(msj.encode())
     
     def stop_connection(self):
-        self.__sock.close()
+        self.__sock.close() 
     
     def recive_message(self):
         data = self.__sock.recv(self.__cache)
