@@ -4529,7 +4529,7 @@ function fancyHostTrafficSpecific() {
 // Función pasar datos al textArea
 function copiarTrafficHost(id) {
   
-  var tabla = 'Especifico '+'\n'+'Host: '+String('H2')+'\n'+'Tiempo'+'\t\t'+'Bytes'+'\t\t'+'Bits/Seg'+'\t\t'+'Retransmitidos'+'\t\t'+'SND CWND'+'\t\t'+'RTT'+'\t\t'+'RTTVAR'+'\t\t'+'PMTU';
+  var tabla = 'Especifico '+'\n'+'Host: '+String('H2')+'\n'+'Tiempo'+'\t\t'+'Bytes'+'\t\t'+'BitRate'+'\t\t'+'Retransmitidos'+'\t\t'+'CWND'+'\t\t'+'RTT'+'\t\t'+'RTTVAR'+'\t\t'+'PMTU';
   
   var prueba = "prueba 2";
   var prueba2 = "contnuacion prueba";
