@@ -11,6 +11,11 @@ var labelTextController = new fabric.IText("label", {
 
 });
 
+window.oncontextmenu = function () {
+  return false;
+}
+
+
 var boxWidth = labelTextController.getScaledWidth();
 var rectangleController = new fabric.Rect({
   left: 0,
@@ -44,7 +49,10 @@ window.onload = function () {
 }
 
 // Lienzo canvas
-var canvas = this._canvas = new fabric.Canvas('canvas');
+var canvas = this._canvas = new fabric.Canvas('canvas', {
+  fireRightClick: true,
+  fireMiddleClick: true
+});
 canvas.backgroundColor = '#EDFAFA';
 canvas.renderAll();
 var insertOp = false;
@@ -66,9 +74,16 @@ var elemento = {}
 //variables necesarias para la gestion del grafico del trafico generado
 
 var labelsGraphic = [];
-var datosY = [];
+var datosYNumBytes = [];
+var datosYBitsPerSecond = [];
+var datosYSndCwnd = [];
+var datosYRetransmits = [];
+var datosYRtt = [];
+var datosYRttVar = [];
+var datosYPmtu = [];
 
-
+//Datos del Trafico generado
+var trafficData = {}
 
 //Variables para la ejecucion de las Topologías desde Templates
 
@@ -2025,7 +2040,7 @@ canvas.on("mouse:dblclick", function (options) {
           divFancy = ".divFancyController";
 
         } else if (objId == "h") {
-
+          $('#labelFancyHost').text('Host: ' + objActive.id);
           var iPHost = objActive.iPHost;
           var sheduler = objActive.sheduler;
           var cpuLimit = objActive.cpuLimit;
@@ -2280,7 +2295,15 @@ canvas.observe('mouse:down', function (options) {
           lockUniScaling: false,
           lockRotation: false,
         });
-        //Si el Elemento Activo es una Asiciación o Link aumenta su Grosor
+
+        if (options.button === 3) {
+          console.log("right click");
+          if (objActive.id.charAt(0) == "h") {
+            fancyHostTrafficSpecific();
+
+          }
+        }
+        //Si el Elemento Activo es una Asociación o Link aumenta su Grosor
         if (objActive.id.charAt(0) == "l" || objActive.id.charAt(0) == "n") {
           objActive && objActive.set({
             strokeWidth: 4,
@@ -2295,6 +2318,7 @@ canvas.observe('mouse:down', function (options) {
         objActive.set({
           opacity: 0.7,
         });
+
       } else {
         canvas.forEachObject(function (obj) {
           if (obj.id.charAt(0) == "l" || obj.id.charAt(0) == "n") {
@@ -3827,7 +3851,7 @@ $('#generateBtn').on('click', function () {
     trafficDir['specific'] = 'true';
     trafficDir['host_client'] = inputHostAS.toString();
     trafficDir['host_server'] = inputHostBS.toString();
-    modeOp = 'Speciffic: '+ inputHostAS.toString()+' to '+inputHostBS.toString();
+    modeOp = 'Speciffic: ' + inputHostAS.toString() + ' to ' + inputHostBS.toString();
   } else if (radioGlobal) {
     console.log("global");
     trafficDir['global'] = 'true';
@@ -3885,7 +3909,8 @@ $('#generateBtn').on('click', function () {
 
 
       var claves = Object.keys(data);
-
+      //Obtención de Datos para Analizador Gráfico}
+      //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
       for (var k in data) {
 
         for (var t in data[k]['speciffic']) {
@@ -3903,89 +3928,193 @@ $('#generateBtn').on('click', function () {
           //console.log('HOST ' + String(k));
           //console.log('Trafico: ' + JSON.stringify(trafficValues));
 
-          if (Object.keys(trafficValues).includes(String(t))) {
+          //Valores Numero de Bytes
+          if (Object.keys(trafficValues).includes(String(t) + '_num_bytes')) {
 
-            var valAux = parseInt(trafficValues[llave]);
+            var valActualNumBytes = parseInt(trafficValues[llave + '_num_bytes']);
             var valorSumar = parseInt(data[k]['speciffic'][t]['n_bytes']);
-            //console.log('Almacenado ' + String(valAux));
-            //console.log('Actual ' + String(valorSumar));
-            var total = valAux + valorSumar;
-            trafficValues[llave] = total;
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_num_bytes'] = totalNumBytes;
 
           } else {
-            trafficValues[llave] = parseInt(data[k]['speciffic'][t]['n_bytes']);
+            trafficValues[llave + '_num_bytes'] = parseInt(data[k]['speciffic'][t]['n_bytes']);
 
           }
 
-        }
 
-          protocol = String(data[k]['general']['protocol']);
-          time_e = data[k]['general']['duration'];
-          blocks = String(data[k]['general']['blocks']);
-          tcpMssDefault = String(data[k]['general']['tcp_mss_default']);
-          blkSize = String(data[k]['general']['blksize']);
-          sockBufSize = String(data[k]['general']['sock_bufsize']);
-          rcvBufActual = String(data[k]['general']['rcvbuf_actual']);
-          sndBufActual = String(data[k]['general']['sndbuf_actual']);
+          //Valores Bits por Segundo
+          if (Object.keys(trafficValues).includes(String(t) + '_bits_per_second')) {
 
-        }
+            var valActualNumBytes = parseInt(trafficValues[llave + '_bits_per_second']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['bits_per_second']);
 
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_bits_per_second'] = totalNumBytes;
 
-        //Promedio de Bytes Transmitidos en la Emulacion del Trafico
-        promTotalBytesTx = totalBytesTx / counter;
-        promBitsPerSecond = bitsPerSecond / counter;
-        promSndCwnd = sndCwnd / counter;
-        promRtt = rtt / counter;
-        promRetransmits = retransmits / counter;
-        promRttVar = rttVar / counter;
-        promPmtu = pmtu / counter;
-        interval = range;
-        console.log('Trafico Tiempo ' + JSON.stringify(trafficValues));
-        //Parametros para la generacion de la grafica 
+          } else {
+            trafficValues[llave + '_bits_per_second'] = parseInt(data[k]['speciffic'][t]['bits_per_second']);
 
-        //Eje X 
-        var numLabels = time_e / interval;
-        
-
-        for (var i = 0; i <= numLabels; i++) {
-          labelsGraphic.push('t '+String(i));
-        }
-
-        for(var o in trafficValues){
-          for(var q =0; q<numLabels;q++){
-            if(String(o)== ('t_'+String(q))){
-              datosY[q] = trafficValues[o];
-            }
           }
+
+          //Valores SND CWND
+          if (Object.keys(trafficValues).includes(String(t) + '_snd_cwnd')) {
+
+            var valActualNumBytes = parseInt(trafficValues[llave + '_snd_cwnd']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['snd_cwnd']);
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_snd_cwnd'] = totalNumBytes;
+
+          } else {
+            trafficValues[llave + '_snd_cwnd'] = parseInt(data[k]['speciffic'][t]['snd_cwnd']);
+
+          }
+
+
+          //Valores Retransmitidos
+          if (Object.keys(trafficValues).includes(String(t) + '_retransmits')) {
+
+            var valActualNumBytes = parseInt(trafficValues[llave + '_retransmits']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['retransmits']);
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_retransmits'] = totalNumBytes;
+
+          } else {
+            trafficValues[llave + '_retransmits'] = parseInt(data[k]['speciffic'][t]['retransmits']);
+
+          }
+          //Valores RTT
+          if (Object.keys(trafficValues).includes(String(t) + '_rtt')) {
+
+            var valActualNumBytes = parseInt(trafficValues[llave + '_rtt']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['rtt']);
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_rtt'] = totalNumBytes;
+
+          } else {
+            trafficValues[llave + '_rtt'] = parseInt(data[k]['speciffic'][t]['rtt']);
+
+          }
+
+
+          //Valores RTTVar
+          if (Object.keys(trafficValues).includes(String(t) + '_rttvar')) {
+
+            var valActualNumBytes = parseInt(trafficValues[llave + '_rttvar']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['rttvar']);
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_rttvar'] = totalNumBytes;
+
+          } else {
+            trafficValues[llave + '_rttvar'] = parseInt(data[k]['speciffic'][t]['rttvar']);
+
+          }
+
+          //Valores PMTU
+          if (Object.keys(trafficValues).includes(String(t) + '_pmtu')) {
+
+            var valActualNumBytes = parseInt(trafficValues[llave + '_pmtu']);
+            var valorSumar = parseInt(data[k]['speciffic'][t]['pmtu']);
+
+            var totalNumBytes = valActualNumBytes + valorSumar;
+            trafficValues[llave + '_pmtu'] = totalNumBytes;
+
+          } else {
+            trafficValues[llave + '_pmtu'] = parseInt(data[k]['speciffic'][t]['pmtu']);
+
+          }
+
+
+
         }
 
-        
-/*
-        for (var y in trafficValues){
-          datosY.push(parseInt(trafficValues[y]));
-        }*/
-        console.log("Labels " + labelsGraphic);
-        console.log("Datos " + datosY);
-
-        $('#modo_op').text(String(modeOp));
-        $('#protocol').text(String(protocol));
-        $('#duration').text(String(time_e));
-        $('#size_block').text(String(blkSize));
-        $('#bloque').text(String(blocks));
-        $('#tcp_mss').text(String(tcpMssDefault));
-        $('#snd_buffer').text(String(sndBufActual));
-        $('#rcv_buffer').text(String(rcvBufActual));
-        $('#total_bytes').text(String(totalBytesTx));
-        $('#prom_tbytes').text(String(promTotalBytesTx));
-        $('#prom_bit').text(String(promBitsPerSecond));
-        $('#prom_sndcwnd').text(String(promSndCwnd));
-        $('#prom_rtt').text(String(promRtt));
-        $('#prom_rtx').text(String(promRetransmits ));
-        $('#prom_rttvar').text(String(promRttVar));
-        $('#prom_pmtu').text(String(promPmtu));
+        protocol = String(data[k]['general']['protocol']);
+        time_e = data[k]['general']['duration'];
+        blocks = String(data[k]['general']['blocks']);
+        tcpMssDefault = String(data[k]['general']['tcp_mss_default']);
+        blkSize = String(data[k]['general']['blksize']);
+        sockBufSize = String(data[k]['general']['sock_bufsize']);
+        rcvBufActual = String(data[k]['general']['rcvbuf_actual']);
+        sndBufActual = String(data[k]['general']['sndbuf_actual']);
 
       }
-    });
+
+
+      //Promedio de Bytes Transmitidos en la Emulacion del Trafico
+      promTotalBytesTx = totalBytesTx / counter;
+      promBitsPerSecond = bitsPerSecond / counter;
+      promSndCwnd = sndCwnd / counter;
+      promRtt = rtt / counter;
+      promRetransmits = retransmits / counter;
+      promRttVar = rttVar / counter;
+      promPmtu = pmtu / counter;
+      interval = range;
+      console.log('Trafico Tiempo ' + JSON.stringify(trafficValues));
+      //Parametros para la generacion de la grafica 
+
+      //Eje X 
+      var numLabels = time_e / interval;
+
+
+      for (var i = 0; i <= numLabels; i++) {
+        labelsGraphic.push('t ' + String(i));
+      }
+
+      for (var o in trafficValues) {
+        for (var q = 0; q < numLabels; q++) {
+          if (String(o) == ('t_' + String(q) + '_num_bytes')) {
+            datosYNumBytes[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_bits_per_second')) {
+            datosYBitsPerSecond[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_snd_cwnd')) {
+            datosYSndCwnd[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_retransmits')) {
+            datosYRetransmits[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_rtt')) {
+            datosYRtt[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_rttvar')) {
+            datosYRttVar[q] = trafficValues[o];
+          }
+          if (String(o) == ('t_' + String(q) + '_pmtu')) {
+            datosYPmtu[q] = trafficValues[o];
+          }
+        }
+        //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+        //Obtencion datos Trafico Host Individual
+        trafficData = data;
+
+
+      }
+      console.log('Datos Bytes: ' + datosYNumBytes);
+      $('#modo_op').text(String(modeOp));
+      $('#protocol').text(String(protocol));
+      $('#duration').text(String(time_e));
+      $('#size_block').text(String(blkSize));
+      $('#bloque').text(String(blocks));
+      $('#tcp_mss').text(String(tcpMssDefault));
+      $('#snd_buffer').text(String(sndBufActual));
+      $('#rcv_buffer').text(String(rcvBufActual));
+      $('#total_bytes').text(String(totalBytesTx));
+      $('#prom_tbytes').text(String(promTotalBytesTx));
+      $('#prom_bit').text(String(promBitsPerSecond));
+      $('#prom_sndcwnd').text(String(promSndCwnd));
+      $('#prom_rtt').text(String(promRtt));
+      $('#prom_rtx').text(String(promRetransmits));
+      $('#prom_rttvar').text(String(promRttVar));
+      $('#prom_pmtu').text(String(promPmtu));
+
+    }
+  });
 
 
   // Restablecimiento por Defecto de los CheckBox
@@ -4081,6 +4210,8 @@ $('.generator').on('click', function () {
   fancyTrafficGenerator();
 
 });
+
+
 
 $('.genTr').on('click', function () {
 
@@ -4396,10 +4527,14 @@ function fancyHostTrafficSpecific() {
 
 }
 // Función pasar datos al textArea
-function copiarTrafficHost() {
+function copiarTrafficHost(id) {
+  
+  var tabla = 'Especifico '+'\n'+'Host: '+String('H2')+'\n'+'Tiempo'+'\t\t'+'Bytes'+'\t\t'+'Bits/Seg'+'\t\t'+'Retransmitidos'+'\t\t'+'SND CWND'+'\t\t'+'RTT'+'\t\t'+'RTTVAR'+'\t\t'+'PMTU';
+  
   var prueba = "prueba 2";
   var prueba2 = "contnuacion prueba";
-  var txtArea = prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
+  var txtArea = tabla;
+//  var txtArea = prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
   $("#txtAreaTrafficSpecific").html(txtArea);
 }
 
@@ -4437,7 +4572,13 @@ $('.graphic').on('click', function () {
 
   var graph = $('#graphic');
 
-  datosY.push(0);
+  datosYNumBytes.push(0);
+  datosYBitsPerSecond.push(0);
+  datosYSndCwnd.push(0);
+  datosYRetransmits.push(0);
+  datosYRtt.push(0);
+  datosYRttVar.push(0);
+  datosYPmtu.push(0);
 
 
   var graphics = new Chart(graph, {
@@ -4447,23 +4588,76 @@ $('.graphic').on('click', function () {
       labels: labelsGraphic,
       datasets: [{
         label: 'Total de Bytes Transmitidos',
-        data: datosY,
+        data: datosYNumBytes,
         backgroundColor: [
-          
+
           'rgba(54, 162, 235, 0.2)'
-          
-        ],
-        borderColor: [
-          /*'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'*/
+
         ],
         borderWidth: 1,
         steppedLine: true
+      },
+      {
+        label: 'Bits por Segundo',
+        data: datosYBitsPerSecond,
+        backgroundColor: [
+          'rgba(111, 194, 63, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
+      },
+      {
+        label: 'SND CWND',
+        data: datosYSndCwnd,
+        backgroundColor: [
+          'rgba(226, 33, 33, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
+      },
+      {
+        label: 'Bytes Retransmitidos',
+        data: datosYRetransmits,
+        backgroundColor: [
+          'rgba(226, 165, 33, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
+      },
+      {
+        label: 'RTT',
+        data: datosYRtt,
+        backgroundColor: [
+          'rgba(33, 226, 226, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
+      },
+      {
+        label: 'RTT VAR',
+        data: datosYRttVar,
+        backgroundColor: [
+          'rgba(101, 33, 226, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
+      },
+      {
+        label: 'PMTU',
+        data: datosYPmtu,
+        backgroundColor: [
+          'rgba(226, 33, 168, 0.2)'
+        ],
+        borderWidth: 1,
+        steppedLine: true
+
       }]
+
     },
     options: {
       scales: {

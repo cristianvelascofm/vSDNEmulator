@@ -1529,9 +1529,10 @@
     pointer-events: none;
 }
 
-#radioKBit, #radioMBit{
+#radioKBit, #radioMBit {
     pointer-events: none;
 }
+
 #inputWindow {
     margin-left: 10px;
     border-bottom: #81a7f1 solid 2px;
@@ -1545,7 +1546,7 @@
     pointer-events: none;
 }
 
-#radioKByteW, #radioMByteW{
+#radioKByteW, #radioMByteW {
     pointer-events: none;
 }
 
@@ -1711,28 +1712,39 @@
     float: left;
     width: 270px;
     height: 450px;
-    margin-top: 20px;
+    margin-top: 25px;
     padding: 5px;
 }
 
 /* Tabla */
+
 #tableInfo {
+    margin-top: 45px;
     font-size: 11px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-spacing: 1px;
+    height: 85%;
+    border-collapse: separate;
+    border-spacing: 7px 1px;
 }
 
 .labelparameter {
     text-align: left;
-    
+    color: #20b0c0;
+}
+
+.labelparameterMeter {
+    text-align: center;
+    color: #2088c0;
 }
 
 .parameter {
-    text-align: right;
-    border-bottom: #81a7f1 solid 2px;
+    width: 43%;
+    border-bottom: #2AC176 solid 1px;
     border-top: none;
     border-left: none;
     border-right: none;
+    text-align: right;
     outline: none;
     color: #81a7f1;
 }
