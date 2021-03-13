@@ -718,9 +718,9 @@
                 <div id="containerFancyInfoGraphic">
                         <table id="tableInfo">
 
-                                
 
-                                
+
+
                                 <tr>
                                         <th class="labelparameterMeter" colspan="2">MÉTRICAS DE DESEMPEÑO</th>
                                 </tr>
@@ -807,11 +807,109 @@
 <div class="divTrafficHost" style="display: none;">
 
         <div id="containerTrafficHost">
-                <h2 id="tittleHostTraffic">ANALIZADOR DE TRAFICO ESPECIFICO</h2>
-                <h3 id="idenHost">HOST h</h3>
-                <textarea id="txtAreaTrafficSpecific">
-                        prueba
-                </textarea>
+
+                <div id="divLabelTrafficHostSpecific">
+                        <h2 id="tittleHostTraffic">ANALIZADOR DE TRAFICO ESPECIFICO</h2>
+
+                        <div>
+                                <div class="divLabelHostGeneral">
+                                        <h3 class="info_host" id="idenHost">HOST </h3><h3 class="info_host" id='id_host'></h3>
+                                </div>
+                                <div class="divLabelHostGeneral">
+                                        <label id="labelLink"> Enlace: </label>
+                                        <select id="optionLink" data-default="opL1">
+                                                <!-- <option value="opL1" selected="selected"></option> -->
+                                        </select>
+                                </div>
+                                <div class="divLabelHostGeneral">
+                                        <input type="button" id="inputSelectorLink" value="Visualizar">
+                                </div>
+
+                        </div>
+
+                </div>
+
+                <div id="divTableHostGeneral">
+                        <table id="tableInfoHG">
+
+                                <tr>
+                                        <th class="labelparameterMeterHG" colspan="4">Datos Generales</th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameterHG">Host Local:</th>
+                                        <th id="local_host" class="parameterHG"> </th>
+                                        <th class="labelparameterHG">Host Remoto:</th>
+                                        <th id="remote_host" class="parameterHG"></th>
+                                </tr>
+                                <tr>
+                                        <th class="labelparameterHG">Puerto Local:</th>
+                                        <th id="local_port" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Puerto Remoto:</th>
+                                        <th id="remote_port" class="parameterHG"></th>
+                                </tr>
+
+
+                                <tr>
+                                        <th class="labelparameterHG">Omitido:</th>
+                                        <th id="omit" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Protocolo:</th>
+                                        <th id="protocolHG" class="parameterHG"></th>
+                                </tr>
+
+                                <tr>
+                                        <th class="labelparameterHG">Buffer Envío:</th>
+                                        <th id="buff_snd" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Buffer Recepción:</th>
+                                        <th id="buff_rcv" class="parameterHG"></th>
+                                </tr>
+
+                                <tr>
+                                        <th class="labelparameterHG">Bytes Especificados Tx:</th>
+                                        <th id="bytesHG" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Ventana Deslizante:</th>
+                                        <th id="windowHG" class="parameterHG"></th>
+                                </tr>
+
+                                <tr>
+                                        <th class="labelparameterHG">Duración:</th>
+                                        <th id="timeHG" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Bloques:</th>
+                                        <th id="blockHG" class="parameterHG"></th>
+                                </tr>
+
+                                <tr>
+                                        <th class="labelparameterHG">TCP MSS:</th>
+                                        <th id="tcp_mssHG" class="parameterHG"></th>
+                                        <th class="labelparameterHG">Tanaño Bloque:</th>
+                                        <th id="blocksizeHG" class="parameterHG"></th>
+                                </tr>
+                        </table>
+
+                </div>
+
+                <div class="containerHostSpecific">
+
+                        <table class="table" id="tableHostSpecific">
+                                <thead class="thead-dark">
+                                        <tr>
+
+                                                <th id="generalHostSpecific">Tiempo I</th>
+                                                <th id="generalHostSpecific">Tiempo F</th>
+                                                <th id="generalHostSpecific">Bytes</th>
+                                                <th id="generalHostSpecific">BitRate</th>
+                                                <th id="generalHostSpecific">Retransmitidos</th>
+                                                <th id="generalHostSpecific">CWND</th>
+                                                <th id="generalHostSpecific">RTT</th>
+                                                <th id="generalHostSpecific">RTTVAR</th>
+                                                <th id="generalHostSpecific">PMTU</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                        </table>
+
+                </div>
         </div>
 
 </div>

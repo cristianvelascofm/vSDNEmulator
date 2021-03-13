@@ -84,6 +84,7 @@ var datosYPmtu = [];
 
 //Datos del Trafico generado
 var trafficData = {}
+var identTagHost = '';
 
 //Variables para la ejecucion de las Topologías desde Templates
 
@@ -2299,7 +2300,10 @@ canvas.observe('mouse:down', function (options) {
         if (options.button === 3) {
           console.log("right click");
           if (objActive.id.charAt(0) == "h") {
+
+            identTagHost = String(objActive.id);
             fancyHostTrafficSpecific();
+
 
           }
         }
@@ -3717,7 +3721,22 @@ function fancyTrafficGenerator() {
 //Variables para Formulario de Selección de Tráfico
 $('#generateBtn').on('click', function () {
   labelsGraphic = [];
-  datosY = [];
+  datosYBitsPerSecond = [];
+  datosYNumBytes = [];
+  datosYPmtu = [];
+  datosYRetransmits = [];
+  datosYRtt = [];
+  datosYRttVar = [];
+  datosYSndCwnd = [];
+
+  //Clear de LIsta de host en el Fancy de Host Traffic Speciffic
+  $('#optionLink').empty();
+
+  //Clear de la Tabla de host en el Fancy de Host Traffic Speciffic
+  $('#tableHostSpecific > tbody').empty();
+
+
+
   var typeTraffic = $('#selectorTraffic option:selected').text();
 
   // Opcion -i
@@ -4516,7 +4535,30 @@ function clear_variables_action() {
 function fancyHostTrafficSpecific() {
 
   var divFancy = ".divTrafficHost";
+  $('#optionLink').empty();
 
+  $('#local_host').text('');
+  $('#remote_host').text('');
+  $('#local_port').text('');
+  $('#remote_port').text('');
+  $('#omit').text('');
+  $('#protocolHG').text('');
+  $('#buff_snd').text('');
+  $('#buff_rcv').text('');
+  $('#bytesHG').text('');
+  $('#windowHG').text('');
+  $('#timeHG').text('');
+  $('#blockHG').text('');
+  $('#tcp_mssHG').text('');
+  $('#blocksizeHG').text('');
+
+
+  $('#tableHostSpecific > tbody').empty();
+  for (var i = 0; i < tagHost.length; i++) {
+
+    $('#optionLink').append('<option value=' + String(tagHost[i]) + ' selected="selected">' + String(tagHost[i]) + '</option>');
+  }
+  $('#id_host').text(identTagHost);
   $.fancybox.open($(divFancy), {
     touch: false,
     modal: false,
@@ -4525,21 +4567,121 @@ function fancyHostTrafficSpecific() {
     clickOutside: false,
   });
 
+
+
+
 }
+
+$('#inputSelectorLink').on('click', function () {
+
+  var tagIdHost = $('#id_host').text();
+  var hostServer = $('#optionLink option:selected').text();
+  //Clear de los datos generales de host en el Fancy de Host Traffic Speciffic
+  $('#local_host').text('');
+  $('#remote_host').text('');
+  $('#local_port').text('');
+  $('#remote_port').text('');
+  $('#omit').text('');
+  $('#protocolHG').text('');
+  $('#buff_snd').text('');
+  $('#buff_rcv').text('');
+  $('#bytesHG').text('');
+  $('#windowHG').text('');
+  $('#timeHG').text('');
+  $('#blockHG').text('');
+  $('#tcp_mssHG').text('');
+  $('#blocksizeHG').text('');
+
+
+  //Clear de la Tabla de host en el Fancy de Host Traffic Speciffic
+  $('#tableHostSpecific > tbody').empty();
+
+  if (Object.keys(trafficData).includes(String(tagIdHost) + '_' + String(hostServer))) {
+
+    var k = String(tagIdHost) + '_' + String(hostServer);
+
+    for (var q = 0; q < labelsGraphic.length; q++) {
+
+      for (var t in trafficData[k]['speciffic']) {
+        var start = String(trafficData[k]['speciffic'][t]['start']);
+        var end = String(trafficData[k]['speciffic'][t]['end']);
+        var totalBytesTx = String(trafficData[k]['speciffic'][t]['n_bytes']);
+        var bitsPerSecond = String(trafficData[k]['speciffic'][t]['bits_per_second']);
+        var sndCwnd = String(trafficData[k]['speciffic'][t]['snd_cwnd']);
+        var rtt = String(trafficData[k]['speciffic'][t]['rtt']);
+        var retransmits = String(trafficData[k]['speciffic'][t]['retransmits']);
+        var rttVar = String(trafficData[k]['speciffic'][t]['rttvar']);
+        var pmtu = String(trafficData[k]['speciffic'][t]['pmtu']);
+
+        if (String(t) == 't_' + String(q)) {
+
+          $("#tableHostSpecific").append('<tr><td>' + start + '</td><td>' + end + '</td><td>' + totalBytesTx + '</td><td>' + bitsPerSecond + '</td><td>' + retransmits + '</td><td>' + sndCwnd + '</td><td>' + rtt + '</td><td>' + rttVar + '</td><td>' + pmtu + '</td></tr>');
+        }
+      }
+
+    }
+
+    var local_host = String(trafficData[k]['general']['local_host']);
+    var local_port = String(trafficData[k]['general']['local_port']);
+    var omit = String(trafficData[k]['general']['omit']);
+    var protocolH = String(trafficData[k]['general']['protocol']);
+    var remote_host = String(trafficData[k]['general']['remote_host']);
+    var remote_port = String(trafficData[k]['general']['remote_port']);
+    var snd_buf = String(trafficData[k]['general']['sndbuf_actual']);
+    var num_bytes = String(trafficData[k]['general']['num_bytes']);
+    var rcv_buff = String(trafficData[k]['general']['rcvbuf_actual']);
+    var sock_bufsize = String(trafficData[k]['general']['sock_bufsize']);
+    var duration = String(trafficData[k]['general']['duration']);
+    var blocks = String(trafficData[k]['general']['blocks']);
+    var tcp_mss = String(trafficData[k]['general']['tcp_mss_default']);
+    var blksize = String(trafficData[k]['general']['blksize']);
+
+    $('#local_host').text(local_host);
+    $('#remote_host').text(remote_host);
+    $('#local_port').text(local_port);
+    $('#remote_port').text(remote_port);
+    $('#omit').text(omit);
+    $('#protocolHG').text(protocolH);
+    $('#buff_snd').text(snd_buf);
+    $('#buff_rcv').text(rcv_buff);
+    $('#bytesHG').text(num_bytes);
+    $('#windowHG').text(sock_bufsize);
+    $('#timeHG').text(duration);
+    $('#blockHG').text(blocks);
+    $('#tcp_mssHG').text(tcp_mss);
+    $('#blocksizeHG').text(blksize);
+
+
+  }
+
+  //var local_host = $('#local_host')
+
+
+});
 // Función pasar datos al textArea
 function copiarTrafficHost(id) {
-  
-  var tabla = 'Especifico '+'\n'+'Host: '+String('H2')+'\n'+'Tiempo'+'\t\t'+'Bytes'+'\t\t'+'BitRate'+'\t\t'+'Retransmitidos'+'\t\t'+'CWND'+'\t\t'+'RTT'+'\t\t'+'RTTVAR'+'\t\t'+'PMTU';
-  
+
+  var tabla = 'Especifico ' + '\n' + 'Host: ' + String('H2') + '\n' + 'Tiempo' + '\t\t' + 'Bytes' + '\t\t' + 'BitRate' + '\t\t' + 'Retransmitidos' + '\t\t' + 'CWND' + '\t\t' + 'RTT' + '\t\t' + 'RTTVAR' + '\t\t' + 'PMTU';
+
   var prueba = "prueba 2";
   var prueba2 = "contnuacion prueba";
   var txtArea = tabla;
-//  var txtArea = prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
+  //  var txtArea = prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
   $("#txtAreaTrafficSpecific").html(txtArea);
 }
 
 $('.copiar').on('click', function () {
-  copiarTrafficHost();
+  //copiarTrafficHost();
+  //$("#tableHostSpecific").append('<tr><td>Valor1</td><td>Valor2</td><td>Valor3</td><td>Valor4</td><td>Valor5</td><td>Valor6</td><td>Valor7</td><td>Valor8</td><td>Valor7</td></tr>');
+  // $('#myTable tr:last').after('<tr>...</tr><tr>...</tr>');
+
+  for (var i = 0; i < tagHost.length; i++) {
+
+    $('#optionLink').append('<option value=' + String(tagHost[i]) + ' selected="selected">' + String(tagHost[i]) + '</option>');
+  }
+
+
+
   fancyHostTrafficSpecific();
 });
 
@@ -4868,3 +5010,4 @@ function xSelect() {
   $("#xCloseSelect").css({ "display": "flex", "margin-top": "-22px" });
   console.log("Cerrar ");
 }
+
