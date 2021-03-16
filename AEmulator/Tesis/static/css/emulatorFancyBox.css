@@ -5,26 +5,37 @@
 .divFancySwitch {
     width: 500px;
     height: 620px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#containerParameterFancySwitch {
+    width: auto;
+    height: 40px;
+    font-size: 25px;
+}
+
+#inputInfoSwitch, #imgSw, #labelFancySwitch {
+    display: inline;
+}
+
+#inputInfoSwitch {
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+#imgSw {
+    margin-left: 110px;
+    padding-top: 5px;
+}
+
+#labelFancySwitch {
+    margin-left: 3px;
+    font-size: 33px;
 }
 
 #containerInsertSwitch {
     height: calc(70vh - 100px);
-    /*overflow: auto;*/
 }
-
-#containerParameterFancySwitch {
-    text-align: center;
-    background-image: url(../img/openflow_switch.png);
-    background-repeat: no-repeat;
-    background-size: 40px;
-    background-position: 85px -2px;
-    width: auto;
-    height: 35px;
-    font-size: 25px;
-    font-family: 'Quicksand', sans-serif;
-}
-
-/* Contenedor del Formulario */
 
 #containerFancyFormSwitch {
     font-size: 15px;
@@ -56,24 +67,6 @@
     font-size: 15px;
     margin-left: 96px;
 }
-
-/*
-#arrowTypeFancySwitch {
-    position: absolute;
-    right: 60px;
-    top: 105px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowTypeFancySwitch:hover {
-    margin-top: 2px;
-}*/
 
 /* Contenedor STP Switch*/
 
@@ -167,25 +160,6 @@
     margin-left: 74px;
 }
 
-/*
-#arrowProtocolFancySwitch {
-    position: absolute;
-    right: 60px;
-    top: 265px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowProtocolFancySwitch:hover {
-    margin-top: 2px;
-}
-*/
-
 /* Contenedor de Data Path del Switch */
 
 #containerDataPath {
@@ -210,24 +184,6 @@
     font-size: 15px;
     margin-left: 65px;
 }
-
-/*
-#arrowDataPathFancySwitch {
-    position: absolute;
-    right: 60px;
-    top: 308px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowDataPathFancySwitch:hover {
-    margin-top: 2px;
-}*/
 
 /* Contenedor Data Path Id Switch */
 
@@ -297,25 +253,6 @@
     font-size: 15px;
     margin-left: 13px;
 }
-
-/*
-#arrowFailMode {
-    position: absolute;
-    right: 60px;
-    top: 425px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowFailMode:hover {
-    margin-top: 2px;
-}
-*/
 
 /* Contenedor Elecciones Check Box */
 
@@ -459,22 +396,32 @@
 
 /* Fancy Box Insert Controller */
 
-/* Contenedor Parametros Controller */
+/* Contenedor Principal */
 
 #containerInsertController {
     height: 250px;
     width: 350px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 #containerParameterFancyController {
-    text-align: center;
-    background-image: url(../img/controller.png);
-    background-repeat: no-repeat;
-    background-size: 30px;
-    background-position: 18px 0;
-    height: 35px;
+    height: 50px;
+    width: 350px;
+    padding-top: -30px;
+    margin-bottom: 30px;
+}
+
+#inputInfoController, #imgControl, #labelFancyController {
+    display: inline;
+}
+
+#imgControl {
+    margin-left: 35px;
+}
+
+#labelFancyController {
     font-size: 25px;
-    font-family: 'Quicksand', sans-serif;
+    margin-left: 5px;
 }
 
 #containerTypeController {
@@ -492,30 +439,10 @@
     border-right: none;
     text-align: right;
     outline: none;
-    /*appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
     margin-left: 108px;
 }
-
-/*#arrowOptionTypeController {
-    position: absolute;
-    right: 60px;
-    top: 95px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowOptionTypeController:hover {
-    margin-top: 2px;
-}*/
 
 #containerIPController {
     margin-top: 10px;
@@ -534,7 +461,7 @@
     outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 130px;
+    margin-left: 127px;
 }
 
 #containerPortController {
@@ -554,7 +481,7 @@
     outline: none;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 87px;
+    margin-left: 92px;
 }
 
 #containerProtocolController {
@@ -572,32 +499,10 @@
     border-right: none;
     text-align: right;
     outline: none;
-    /* appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;*/
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    margin-left: 60px;
+    margin-left: 70px;
 }
-
-/*#arrowProtocolController {
-    position: absolute;
-    right: 60px;
-    top: 160px;
-    width: 10px;
-    height: 10px;
-    display: block;
-    border-left: 2px solid #2AC176;
-    border-bottom: 2px solid #2AC176;
-    transform: rotate(-45deg);
-    transition: all 0.25s ease;
-}
-
-#arrowProtocolController:hover {
-    margin-top: 2px;
-}*/
-
-/* Contenedor de los Botones del Formulario */
 
 #containerButtonController {
     margin-top: 40px;
@@ -650,14 +555,17 @@
 }
 
 #containerParameterFancyPort {
-    text-align: center;
-    background-image: url(../img/port.png);
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: 60px 7px;
     height: 35px;
     font-size: 25px;
-    font-family: 'Quicksand', sans-serif;
+}
+
+#imgPort {
+    margin-left: 100px;
+    text-align: center;
+}
+
+#inputInfoPort {
+    margin-left: 5px;
 }
 
 #containerFormPort {
@@ -904,14 +812,17 @@
 }
 
 #containerParameterFancyLabel {
-    text-align: center;
-    background-image: url(../img/label.png);
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: 60px 7px;
     height: 35px;
     font-size: 25px;
     font-family: 'Quicksand', sans-serif;
+}
+
+#inputInfoLabel {
+    margin-left: 3px;
+}
+
+#imgLabel {
+    margin-left: 130px;
 }
 
 #containerFormLabel {
@@ -993,30 +904,32 @@
 #containerInsertHost {
     width: 380px;
     height: 200px;
-}
-
-/* Contenedor Label Host Fancy*/
-
-#containerParameterFancyHost {
-    text-align: center;
-    background-image: url(../img/host.png);
-    background-repeat: no-repeat;
-    background-size: 40px;
-    background-position: 85px -2px;
-    height: 35px;
-    font-size: 25px;
     font-family: 'Quicksand', sans-serif;
 }
 
-/* Contenedor Form Host Fancy*/
+#containerParameterFancyHost {
+    height: 35px;
+    font-size: 25px;
+}
+
+#labelFancyHost, #imgHost, #inputInfoHost {
+    display: inline;
+}
+
+#imgHost {
+    margin-left: 105px;
+    margin-top: 10px;
+}
+
+#labelFancyHost {
+    text-align: center;
+}
 
 #containerFormHost {
     font-size: 15px;
     font-family: 'Quicksand', sans-serif;
     margin-top: 20px;
 }
-
-/* Contenedor IP Host*/
 
 #containerIPHost {
     margin-top: 10px;
@@ -1416,8 +1329,16 @@
     height: 300px;
 }
 
+#parameter_xclient, #inputInfoIP {
+    display: inline;
+}
+
+#inputInfoIP {
+    margin-left: 3px;
+}
+
 #parameter_xclient {
-    text-align: center;
+    margin-left: 40px;
 }
 
 #labelIP {
@@ -1427,6 +1348,7 @@
 
 #formulario_IP_xclient {
     font-family: 'Quicksand', sans-serif;
+    margin-top: 40px;
 }
 
 #inputIP_xclient {
@@ -1467,13 +1389,22 @@
     font-family: 'Quicksand', sans-serif;
 }
 
+#parameter_traffic, #inputInfoGenerate {
+    display: inline;
+}
+
+#inputInfoGenerate {
+    margin-left: 3px;
+}
+
 #parameter_traffic {
-    text-align: center;
-    margin-top: 3px;
+    margin-left: 100px;
+    margin-bottom: 10px;
 }
 
 #formulario_traffic {
     font-size: 14px;
+    margin-top: 10px;
 }
 
 #labelTraffic {
@@ -1691,8 +1622,12 @@
     height: 460px;
 }
 
-#containerTittleFancyGraphic {
-    text-align: center;
+#inputInfoGraphic {
+    margin-left: 3px;
+}
+
+#labelFancyGraphic {
+    margin-left: 250px;
 }
 
 #containerCanvaGraphic {
@@ -1708,12 +1643,13 @@
     height: 450px;
 }
 
-#containerFancyInfoGraphic {
+#containerFancyInfoGraphicTCP {
     float: left;
     width: 270px;
     height: 450px;
     margin-top: 25px;
     padding: 5px;
+    display: none;
 }
 
 /* Tabla */
@@ -1823,7 +1759,7 @@
     background-image: url(../img/host.png);
     background-repeat: no-repeat;
     background-size: 20px;
-    background-position: 3px 3px;
+    background-position: 8px 3px;
     padding-left: 70px;
 }
 
@@ -1896,6 +1832,147 @@
     margin-bottom: 25px;
 }
 
-.info_host{
+.info_host {
     display: inline;
+}
+
+#tb_tableHostHG, #th_tableHostHG {
+    display: block;
+}
+
+
+
+#inputInfo {
+    /*     background-image: url(../img/informacion.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 3px 3px; */
+    width: 28px;
+    height: 28px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+#infoIcon {
+    width: auto;
+    height: 40px;
+    padding-top: -2px;
+    margin-bottom: 25px;
+}
+
+#inputInfo, #tittleHostTraffic {
+    display: inline-block;
+}
+
+#tittleHostTraffic {
+    margin-left: 150px;
+}
+
+/*Fancy Text Area Info*/
+
+#divFancyInfo {
+    width: 600px;
+    height: 400px;
+    font-size: 11px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#labelInfoTxtArea {
+    width: auto;
+    height: 40px;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#containerAreaInfo {
+    width: auto;
+    height: auto;
+    
+    
+}
+
+/* #txtAreaFancyInfo {
+    width: 530px;
+    height: 360px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: #2AC176 solid 2px;
+    resize: none;
+    text-align: justify;
+} */
+
+#txtAreaFancyInfo {
+    width: 600px;
+    
+    font-size: 11px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-collapse: separate;
+    border-spacing: 3px 3px;
+    border: #b8b9bb solid 2px;
+    outline: none;
+    display: block;
+   
+    
+}
+#txtAreaFancyInfo, #trInfo td{
+    border: #b8b9bb solid 2px;
+}
+
+
+
+
+#parameterInfo, #tbInfo  tr {
+    display:table;
+    width: 100%;
+    table-layout:fixed;
+    
+}
+
+#tbInfo {   
+    display: block;
+    height: 300px;
+    overflow:auto;
+    text-align: justify;
+}
+
+
+#thInfo {
+    border: #b8b9bb solid 2px;
+    border-collapse: separate;
+    /* border-spacing: 5px 5px;     */
+}
+
+
+#labelInfoFancy {
+    color: #81a7f1;
+}
+
+/*Info Controller*/
+
+#inputInfoController {
+    /*     background-image: url(../img/informacion.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 3px 3px; */
+    width: 28px;
+    height: 28px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+#inputInfoController, #labelFancyController {
+    display: inline-block;
 }

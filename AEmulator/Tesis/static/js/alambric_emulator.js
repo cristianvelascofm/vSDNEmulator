@@ -3905,7 +3905,7 @@ $('#generateBtn').on('click', function () {
       var sockBufSize = '';
       var rcvBufActual = '';
       var sndBufActual = '';
-
+      
 
 
       var totalBytesTx = 0;
@@ -4113,6 +4113,11 @@ $('#generateBtn').on('click', function () {
         trafficData = data;
 
 
+      }
+      if(protocol == 'TCP'){
+        $('#containerFancyInfoGraphicTCP').css({ 'display': 'visible' });
+      }else if (protocol == 'UDP'){
+        $('#containerFancyInfoGraphicUDP').css({ 'display': 'visible' });
       }
       console.log('Datos Bytes: ' + datosYNumBytes);
       $('#modo_op').text(String(modeOp));
@@ -5011,3 +5016,93 @@ function xSelect() {
   console.log("Cerrar ");
 }
 
+
+//Funcion para la Creacion de la Informacion de cada Fancy
+function fancyInfoTextArea(facnyOrigin) {
+  $('#txtAreaFancyInfo > tbody').empty();
+  $('#labelInfoFancy').text('');
+  var divFancy = ".divFancyInfoTxtArea";
+
+
+
+  var titleInfo = $('#labelInfoFancy');
+  var tableAreaInfo = $('#txtAreaFancyInfo');
+
+  var txt = '';
+  /*prueba + "\t" + prueba2 + "\n" + prueba + "\t" + prueba2;
+  txtAreaInfo.html(txt);*/
+
+  if (facnyOrigin == 'host') {
+
+    titleInfo.text('HOST');
+
+    tableAreaInfo.append('<tr><td>' + 'Ruta por Defecto' + '</td> <td>' + 'Defina la direccion IP del Host. Por defecto, las Ips están configuradas semejantes a: 10.0.0.X' +'</td></tr>');
+    tableAreaInfo.append('<tr><td>' + 'Scheduler' + '</td> <td>' + 'Programador de red, o porgramador de paqutes, algoritmo de puesta en cola. Gestiona la secuencia de paquetes de red en las colas de transmision y recepción.'
+    +'<li>CFS:Completely Fair Scheduler. Un algoritmo planificador desarrollado con el objetivo de maximizar el uso de la CPU con las diferentes tareas que se lanzan en un sistema Linux basándose en el Fair Queuing.</li>'+
+    '<li>RT: Real Time. Programación de tiempo real compuesto por el programador, el reloj y otros elementos hardware de procesamiento.</li>' +'</td></tr>');
+    tableAreaInfo.append('<tr><td>' + 'Límite CPU' + '</td> <td>' + 'Establece la capacidad de las frecuencias de trabajo del Host.' +'</td></tr>');
+    tableAreaInfo.append('<tr><td>' + 'Núcleos CPU' + '</td> <td>' + 'Establece la cantidad de núcleos que tendrá el CPU del Host.' +'</td></tr>');
+    
+      /*'Scheduler: \t Programador de red, o porgramador de paqutes, algoritmo de puesta en cola. Gestiona la secuencia de paquetes de red en las colas de transmision y recepción. \n'+
+      'CFS: \t Check Frame Squence,  conjunto de bits adjuntos al final de la trama Ethernet utilizado para verificar la integridad de la información recibida mediante una "secuencia" de verificación de trama incorrecta, también conocido como CRC o checksum.';*/
+      //txtAreaInfo.html(txt);
+
+  } else if (facnyOrigin == 'controller') {
+
+
+  }
+
+  $.fancybox.open($(divFancy), {
+    touch: false,
+    modal: false,
+    infobar: false,
+    clickSlide: false,
+    clickOutside: false,
+  });
+
+}
+
+//Variable Info para TextArea
+$('#inputInfo').on('click', function () {
+  fancyInfoTextArea('trafficInfo');
+});
+
+//Variable Info para Controller
+$('#inputInfoController').on('click', function () {
+  fancyInfoTextArea('controller');
+});
+
+//Variable Info para Host
+$('#inputInfoHost').on('click', function () {
+  fancyInfoTextArea('host');
+});
+
+//Variable Info para Switch
+$('#inputInfoSwitch').on('click', function () {
+  fancyInfoTextArea('switch');
+});
+
+//Variable Info para Port
+$('#inputInfoPort').on('click', function () {
+  fancyInfoTextArea('port');
+});
+
+//Variable Info para Label
+$('#inputInfoLabel').on('click', function () {
+  fancyInfoTextArea('label');
+});
+
+//Variable Info para Graphic
+$('#inputInfoGraphic').on('click', function () {
+  fancyInfoTextArea('graphic');
+});
+
+//Variable Info para Generator
+$('#inputInfoGenerate').on('click', function () {
+  fancyInfoTextArea('generator');
+});
+
+//Variable Info para Generator
+$('#inputInfoIP').on('click', function () {
+  fancyInfoTextArea('IPgenerator');
+});

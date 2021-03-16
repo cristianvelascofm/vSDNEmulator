@@ -119,10 +119,10 @@
                         </li>
                         <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
                                         width="18px" height="18px"> </li>
-                        <li title="Copiar" id="option_tool_bar"> <img src="{% static 'img/copy.png' %}" alt=""
-                                        width="18x" height="18px" class="copiar"></li>
-                        <li title="Pegar" id="option_tool_bar"> <img src="{% static 'img/paste.png' %}" alt=""
-                                        width="18px" height="18px"></li>
+                        <li title="Copiar" id="option_tool_bar" class="copiar"> <img src="{% static 'img/copy.png' %}"
+                                        alt="" width="18x" height="18px"></li>
+                        <li title="Pegar" id="option_tool_bar" class="pegar"> <img src="{% static 'img/paste.png' %}"
+                                        alt="" width="18px" height="18px"></li>
                         <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt=""
                                         width="18px" height="18px"></li>
                         <li title="Rehacer" id="option_tool_bar" class='rehacer'> <img src="{% static 'img/redo.png' %}"
@@ -136,7 +136,8 @@
                         <li title="Analizador de Tráfico" id="option_tool_bar wireshark" class='wireShark'> <img
                                         src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px"></li>
                         <li title="Graficos" id="option_tool_bar graphic" class='graphic'> <img
-                                        src="{% static 'img/diagram.png' %}" alt="" width="18px" height="18px"></li>
+                                        src="{% static 'img/diagram.png' %}" alt="" width="18px" height="18px">
+                        </li>
                         <li title="Controller OpenDayLigth" id="option_tool_bar opendayligth" class='opendayligth'> <img
                                         src="{% static 'img/vagueness.png' %}" alt="" width="20px" height="20px"></li>
 
@@ -178,6 +179,8 @@
 
 <div style="display: none;">
         <div class="divIP_xclient">
+                <input type="image" id="inputInfoIP" title="Información" src="{% static 'img/informacion.png' %}"
+                        width="20px" height="20px">
                 <h2 id="parameter_xclient">Configuración IP</h2>
 
                 <form id="formulario_IP_xclient">
@@ -190,6 +193,9 @@
 
 <div style="display: none;">
         <div class="divTraffic">
+
+                <input type="image" id="inputInfoGenerate" title="Información" src="{% static 'img/informacion.png' %}"
+                        width="20px" height="20px">
                 <h2 id="parameter_traffic">Generador de Tráfico</h2>
                 <form id="formulario_traffic">
 
@@ -412,7 +418,10 @@
         <div id="containerInsertController">
 
                 <div id="containerParameterFancyController">
-                        <label id="labelFancyController"> Controller </label>
+                        <input type="image" id="inputInfoController" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="30px" height="30px">
+                        <img id="imgControl" src="{% static 'img/controller.png' %}" width="25px" height="25px"></img>
+                        <h1 id="labelFancyController">Controller</h1>
                 </div>
 
                 <div id="divFancyFormController">
@@ -472,6 +481,9 @@
         <div id="containerInsertHost">
 
                 <div id="containerParameterFancyHost">
+                        <input type="image" id="inputInfoHost" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgHost" src="{% static 'img/host.png' %}" width="25px" height="25px"></img>
                         <label id="labelFancyHost"> </label>
                 </div>
 
@@ -479,6 +491,7 @@
                         <form id="formularioFancyHost">
 
                                 <div id="containerIPHost">
+
                                         <label id="labelFancyIPHost">Ruta por Defecto:</label>
                                         <input type="text" id="inputFancyIPHost" name="fname">
                                 </div>
@@ -502,19 +515,6 @@
                                         <label id="labelFancyCPUCoreHost"> Núcleos CPU: </label>
                                         <input type="text" id="inputFancyCPUCoresHost" name="fname">
                                 </div>
-
-
-
-                                <!-- 
-                                <div id="containerStartUp">
-                                        <label id="labelFancyStartScriptsHost"> Startup Script: </label>
-                                        <input type="text" id="inputFancyStartScriptsHost" name="fname">
-                                </div>
-
-                                <div id="containerShutDown">
-                                        <label id="labelFancyShutDownScriptsHost"> ShutDown Script: </label>
-                                        <input type="text" id="inputFancyShutDownScriptsHost" name="fname">
-                                </div>-->
                         </form>
                 </div>
 
@@ -529,7 +529,10 @@
 <div class="divFancySwitch" style="display: none;">
 
         <div id="containerParameterFancySwitch">
-                <label id="labelFancySwitch"> Switch </label><br><br>
+                <input type="image" id="inputInfoSwitch" title="Información" src="{% static 'img/informacion.png' %}"
+                        width="20px" height="20px">
+                <img id="imgSw" src="{% static 'img/openflow_switch.png' %}" width="30px" height="40px"></img>
+                <h1 id="labelFancySwitch"> Switch </h1>
         </div>
 
         <div id="containerInsertSwitch">
@@ -655,6 +658,9 @@
         <div id="containerInsertPort">
 
                 <div id="containerParameterFancyPort">
+                        <input type="image" id="inputInfoPort" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgPort" src="{% static 'img/port.png' %}" width="18px" height="18px"></img>
                         <label id="labelFancyHost"> PUERTO </label>
                 </div>
 
@@ -682,6 +688,9 @@
         <div id="containerInsertLabel">
 
                 <div id="containerParameterFancyLabel">
+                        <input type="image" id="inputInfoLabel" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgLabel" src="{% static 'img/label.png' %}" width="18px" height="18px"></img>
                         <label id="labelFancyLabel"> ETIQUETA </label>
                 </div>
 
@@ -708,6 +717,8 @@
 
         <div id="containerGraphic">
                 <div id="containerTittleFancyGraphic">
+                        <input type="image" id="inputInfoGraphic" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
                         <label id="labelFancyGraphic"> Analizador Grafico de Red </label>
                 </div>
 
@@ -715,7 +726,7 @@
                         <canvas id="graphic"></canvas>
                 </div>
 
-                <div id="containerFancyInfoGraphic">
+                <div id="containerFancyInfoGraphicTCP">
                         <table id="tableInfo">
 
 
@@ -807,13 +818,17 @@
 <div class="divTrafficHost" style="display: none;">
 
         <div id="containerTrafficHost">
-
-                <div id="divLabelTrafficHostSpecific">
+                <div id="infoIcon">
+                        <input type="image" id="inputInfo" title="Información" src="{% static 'img/informacion.png' %}">
                         <h2 id="tittleHostTraffic">ANALIZADOR DE TRAFICO ESPECIFICO</h2>
+                </div>
+                <div id="divLabelTrafficHostSpecific">
+
 
                         <div>
                                 <div class="divLabelHostGeneral">
-                                        <h3 class="info_host" id="idenHost">HOST </h3><h3 class="info_host" id='id_host'></h3>
+                                        <h3 class="info_host" id="idenHost">HOST </h3>
+                                        <h3 class="info_host" id='id_host'></h3>
                                 </div>
                                 <div class="divLabelHostGeneral">
                                         <label id="labelLink"> Enlace: </label>
@@ -890,7 +905,7 @@
                 <div class="containerHostSpecific">
 
                         <table class="table" id="tableHostSpecific">
-                                <thead class="thead-dark">
+                                <thead id="th_tableHostHG" class="thead-dark">
                                         <tr>
 
                                                 <th id="generalHostSpecific">Tiempo I</th>
@@ -904,7 +919,7 @@
                                                 <th id="generalHostSpecific">PMTU</th>
                                         </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tb_tableHostHG">
 
                                 </tbody>
                         </table>
@@ -914,6 +929,27 @@
 
 </div>
 
+<div class="divFancyInfoTxtArea" style="display: none;">
+        <div id="divFancyInfo">
+                <div id="labelInfoTxtArea">
+                        <h1 id="labelInfoFancy">INFORMACION</h1>
+                </div>
+                <div id="containerAreaInfo">
+                        <table readonly="readonly" id="txtAreaFancyInfo" cellpadding="3">
+                                <thead id="parameterInfo">
+                                        <tr id="trInfo">
+                                                <th id='thInfo'>Propiedad</th>
+                                                <th id="thInfo">Descripción</th>
+                                        </tr>
+                                </thead>
+                                <tbody id="tbInfo" style="overflow: auto; display: block">
+
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+
+</div>
 <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
 <script src="{% static 'js/jquery.fancybox.js'%}"></script>
