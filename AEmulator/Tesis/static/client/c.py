@@ -2,7 +2,7 @@ import socket
 import sys
 import json
 from static.client.client_socket import *
-
+import ast
 
 def executor(action):
 
@@ -16,10 +16,16 @@ def executor(action):
         print('Conexcion Establecida')
         
         message = json_code
+        m = 'Hello World'
+        print('Longitud Bytes',len(m.encode()))
         connection.send_message(message)
         print('Mensaje Enviado: ', json_data)
-        data_server = connection.recive_message() 
-        answer_server = data_server.decode()
+        data_server = connection.recive_message()
+        #print('Data server',data_server_b[0])
+        #data_server = ast.literal_eval(data_server_b[0])
+        
+        answer_server = data_server.decode('utf-8')
+        #answer_server = data_server_b[0].decode()
         dict_data_server = eval(answer_server)
         json_data_server = json.dumps(dict_data_server)
         print('Servidor: {!r}'.format(json_data_server))

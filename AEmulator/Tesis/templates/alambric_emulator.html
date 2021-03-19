@@ -1,21 +1,14 @@
-{% extends 'template.html' %}
-{% load static %}
-
-{% block link_css %}
+{% extends 'template.html' %} {% load static %} {% block link_css %}
 
 <link rel="stylesheet" href="{% static 'css/emulator.css' %}">
 <link rel="stylesheet" href="{% static 'css/emulatorFancyBox.css' %}">
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
-<link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
-{% endblock link_css %}
-{% block script_js %}
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}"> {% endblock link_css %} {% block script_js %}
 
 <script src="{% static 'js/fabric.js' %}"></script>
 <script src="{% static 'js/hamburguer_menu.js' %}"></script>
-{% endblock script_js %}
-{% block title %}SDN - Emulator{% endblock title %}
-
-{% block content %}
+{% endblock script_js %} {% block title %}SDN - Emulator{% endblock title %} {% block content %}
+<!-- Menu Desplegable -->
 <div class="menujq" id="menu_bar">
         <ul id="menu_option_bar">
                 <li id="menu_archivo_bar"> <a href="javascript:void();">Archivo</a>
@@ -88,58 +81,57 @@
         </ul>
 </div>
 
-<script type="text/javascript">
-        $(document).ready(function () {
-                $('.menujq > ul > li:has(ul)').addClass('desplegable');
-                $('.menujq > ul > li > a').click(function () {
-
-                        var comprobar = $(this).next();
-
-                        $('.menujq li').removeClass('activa');
-                        $(this).closest('li').addClass('activa');
-
-                        if ((comprobar.is('ul')) && (comprobar.is(':visible'))) {
-                                $(this).closest('li').removeClass('activa');
-                                comprobar.slideUp('normal');
-                        }
-                        if ((comprobar.is('ul')) && (!comprobar.is(':visible'))) {
-                                $('.menujq ul ul:visible').slideUp('normal');
-                                comprobar.slideDown('normal');
-                        }
-                });
-                close($('.menujq'));
-        });
-</script>
-
+<!-- Menu Barra de Herramientas -->
 <div class="emulator">
         <div class="tool_bar">
                 <ul id="menu_option__tool_bar">
                         <li title="Nuevo" id="option_tool_bar" href="#" class="new"> <img
                                         src="{% static 'img/new_document.png' %}" alt="" width="18px" height="18px">
                         </li>
+
                         <li title="Guardar" id="option_tool_bar"> <img src="{% static 'img/save.png' %}" alt=""
-                                        width="18px" height="18px"> </li>
+                                        width="18px" height="18px">
+                        </li>
+
                         <li title="Copiar" id="option_tool_bar" class="copiar"> <img src="{% static 'img/copy.png' %}"
-                                        alt="" width="18x" height="18px"></li>
+                                        alt="" width="18x" height="18px">
+                        </li>
+
                         <li title="Pegar" id="option_tool_bar" class="pegar"> <img src="{% static 'img/paste.png' %}"
-                                        alt="" width="18px" height="18px"></li>
+                                        alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Deshacer" id="option_tool_bar"> <img src="{% static 'img/undo.png' %}" alt=""
-                                        width="18px" height="18px"></li>
+                                        width="18px" height="18px">
+                        </li>
+
                         <li title="Rehacer" id="option_tool_bar" class='rehacer'> <img src="{% static 'img/redo.png' %}"
-                                        alt="" width="18px" height="18px"></li>
+                                        alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Iniciar Emulación" id="option_tool_bar" class="play"> <img
-                                        src="{% static 'img/play.png' %}" alt="" width="18px" height="18px"></li>
+                                        src="{% static 'img/play.png' %}" alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Detener Emulación" id="option_tool_bar" class='stop'> <img
-                                        src="{% static 'img/stop.png' %}" alt="" width="18px" height="18px"></li>
+                                        src="{% static 'img/stop.png' %}" alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Generador de Tráfico" id="option_tool_bar" class='generator'> <img
-                                        src="{% static 'img/check.png' %}" alt="" width="18px" height="18px"></li>
+                                        src="{% static 'img/check.png' %}" alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Analizador de Tráfico" id="option_tool_bar wireshark" class='wireShark'> <img
-                                        src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px"></li>
+                                        src="{% static 'img/analitica.png' %}" alt="" width="18px" height="18px">
+                        </li>
+
                         <li title="Graficos" id="option_tool_bar graphic" class='graphic'> <img
                                         src="{% static 'img/diagram.png' %}" alt="" width="18px" height="18px">
                         </li>
+
                         <li title="Controller OpenDayLigth" id="option_tool_bar opendayligth" class='opendayligth'> <img
-                                        src="{% static 'img/vagueness.png' %}" alt="" width="20px" height="20px"></li>
+                                        src="{% static 'img/vagueness.png' %}" alt="" width="20px" height="20px">
+                        </li>
 
                 </ul>
         </div>
@@ -177,6 +169,7 @@
         </div>
 </div>
 
+<!-- Fancy Detector IP Local -->
 <div style="display: none;">
         <div class="divIP_xclient">
                 <input type="image" id="inputInfoIP" title="Información" src="{% static 'img/informacion.png' %}"
@@ -191,6 +184,397 @@
         </div>
 </div>
 
+<!-- Fancy Host -->
+<div style="display: none;">
+        <div class="divFormTemplate">
+                <h2 id="parameter"> Parámetros de la Red</h2>
+
+                <form id="formulario">
+                        <label id="labelHost">Número de Host:</label><br>
+                        <input type="text" id="inputHostTemplate" name="fname"><br><br>
+                        <input type="button" id="createButtonTemplate" value="Crear">
+                </form>
+        </div>
+</div>
+
+<!-- Fancy Topo Tree -->
+<div style="display: none;">
+        <div class="divFormTree">
+                <h2 id="parameterTree"> Parámetros de la Red</h2>
+
+                <form id="formularioTree">
+                        <label id="labelDepth">Niveles de la Red:</label><br>
+                        <input type="text" id="inputDepthTemplate" name="fname"><br><br>
+                        <label id="labelFanout">Apertura por Nodo:</label><br>
+                        <input type="text" id="inputFanoutTemplate" name="fname"><br><br>
+                        <input type="button" id="createButtonTree" value="Crear">
+                </form>
+
+        </div>
+
+</div>
+
+<!-- Fancy Enlace -->
+<div class="divFancyLink" style="display: none;">
+
+        <div id="containerInsertLink">
+
+                <div id="containerParameterFancyLink">
+                        <label id="labelFancyLink"> Link </label>
+                </div>
+
+                <div id="divFancyFormLink">
+
+                        <form id="formularioFancyLink">
+
+                                <div id="containerBandWidthLink">
+                                        <label id="labelFancyBandWidthLink"> Ancho de Banda: </label>
+                                        <input type="number" id="inputFancyBandWidthLink" step="1" min="0"
+                                                max="1000000000000000000"><span id="spanBandWidthLink">MBits/s</span>
+                                </div>
+
+                                <div id="containerDelayLink">
+                                        <label id="labelFancyDelayLink"> Retardo: </label>
+                                        <input type="number" id="inputFancyDelayLink" step="1" min="0"
+                                                max="1000000000000000000"><span id="spanBandWidthLink">ms</span>
+                                </div>
+
+                                <div id="containerJitterLink">
+                                        <label id="labelFancyJitterLink"> Jitter: </label>
+                                        <input type="number" id="inputFancyJitterLink" step="1" min="0"
+                                                max="1000000000000000000"><span id="spanBandJitterLink">ms</span>
+                                </div>
+
+                                <div id="containerMaxQueueLink">
+                                        <label id="labelFancyMaxQueueLink"> Cola Máxima: </label>
+                                        <input type="number" id="inputFancyMaxQueueLink" step="1" min="0"
+                                                max="1000000000000000000"><span
+                                                id="spanBandMaxQueueLink">paquetes</span>
+                                </div>
+
+                                <div id="containerLossLink">
+                                        <label id="labelFancyLossLink"> Pérdidas: </label>
+                                        <input type="number" id="inputFancyLossLink" step="1" min="0" max="100"><span
+                                                id="spanBandJitterLink">%</span>
+                                </div>
+
+
+                        </form>
+
+                </div>
+
+                <div id="containerButtonLink">
+                        <input type="button" id="CancelarButtonFancyLink" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyLink" value="Guardar">
+                </div>
+        </div>
+</div>
+
+<!-- Fancy del Controlador -->
+<div class="divFancyController" style="display: none;">
+
+        <div id="containerInsertController">
+
+                <div id="containerParameterFancyController">
+                        <input type="image" id="inputInfoController" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="30px" height="30px">
+                        <img id="imgControl" src="{% static 'img/controller.png' %}" width="25px" height="25px"></img>
+                        <h1 id="labelFancyController">Controller</h1>
+                </div>
+
+                <div id="divFancyFormController">
+
+                        <form id="formularioFancyController">
+
+                                <div id="containerTypeController">
+
+                                        <label id="labelTypeFancyController"> Tipo: </label>
+                                        <select id="optionTypeFancyController" data-default="Por defecto">
+                                                <option value="Por defecto" selected="selected">Por defecto</option>
+                                                <option value="OpenFlow Reference Implementation">OpenFlow Reference
+                                                        Implementation</option>
+                                                <option value="NOX">NOX</option>
+                                                <option value="OVS Controller">OVS Controller</option>
+                                                <option value="OpenDayLigth">OpenDayLigth</option>
+                                        </select>
+                                        <i id="arrowOptionTypeController"></i>
+
+                                </div>
+
+                                <div id="containerIPController">
+                                        <label id="labelFancyIpController"> IP: </label>
+                                        <input type="text" id="inputFancyIpController" placeholder="0.0.0.0">
+                                </div>
+
+                                <div id="containerPortController">
+                                        <label id="labelFancyPuertoController"> Puerto: </label>
+                                        <input type="number" id="inputFancyPuertoController" step="1" min="0"
+                                                max="65535">
+                                </div>
+
+                                <div id="containerProtocolController">
+                                        <label id="labelFancyProtocolController"> Protocolo: </label>
+                                        <select id="optionProtocolFancyController" data-default="Ninguno">
+                                                <option value="Ninguno" selected="selected">Ninguno</option>
+                                                <option value="TCP">TCP</option>
+                                                <option value="SSL">SSL</option>
+                                        </select>
+                                        <i id="arrowProtocolController"></i>
+
+                                </div>
+
+                        </form>
+
+                </div>
+
+                <div id="containerButtonController">
+                        <input type="button" id="CancelarButtonFancyController" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyController" value="Guardar">
+                </div>
+        </div>
+</div>
+
+<!-- Fancy Host -->
+<div class="divFancyHost" style="display: none;">
+
+        <div id="containerInsertHost">
+
+                <div id="containerParameterFancyHost">
+                        <input type="image" id="inputInfoHost" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgHost" src="{% static 'img/host.png' %}" width="25px" height="25px"></img>
+                        <label id="labelFancyHost"> </label>
+                </div>
+
+                <div id="containerFormHost">
+                        <form id="formularioFancyHost">
+
+                                <div id="containerIPHost">
+
+                                        <label id="labelFancyIPHost">Ruta por Defecto:</label>
+                                        <input type="text" id="inputFancyIPHost" name="fname">
+                                </div>
+
+                                <div id="containerShedulerHost">
+                                        <label id="labelSchedulerFancyHost"> Scheduler: </label>
+                                        <select id="optionShedulerFancyHost" data-default="Ninguno">
+                                                <option value="Ninguno" selected="selected">Ninguno</option>
+                                                <option value="CFS">CFS</option>
+                                                <option value="RT">RT</option>
+                                        </select>
+                                        <i id="arrowProtocolFancyHost"></i>
+                                </div>
+
+                                <div id="containerCPULimitHost">
+                                        <label id="labelFancyCpuLimitHost"> Limite CPU : </label>
+                                        <input type="number" id="inputFancyCpuLimitHost" step="0.01" min="0" max="1">
+                                </div>
+
+                                <div id="containerCPUCoresHost">
+                                        <label id="labelFancyCPUCoreHost"> Núcleos CPU: </label>
+                                        <input type="text" id="inputFancyCPUCoresHost" name="fname">
+                                </div>
+                        </form>
+                </div>
+
+                <div id="containerFancyButtonFormHost">
+                        <input type="button" id="CancelarButtonFancyHost" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyHost" value="Guardar">
+                </div>
+        </div>
+
+</div>
+
+<!-- Fancy Switch -->
+<div class="divFancySwitch" style="display: none;">
+
+        <div id="containerParameterFancySwitch">
+                <input type="image" id="inputInfoSwitch" title="Información" src="{% static 'img/informacion.png' %}"
+                        width="20px" height="20px">
+                <img id="imgSw" src="{% static 'img/openflow_switch.png' %}" width="30px" height="40px"></img>
+                <h1 id="labelFancySwitch"> Switch </h1>
+        </div>
+
+        <div id="containerInsertSwitch">
+
+                <div id="containerFancyFormSwitch">
+
+                        <form id="formularioFancySwitch">
+
+                                <div id="containerTypeSwitch">
+                                        <label id="labelFancyTypeSwitch"> Type: </label>
+
+                                        <select id="optionTypeFancySwitch" data-default="Ninguno">
+                                                <option value="Ninguno" selected="selected">Ninguno</option>
+                                                <option value="IVS Switch">IVS Switch</option>
+                                                <option value="Linux Brigde">Linux Brigde</option>
+                                                <option value="OVS Brigde">OVS Brigde</option>
+                                                <option value="OVS Switch">OVS Switch</option>
+                                                <option value="User Switch">User Switch</option>
+                                        </select>
+                                        <i id="arrowTypeFancySwitch"></i>
+                                </div>
+
+                                <div id="containerSTPFancySwitch">
+                                        <input id="STPFancySwitch" type="checkbox" name="activado" value="activado"> STP
+                                        <label id="labelFancySTPPriority"> STP Priority: </label>
+                                        <input type="number" id="inputFancySTPPriority" step="4096" min="4096"
+                                                max="32768" value="32768">
+
+                                </div>
+
+                                <div id="containerIPSwitch">
+                                        <label id="labelFancyIPSwitch"> IP: </label>
+                                        <input type="text" id="inputFancyIPSwitch" name="fname"><br>
+                                </div>
+
+                                <div id="containerDPCTLPort">
+                                        <label id="labelFancyDPCTLPort"> DPCTL Port: </label>
+                                        <input type="number" id="inputFancyDPCTLPort" value='6633' step="1" min="0"
+                                                max="65535">
+                                </div>
+
+                                <div id="containerProtocolSwitch">
+                                        <label id="labelFancyProtocolSwitch"> Protocol: </label>
+                                        <select id="optionProtocolFancySwitch" data-default="OpenFlow 1.0">
+                                                <option value="OpenFlow 1.0" selected="selected">OpenFlow 1.1</option>
+                                                <option value="OpenFlow 1.2">OpenFlow 1.2</option>
+                                                <option value="OpenFlow 1.3">OpenFlow 1.3</option>
+                                                <option value="OpenFlow 1.4">OpenFlow 1.4</option>
+                                                <option value="OpenFlow 1.5">OpenFlow 1.5</option>
+                                        </select>
+                                        <i id="arrowProtocolFancySwitch"></i>
+                                </div>
+
+                                <div id="containerDataPath">
+                                        <label id="labelFancyDataPathSwitch"> DataPath: </label>
+                                        <select id="optionDataPathFancySwitch" data-default="Ninguno">
+                                                <option value="Ninguno" selected="selected">Ninguno</option>
+                                                <option value="Kernel">Kernel</option>
+                                                <option value="User">User</option>
+                                        </select>
+                                        <i id="arrowDataPathFancySwitch"></i>
+                                </div>
+
+                                <div id="containerDataPathID">
+                                        <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
+                                        <input type="text" id="inputFancyDataPathIDSwitch">
+                                </div>
+
+                                <div id="containerOfDataPathArguments">
+                                        <label id="labelFancyOfDataPathArgsSwitch"> DataPath Args: </label>
+                                        <input type="text" id="inputFancyOfDataPathArgsSwitch">
+                                </div>
+
+                                <div id="FailMode">
+                                        <label id="labelFancyFailModeSwitch"> Modelo de Fallas: </label>
+                                        <select id="optionFailModeFancySwitch" data-default="Ninguno">
+                                                <option value="Ninguno" selected="selected">Ninguno</option>
+                                                <option value="Secure">Secure</option>
+                                                <option value="Standalone">Standalone</option>
+                                        </select>
+                                        <i id="arrowFailMode"></i>
+                                </div>
+
+                                <div id="containerCheckBoxOne">
+                                        <input id="InBandFancySwitch" type="checkbox" value="activado">InBand
+                                        <input id="InNameSpaceFancySwitch" type="checkbox" value="activado">In NameSpace
+                                </div>
+
+                                <div id="containerCheckBoxTwo">
+                                        <input id="BatchFancySwitch" type="checkbox" value="activado">Batch
+                                        <input id="VerboseFancySwitch" type="checkbox" value="activado">Verbose
+                                </div>
+                                <!--
+                                <div id="containerAddOption">
+                                        <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Opciones adicionales del Switch:
+                                        </label>
+                                        <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch">
+                                </div>
+
+                                
+                                <div id="containerStartUp">
+                                        <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
+                                        <input type="text" id="inputFancyStartScriptsSwitch">
+                                </div>
+
+                                <div id="containerShutDown">
+                                        <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
+                                        <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname">
+                                </div>
+                                -->
+                        </form>
+                </div>
+
+        </div>
+
+        <div id="containerFancyButtonFormSwitch">
+                <input type="button" id="CancelarButtonFancySwitch" value="Cancelar">
+                <input type="button" id="GuardarButtonFancySwitch" value="Guardar">
+        </div>
+</div>
+
+<!-- Fancy Puerto -->
+<div class="divFancyPort" style="display: none;">
+
+        <div id="containerInsertPort">
+
+                <div id="containerParameterFancyPort">
+                        <input type="image" id="inputInfoPort" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgPort" src="{% static 'img/port.png' %}" width="18px" height="18px"></img>
+                        <label id="labelFancyHost"> PUERTO </label>
+                </div>
+
+                <div id="containerFormPort">
+                        <form id="formularioFancyPort">
+
+                                <div id="containerIPPort">
+                                        <label id="labelFancyIPPort">IPs:</label>
+                                        <input type="text" id="inputFancyIPPort" name="fname">
+                                </div>
+                        </form>
+                </div>
+
+                <div id="containerFancyButtonFormPort">
+                        <input type="button" id="CancelarButtonFancyPort" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyPort" value="Guardar">
+                </div>
+        </div>
+
+</div>
+
+<!-- Fancy Etiqueta -->
+<div class="divFancyLabel" style="display: none;">
+
+        <div id="containerInsertLabel">
+
+                <div id="containerParameterFancyLabel">
+                        <input type="image" id="inputInfoLabel" title="Información"
+                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
+                        <img id="imgLabel" src="{% static 'img/label.png' %}" width="18px" height="18px"></img>
+                        <label id="labelFancyLabel"> ETIQUETA </label>
+                </div>
+
+                <div id="containerFormLabel">
+                        <form id="formularioFancyLabel">
+
+                                <div id="containerLabel">
+                                        <label id="labelFancyLabel">Etiqueta: </label>
+                                        <input type="text" id="inputFancyLabel" name="fname">
+                                </div>
+                        </form>
+                </div>
+
+                <div id="containerFancyButtonFormLabel">
+                        <input type="button" id="CancelarButtonFancyLabel" value="Cancelar">
+                        <input type="button" id="GuardarButtonFancyLabel" value="Guardar">
+                </div>
+        </div>
+
+</div>
+
+<!-- Fancy Generador de Traffico -->
 <div style="display: none;">
         <div class="divTraffic">
 
@@ -329,390 +713,7 @@
         </div>
 </div>
 
-<div style="display: none;">
-        <div class="divFormTemplate">
-                <h2 id="parameter"> Parámetros de la Red</h2>
-
-                <form id="formulario">
-                        <label id="labelHost">Número de Host:</label><br>
-                        <input type="text" id="inputHostTemplate" name="fname"><br><br>
-                        <input type="button" id="createButtonTemplate" value="Crear">
-                </form>
-        </div>
-</div>
-
-<div style="display: none;">
-        <div class="divFormTree">
-                <h2 id="parameterTree"> Parámetros de la Red</h2>
-
-                <form id="formularioTree">
-                        <label id="labelDepth">Niveles de la Red:</label><br>
-                        <input type="text" id="inputDepthTemplate" name="fname"><br><br>
-                        <label id="labelFanout">Apertura por Nodo:</label><br>
-                        <input type="text" id="inputFanoutTemplate" name="fname"><br><br>
-                        <input type="button" id="createButtonTree" value="Crear">
-                </form>
-
-        </div>
-
-</div>
-
-<div class="divFancyLink" style="display: none;">
-
-        <div id="containerInsertLink">
-
-                <div id="containerParameterFancyLink">
-                        <label id="labelFancyLink"> Link </label>
-                </div>
-
-                <div id="divFancyFormLink">
-
-                        <form id="formularioFancyLink">
-
-                                <div id="containerBandWidthLink">
-                                        <label id="labelFancyBandWidthLink"> Ancho de Banda: </label>
-                                        <input type="number" id="inputFancyBandWidthLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandWidthLink">MBits/s</span>
-                                </div>
-
-                                <div id="containerDelayLink">
-                                        <label id="labelFancyDelayLink"> Retardo: </label>
-                                        <input type="number" id="inputFancyDelayLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandWidthLink">ms</span>
-                                </div>
-
-                                <div id="containerJitterLink">
-                                        <label id="labelFancyJitterLink"> Jitter: </label>
-                                        <input type="number" id="inputFancyJitterLink" step="1" min="0"
-                                                max="1000000000000000000"><span id="spanBandJitterLink">ms</span>
-                                </div>
-
-                                <div id="containerMaxQueueLink">
-                                        <label id="labelFancyMaxQueueLink"> Cola Máxima: </label>
-                                        <input type="number" id="inputFancyMaxQueueLink" step="1" min="0"
-                                                max="1000000000000000000"><span
-                                                id="spanBandMaxQueueLink">paquetes</span>
-                                </div>
-
-                                <div id="containerLossLink">
-                                        <label id="labelFancyLossLink"> Pérdidas: </label>
-                                        <input type="number" id="inputFancyLossLink" step="1" min="0" max="100"><span
-                                                id="spanBandJitterLink">%</span>
-                                </div>
-
-
-                        </form>
-
-                </div>
-
-                <div id="containerButtonLink">
-                        <input type="button" id="CancelarButtonFancyLink" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancyLink" value="Guardar">
-                </div>
-        </div>
-</div>
-
-<!-- Fancy del Controlador -->
-<div class="divFancyController" style="display: none;">
-
-        <div id="containerInsertController">
-
-                <div id="containerParameterFancyController">
-                        <input type="image" id="inputInfoController" title="Información"
-                                src="{% static 'img/informacion.png' %}" width="30px" height="30px">
-                        <img id="imgControl" src="{% static 'img/controller.png' %}" width="25px" height="25px"></img>
-                        <h1 id="labelFancyController">Controller</h1>
-                </div>
-
-                <div id="divFancyFormController">
-
-                        <form id="formularioFancyController">
-
-                                <div id="containerTypeController">
-
-                                        <label id="labelTypeFancyController"> Tipo: </label>
-                                        <select id="optionTypeFancyController" data-default="Por defecto">
-                                                <option value="Por defecto" selected="selected">Por defecto</option>
-                                                <option value="OpenFlow Reference Implementation">OpenFlow Reference
-                                                        Implementation</option>
-                                                <option value="NOX">NOX</option>
-                                                <option value="OVS Controller">OVS Controller</option>
-                                                <option value="OpenDayLigth">OpenDayLigth</option>
-                                        </select>
-                                        <i id="arrowOptionTypeController"></i>
-
-                                </div>
-
-                                <div id="containerIPController">
-                                        <label id="labelFancyIpController"> IP: </label>
-                                        <input type="text" id="inputFancyIpController" placeholder="0.0.0.0">
-                                </div>
-
-                                <div id="containerPortController">
-                                        <label id="labelFancyPuertoController"> Puerto: </label>
-                                        <input type="number" id="inputFancyPuertoController" step="1" min="0"
-                                                max="65535">
-                                </div>
-
-                                <div id="containerProtocolController">
-                                        <label id="labelFancyProtocolController"> Protocolo: </label>
-                                        <select id="optionProtocolFancyController" data-default="Ninguno">
-                                                <option value="Ninguno" selected="selected">Ninguno</option>
-                                                <option value="TCP">TCP</option>
-                                                <option value="SSL">SSL</option>
-                                        </select>
-                                        <i id="arrowProtocolController"></i>
-
-                                </div>
-
-                        </form>
-
-                </div>
-
-                <div id="containerButtonController">
-                        <input type="button" id="CancelarButtonFancyController" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancyController" value="Guardar">
-                </div>
-        </div>
-</div>
-
-<div class="divFancyHost" style="display: none;">
-
-        <div id="containerInsertHost">
-
-                <div id="containerParameterFancyHost">
-                        <input type="image" id="inputInfoHost" title="Información"
-                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
-                        <img id="imgHost" src="{% static 'img/host.png' %}" width="25px" height="25px"></img>
-                        <label id="labelFancyHost"> </label>
-                </div>
-
-                <div id="containerFormHost">
-                        <form id="formularioFancyHost">
-
-                                <div id="containerIPHost">
-
-                                        <label id="labelFancyIPHost">Ruta por Defecto:</label>
-                                        <input type="text" id="inputFancyIPHost" name="fname">
-                                </div>
-
-                                <div id="containerShedulerHost">
-                                        <label id="labelSchedulerFancyHost"> Scheduler: </label>
-                                        <select id="optionShedulerFancyHost" data-default="Ninguno">
-                                                <option value="Ninguno" selected="selected">Ninguno</option>
-                                                <option value="CFS">CFS</option>
-                                                <option value="RT">RT</option>
-                                        </select>
-                                        <i id="arrowProtocolFancyHost"></i>
-                                </div>
-
-                                <div id="containerCPULimitHost">
-                                        <label id="labelFancyCpuLimitHost"> Limite CPU : </label>
-                                        <input type="number" id="inputFancyCpuLimitHost" step="0.01" min="0" max="1">
-                                </div>
-
-                                <div id="containerCPUCoresHost">
-                                        <label id="labelFancyCPUCoreHost"> Núcleos CPU: </label>
-                                        <input type="text" id="inputFancyCPUCoresHost" name="fname">
-                                </div>
-                        </form>
-                </div>
-
-                <div id="containerFancyButtonFormHost">
-                        <input type="button" id="CancelarButtonFancyHost" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancyHost" value="Guardar">
-                </div>
-        </div>
-
-</div>
-
-<div class="divFancySwitch" style="display: none;">
-
-        <div id="containerParameterFancySwitch">
-                <input type="image" id="inputInfoSwitch" title="Información" src="{% static 'img/informacion.png' %}"
-                        width="20px" height="20px">
-                <img id="imgSw" src="{% static 'img/openflow_switch.png' %}" width="30px" height="40px"></img>
-                <h1 id="labelFancySwitch"> Switch </h1>
-        </div>
-
-        <div id="containerInsertSwitch">
-
-                <div id="containerFancyFormSwitch">
-
-                        <form id="formularioFancySwitch">
-
-                                <div id="containerTypeSwitch">
-                                        <label id="labelFancyTypeSwitch"> Type: </label>
-
-                                        <select id="optionTypeFancySwitch" data-default="Ninguno">
-                                                <option value="Ninguno" selected="selected">Ninguno</option>
-                                                <option value="IVS Switch">IVS Switch</option>
-                                                <option value="Linux Brigde">Linux Brigde</option>
-                                                <option value="OVS Brigde">OVS Brigde</option>
-                                                <option value="OVS Switch">OVS Switch</option>
-                                                <option value="User Switch">User Switch</option>
-                                        </select>
-                                        <i id="arrowTypeFancySwitch"></i>
-                                </div>
-
-                                <div id="containerSTPFancySwitch">
-                                        <input id="STPFancySwitch" type="checkbox" name="activado" value="activado"> STP
-
-                                        <label id="labelFancySTPPriority"> STP Priority: </label>
-                                        <input type="number" id="inputFancySTPPriority" step="4096" min="0" max="61440">
-
-                                </div>
-
-                                <div id="containerIPSwitch">
-                                        <label id="labelFancyIPSwitch"> IP: </label>
-                                        <input type="text" id="inputFancyIPSwitch" name="fname"><br>
-                                </div>
-
-                                <div id="containerDPCTLPort">
-                                        <label id="labelFancyDPCTLPort"> DPCTL Port: </label>
-                                        <input type="number" id="inputFancyDPCTLPort" step="1" min="0" max="65535">
-                                </div>
-
-                                <div id="containerProtocolSwitch">
-                                        <label id="labelFancyProtocolSwitch"> Protocol: </label>
-                                        <select id="optionProtocolFancySwitch" data-default="OpenFlow 1.0">
-                                                <option value="OpenFlow 1.0" selected="selected">OpenFlow 1.0</option>
-                                                <option value="OpenFlow 1.2">OpenFlow 1.2</option>
-                                                <option value="OpenFlow 1.3">OpenFlow 1.3</option>
-                                                <option value="OpenFlow 1.4">OpenFlow 1.4</option>
-                                                <option value="OpenFlow 1.5">OpenFlow 1.5</option>
-                                        </select>
-                                        <i id="arrowProtocolFancySwitch"></i>
-                                </div>
-
-                                <div id="containerDataPath">
-                                        <label id="labelFancyDataPathSwitch"> DataPath: </label>
-                                        <select id="optionDataPathFancySwitch" data-default="Ninguno">
-                                                <option value="Ninguno" selected="selected">Ninguno</option>
-                                                <option value="Kernel">Kernel</option>
-                                                <option value="User">User</option>
-                                        </select>
-                                        <i id="arrowDataPathFancySwitch"></i>
-                                </div>
-
-                                <div id="containerDataPathID">
-                                        <label id="labelFancyDataPathIDSwitch"> DataPath ID: </label>
-                                        <input type="text" id="inputFancyDataPathIDSwitch">
-                                </div>
-
-                                <div id="containerOfDataPathArguments">
-                                        <label id="labelFancyOfDataPathArgsSwitch"> DataPath Args: </label>
-                                        <input type="text" id="inputFancyOfDataPathArgsSwitch">
-                                </div>
-
-                                <div id="FailMode">
-                                        <label id="labelFancyFailModeSwitch"> Modelo de Fallas: </label>
-                                        <select id="optionFailModeFancySwitch" data-default="Ninguno">
-                                                <option value="Ninguno" selected="selected">Ninguno</option>
-                                                <option value="Secure">Secure</option>
-                                                <option value="Standalone">Standalone</option>
-                                        </select>
-                                        <i id="arrowFailMode"></i>
-                                </div>
-
-                                <div id="containerCheckBoxOne">
-                                        <input id="InBandFancySwitch" type="checkbox" value="activado">InBand
-                                        <input id="InNameSpaceFancySwitch" type="checkbox" value="activado">In NameSpace
-                                </div>
-
-                                <div id="containerCheckBoxTwo">
-                                        <input id="BatchFancySwitch" type="checkbox" value="activado">Batch
-                                        <input id="VerboseFancySwitch" type="checkbox" value="activado">Verbose
-                                </div>
-                                <!--
-                                <div id="containerAddOption">
-                                        <label id="labelFancyAdditionalSwOptionsScriptsSwitch"> Opciones adicionales del Switch:
-                                        </label>
-                                        <input type="text" id="inputFancyAdditionalSwOptionsScriptsSwitch">
-                                </div>
-
-                                
-                                <div id="containerStartUp">
-                                        <label id="labelFancyStartScriptsSwitch"> Startup Script: </label>
-                                        <input type="text" id="inputFancyStartScriptsSwitch">
-                                </div>
-
-                                <div id="containerShutDown">
-                                        <label id="labelFancyShutDownScriptsSwitch"> ShutDown Script: </label>
-                                        <input type="text" id="inputFancyShutDownScriptsSwitch" name="fname">
-                                </div>
-                                -->
-                        </form>
-                </div>
-
-        </div>
-
-        <div id="containerFancyButtonFormSwitch">
-                <input type="button" id="CancelarButtonFancySwitch" value="Cancelar">
-                <input type="button" id="GuardarButtonFancySwitch" value="Guardar">
-        </div>
-</div>
-
-<div class="divFancyPort" style="display: none;">
-
-        <div id="containerInsertPort">
-
-                <div id="containerParameterFancyPort">
-                        <input type="image" id="inputInfoPort" title="Información"
-                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
-                        <img id="imgPort" src="{% static 'img/port.png' %}" width="18px" height="18px"></img>
-                        <label id="labelFancyHost"> PUERTO </label>
-                </div>
-
-                <div id="containerFormPort">
-                        <form id="formularioFancyPort">
-
-                                <div id="containerIPPort">
-                                        <label id="labelFancyIPPort">IPs:</label>
-                                        <input type="text" id="inputFancyIPPort" name="fname">
-                                </div>
-                        </form>
-                </div>
-
-                <div id="containerFancyButtonFormPort">
-                        <input type="button" id="CancelarButtonFancyPort" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancyPort" value="Guardar">
-                </div>
-        </div>
-
-</div>
-
-
-<div class="divFancyLabel" style="display: none;">
-
-        <div id="containerInsertLabel">
-
-                <div id="containerParameterFancyLabel">
-                        <input type="image" id="inputInfoLabel" title="Información"
-                                src="{% static 'img/informacion.png' %}" width="20px" height="20px">
-                        <img id="imgLabel" src="{% static 'img/label.png' %}" width="18px" height="18px"></img>
-                        <label id="labelFancyLabel"> ETIQUETA </label>
-                </div>
-
-                <div id="containerFormLabel">
-                        <form id="formularioFancyLabel">
-
-                                <div id="containerLabel">
-                                        <label id="labelFancyLabel">Etiqueta: </label>
-                                        <input type="text" id="inputFancyLabel" name="fname">
-                                </div>
-                        </form>
-                </div>
-
-                <div id="containerFancyButtonFormLabel">
-                        <input type="button" id="CancelarButtonFancyLabel" value="Cancelar">
-                        <input type="button" id="GuardarButtonFancyLabel" value="Guardar">
-                </div>
-        </div>
-
-</div>
-
-
+<!-- Analizador Grafico -->
 <div class="divFancyGraphic" style="display: none;">
 
         <div id="containerGraphic">
@@ -724,88 +725,163 @@
 
                 <div id="containerCanvaGraphic">
                         <canvas id="graphic"></canvas>
+                        <canvas id="graphic2"></canvas>
+                </div>
+
+
+
+                <div id="botonSelectClientServerTCP">
+                        <label id="labelSelectServerClientTCP"> Seleccione: </label>
+                        <select id="optionSelectServerClientTCP" data-default="opLSC">
+                                <option id="serverTCP" selected="selected">Servidor</option>
+                                <option id="clientTCP">Cliente</option>
+                        </select>
+                        <input type="button" id="inputSelectorSeverClient" value="Visualizar">
                 </div>
 
                 <div id="containerFancyInfoGraphicTCP">
-                        <table id="tableInfo">
 
+                        <div id="containerTableInfo">
+                                <div id="containerlabelInfo">
+                                        <label id="labelparameterMeter">MÉTRICAS DE DESEMPEÑO</label>
+                                </div>
+                                <table id="tableInfo">
+                                        <tr>
+                                                <th class="labelparameter">Modo de Operación:</th>
+                                                <th id="modo_op" class="parameter"> </th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Protocolo:</th>
+                                                <th id="protocol" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Duración:</th>
+                                                <th id="duration" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Tamaño Bloque:</th>
+                                                <th id="size_block" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Bloques:</th>
+                                                <th id="bloque" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--TCP_mss-->
+                                                <th class="labelparameter">TCP MSS:</th>
+                                                <th id="tcp_mss" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--snd_buffer-->
+                                                <th class="labelparameter">Buffer de Envío:</th>
+                                                <th id="snd_buffer" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--rcv_buffer-->
+                                                <th class="labelparameter">Buffer de Recepción:</th>
+                                                <th id="rcv_buffer" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Total Bytes:</th>
+                                                <th id="total_bytes" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom Total Bytes:</th>
+                                                <th id="prom_tbytes" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom Bit por Seg:</th>
+                                                <th id="prom_bit" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom SND CWND:</th>
+                                                <th id="prom_sndcwnd" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom RTT:</th>
+                                                <th id="prom_rtt" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom Retransmitidos:</th>
+                                                <th id="prom_rtx" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom RTTVAR:</th>
+                                                <th id="prom_rttvar" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom PMTU:</th>
+                                                <th id="prom_pmtu" class="parameter"></th>
+                                        </tr>
+                                </table>
+                        </div>
 
-
-
-                                <tr>
-                                        <th class="labelparameterMeter" colspan="2">MÉTRICAS DE DESEMPEÑO</th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Modo de Operación:</th>
-                                        <th id="modo_op" class="parameter"> </th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Protocolo:</th>
-                                        <th id="protocol" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Duración:</th>
-                                        <th id="duration" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Tamaño Bloque:</th>
-                                        <th id="size_block" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Bloques:</th>
-                                        <th id="bloque" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <!--TCP_mss-->
-                                        <th class="labelparameter">TCP MSS:</th>
-                                        <th id="tcp_mss" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <!--snd_buffer-->
-                                        <th class="labelparameter">Buffer de Envío:</th>
-                                        <th id="snd_buffer" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <!--rcv_buffer-->
-                                        <th class="labelparameter">Buffer de Recepción:</th>
-                                        <th id="rcv_buffer" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Total Bytes:</th>
-                                        <th id="total_bytes" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom Total Bytes:</th>
-                                        <th id="prom_tbytes" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom Bit por Seg:</th>
-                                        <th id="prom_bit" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom SND CWND:</th>
-                                        <th id="prom_sndcwnd" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom RTT:</th>
-                                        <th id="prom_rtt" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom Retransmitidos:</th>
-                                        <th id="prom_rtx" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom RTTVAR:</th>
-                                        <th id="prom_rttvar" class="parameter"></th>
-                                </tr>
-                                <tr>
-                                        <th class="labelparameter">Prom PMTU:</th>
-                                        <th id="prom_pmtu" class="parameter"></th>
-                                </tr>
-
-                        </table>
                 </div>
+                <div id="containerFancyInfoGraphicUDP">
 
+                        <div id="containerTableInfoUDP">
+                                <div id="containerlabelInfoUDP">
+                                        <label id="labelparameterMeterUDP">MÉTRICAS DE DESEMPEÑO</label>
+                                </div>
+                                <table id="tableInfoUDP">
+                                        <tr>
+                                                <th class="labelparameter">Modo de Operación:</th>
+                                                <th id="modo_opUDP" class="parameter"> </th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Protocolo:</th>
+                                                <th id="protocolUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Duración:</th>
+                                                <th id="durationUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Tamaño Bloque:</th>
+                                                <th id="size_blockUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Bloques:</th>
+                                                <th id="bloqueUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--TCP_mss-->
+                                                <th class="labelparameter">TCP MSS:</th>
+                                                <th id="tcp_mssUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--snd_buffer-->
+                                                <th class="labelparameter">Buffer de Envío:</th>
+                                                <th id="snd_bufferUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--rcv_buffer-->
+                                                <th class="labelparameter">Buffer de Recepción:</th>
+                                                <th id="rcv_bufferUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Total Bytes:</th>
+                                                <th id="total_bytesUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom Total Bytes:</th>
+                                                <th id="prom_tbytesUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Prom Bit por Seg:</th>
+                                                <th id="prom_bitUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Jitter:</th>
+                                                <th id="jitterUDP" class="parameter"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameter">Paquetes:</th>
+                                                <th id="paketsUDP" class="parameter"></th>
+                                        </tr>
+                                </table>
+                        </div>
+                </div>
         </div>
 
 
@@ -815,6 +891,7 @@
 
 </div>
 
+<!-- Fancy Analizador Especifico -->
 <div class="divTrafficHost" style="display: none;">
 
         <div id="containerTrafficHost">
@@ -836,8 +913,16 @@
                                                 <!-- <option value="opL1" selected="selected"></option> -->
                                         </select>
                                 </div>
+                                <div class="divLabelHostGeneral" id="botonSelectClientServerHSpecific">
+                                        <label id="labelSelectServerClientHSpecific"> Desde: </label>
+                                        <select id="optionSelectServerClientHSpecific" data-default="opLSC">
+                                                <option id="serverHSpecific" selected="selected">Servidor</option>
+                                                <option id="clientHSpecific">Cliente</option>
+                                        </select>
+
+                                </div>
                                 <div class="divLabelHostGeneral">
-                                        <input type="button" id="inputSelectorLink" value="Visualizar">
+                                        <input type="button" id="inputSelectorLink" value="Generar">
                                 </div>
 
                         </div>
@@ -929,6 +1014,7 @@
 
 </div>
 
+<!-- Fancy Información -->
 <div class="divFancyInfoTxtArea" style="display: none;">
         <div id="divFancyInfo">
                 <div id="labelInfoTxtArea">
@@ -950,9 +1036,33 @@
         </div>
 
 </div>
+
 <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
 <script src="{% static 'js/jquery.fancybox.js'%}"></script>
 <script src="{% static 'js/Chart.js' %}"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+                $('.menujq > ul > li:has(ul)').addClass('desplegable');
+                $('.menujq > ul > li > a').click(function () {
+
+                        var comprobar = $(this).next();
+
+                        $('.menujq li').removeClass('activa');
+                        $(this).closest('li').addClass('activa');
+
+                        if ((comprobar.is('ul')) && (comprobar.is(':visible'))) {
+                                $(this).closest('li').removeClass('activa');
+                                comprobar.slideUp('normal');
+                        }
+                        if ((comprobar.is('ul')) && (!comprobar.is(':visible'))) {
+                                $('.menujq ul ul:visible').slideUp('normal');
+                                comprobar.slideDown('normal');
+                        }
+                });
+                close($('.menujq'));
+        });
+</script>
 
 {% endblock content %}

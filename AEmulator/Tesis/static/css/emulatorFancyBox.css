@@ -1622,14 +1622,6 @@
     height: 460px;
 }
 
-#inputInfoGraphic {
-    margin-left: 3px;
-}
-
-#labelFancyGraphic {
-    margin-left: 250px;
-}
-
 #containerCanvaGraphic {
     width: 590px;
     height: 450px;
@@ -1638,24 +1630,111 @@
     margin-top: 20px;
 }
 
-#graphic {
-    width: 590px;
-    height: 450px;
+#containerCanvaGraphic,  #botonSelectClientServerTCP{
+    display: inline-block;
 }
 
-#containerFancyInfoGraphicTCP {
+#containerFancyInfoGraphicTCP, #containerFancyInfoGraphicUDP {
     float: left;
     width: 270px;
     height: 450px;
-    margin-top: 25px;
+    margin-top: 10px;
     padding: 5px;
+}
+
+#containerFancyInfoGraphicTCP {
+    /* display: visible; */
     display: none;
+}
+
+#containerFancyInfoGraphicUDP {
+    display: none;
+    /* display: visible; */
+}
+
+#containerlabelInfo, #containerTableInfoUDP {
+    width: auto;
+    height: 30px;
+}
+
+#labelSelectServerClientTCP{
+    margin-left: 1px;
+    color: #0d5d88;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+#optionSelectServerClientTCP {
+    border-bottom: #2AC176 solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    width: 75px;
+    margin-left: 0px;
+}
+
+#inputSelectorSeverClient{
+    border: #96b1e6 solid 2px;
+    outline: none;
+    height: 25px;
+    width: 80px;
+    border-radius: 15px;
+    margin-left: 1px;
+}
+
+#inputSelectorSeverClient:hover{
+    border: #2cb3fc solid 2px;
+    background-color: #0e8bce;
+    color: blanchedalmond;
+}
+
+#inputSelectorSeverClient:focus{
+    border: #2c71fc solid 2px;
+    background-color: blanchedalmond;
+    color: #0e8bce;
+}
+
+#labelparameterMeter, #labelparameterMeterUDP {
+    margin-left: 30px;
+    color: #2088c0;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+#graphic, #graphic2 {
+    width: 590px;
+    height: 450px;
+    /* display: none; */
+}
+
+#containerTableInfo, #containerTableInfoUDP {
+    width: 270px;
+    height: 410px;
+}
+
+#inputInfoGraphic {
+    margin-left: 3px;
+}
+
+#labelFancyGraphic {
+    margin-left: 250px;
+}
+
+#botonSelectClientServerTCP {
+    width: 270px;
+    height: 30px;
+    
+    margin-top: 20px;
 }
 
 /* Tabla */
 
-#tableInfo {
-    margin-top: 45px;
+#tableInfo, #tableInfoUDP {
+    margin-top: 10px;
     font-size: 11px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-spacing: 1px;
@@ -1669,13 +1748,8 @@
     color: #20b0c0;
 }
 
-.labelparameterMeter {
-    text-align: center;
-    color: #2088c0;
-}
-
 .parameter {
-    width: 43%;
+    width: auto;
     border-bottom: #2AC176 solid 1px;
     border-top: none;
     border-left: none;
@@ -1748,6 +1822,23 @@
 
 .divLabelHostGeneral {
     display: inline-block;
+}
+
+#labelSelectServerClientHSpecific {
+    margin-left: 5px;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#optionSelectServerClientHSpecific {
+    border-bottom: #2AC176 solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    width: 75px;
+    margin-left: 0px;
 }
 
 #tittleHostTraffic {
@@ -1840,8 +1931,6 @@
     display: block;
 }
 
-
-
 #inputInfo {
     /*     background-image: url(../img/informacion.png);
     background-repeat: no-repeat;
@@ -1893,25 +1982,10 @@
 #containerAreaInfo {
     width: auto;
     height: auto;
-    
-    
 }
-
-/* #txtAreaFancyInfo {
-    width: 530px;
-    height: 360px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    border: #2AC176 solid 2px;
-    resize: none;
-    text-align: justify;
-} */
 
 #txtAreaFancyInfo {
     width: 600px;
-    
     font-size: 11px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-collapse: separate;
@@ -1919,37 +1993,29 @@
     border: #b8b9bb solid 2px;
     outline: none;
     display: block;
-   
-    
 }
-#txtAreaFancyInfo, #trInfo td{
+
+#txtAreaFancyInfo, #trInfo, #thInfo {
     border: #b8b9bb solid 2px;
 }
 
-
-
-
-#parameterInfo, #tbInfo  tr {
-    display:table;
+#parameterInfo, #tbInfo tr {
+    display: table;
     width: 100%;
-    table-layout:fixed;
-    
+    table-layout: fixed;
 }
 
-#tbInfo {   
+#tbInfo {
     display: block;
     height: 300px;
-    overflow:auto;
+    overflow: auto;
     text-align: justify;
 }
-
 
 #thInfo {
     border: #b8b9bb solid 2px;
     border-collapse: separate;
-    /* border-spacing: 5px 5px;     */
 }
-
 
 #labelInfoFancy {
     color: #81a7f1;
@@ -1958,10 +2024,6 @@
 /*Info Controller*/
 
 #inputInfoController {
-    /*     background-image: url(../img/informacion.png);
-    background-repeat: no-repeat;
-    background-size: 30px;
-    background-position: 3px 3px; */
     width: 28px;
     height: 28px;
     border-bottom: none;
