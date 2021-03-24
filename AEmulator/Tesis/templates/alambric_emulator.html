@@ -728,9 +728,7 @@
                         <canvas id="graphic2"></canvas>
                 </div>
 
-
-
-                <div id="botonSelectClientServerTCP">
+                <div id="continerSelectClientServer">
                         <label id="labelSelectServerClientTCP"> Seleccione: </label>
                         <select id="optionSelectServerClientTCP" data-default="opLSC">
                                 <option id="serverTCP" selected="selected">Servidor</option>
@@ -738,12 +736,12 @@
                         </select>
                         <input type="button" id="inputSelectorSeverClient" value="Visualizar">
                 </div>
-
+                <!-- container client TCP -->
                 <div id="containerFancyInfoGraphicTCP">
 
                         <div id="containerTableInfo">
                                 <div id="containerlabelInfo">
-                                        <label id="labelparameterMeter">MÉTRICAS DE DESEMPEÑO</label>
+                                        <h2 id="labelparameterMeter">MÉTRICAS DE DESEMPEÑO</h2>
                                 </div>
                                 <table id="tableInfo">
                                         <tr>
@@ -817,131 +815,240 @@
                         </div>
 
                 </div>
-                <div id="containerFancyInfoGraphicUDP">
 
-                        <div id="containerTableInfoUDP">
-                                <div id="containerlabelInfoUDP">
-                                        <label id="labelparameterMeterUDP">MÉTRICAS DE DESEMPEÑO</label>
+                <!-- container Server TCP -->
+                <div id="containerFancyInfoGraphicTCPServer">
+
+                        <div id="containerTableInfo">
+                                <div id="containerlabelInfo">
+                                        <h2 id="labelparameterMeter">MÉTRICAS DE DESEMPEÑO</h2>
                                 </div>
-                                <table id="tableInfoUDP">
+                                <table id="tableInfo">
                                         <tr>
                                                 <th class="labelparameter">Modo de Operación:</th>
-                                                <th id="modo_opUDP" class="parameter"> </th>
+                                                <th id="modo_op_TCPServer" class="parameter"> </th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Protocolo:</th>
-                                                <th id="protocolUDP" class="parameter"></th>
+                                                <th id="protocol_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Duración:</th>
-                                                <th id="durationUDP" class="parameter"></th>
+                                                <th id="duration_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Tamaño Bloque:</th>
-                                                <th id="size_blockUDP" class="parameter"></th>
+                                                <th id="size_block_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Bloques:</th>
-                                                <th id="bloqueUDP" class="parameter"></th>
+                                                <th id="bloque_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <!--TCP_mss-->
                                                 <th class="labelparameter">TCP MSS:</th>
-                                                <th id="tcp_mssUDP" class="parameter"></th>
+                                                <th id="tcp_mss_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <!--snd_buffer-->
                                                 <th class="labelparameter">Buffer de Envío:</th>
-                                                <th id="snd_bufferUDP" class="parameter"></th>
+                                                <th id="snd_buffer_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <!--rcv_buffer-->
                                                 <th class="labelparameter">Buffer de Recepción:</th>
-                                                <th id="rcv_bufferUDP" class="parameter"></th>
+                                                <th id="rcv_buffer_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Total Bytes:</th>
-                                                <th id="total_bytesUDP" class="parameter"></th>
+                                                <th id="total_bytes_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Prom Total Bytes:</th>
-                                                <th id="prom_tbytesUDP" class="parameter"></th>
+                                                <th id="prom_tbytes_TCPServer" class="parameter"></th>
                                         </tr>
                                         <tr>
                                                 <th class="labelparameter">Prom Bit por Seg:</th>
-                                                <th id="prom_bitUDP" class="parameter"></th>
+                                                <th id="prom_bit_TCPServer" class="parameter"></th>
+                                        </tr>
+                                        
+                                </table>
+                        </div>
+
+                </div>
+                <!-- container client UP -->
+                <div id="containerFancyInfoGraphicUDP">
+
+                        <div id="containerTableInfoUDP">
+                                <div id="containerlabelInfoUDP">
+                                        <h2 id="labelparameterMeterUDP">MÉTRICAS DE DESEMPEÑO</h2>
+                                </div>
+                                <table id="tableInfoUDP">
+                                        <tr>
+                                                <th class="labelparameterUDP">Modo de Operación:</th>
+                                                <th id="modo_opUDPClient" class="parameterUDP"> </th>
                                         </tr>
                                         <tr>
-                                                <th class="labelparameter">Jitter:</th>
-                                                <th id="jitterUDP" class="parameter"></th>
+                                                <th class="labelparameterUDP">Protocolo:</th>
+                                                <th id="protocolUDPClient" class="parameterUDP"></th>
                                         </tr>
                                         <tr>
-                                                <th class="labelparameter">Paquetes:</th>
-                                                <th id="paketsUDP" class="parameter"></th>
+                                                <th class="labelparameterUDP">Duración:</th>
+                                                <th id="durationUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Tamaño Bloque:</th>
+                                                <th id="size_blockUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Bloques:</th>
+                                                <th id="bloqueUDPClient" class="parameterUDP"></th>
+                                        </tr>
+
+                                        <tr>
+                                                <!--snd_buffer-->
+                                                <th class="labelparameterUDP">Buffer de Envío:</th>
+                                                <th id="snd_bufferUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--rcv_buffer-->
+                                                <th class="labelparameterUDP">Buffer de Recepción:</th>
+                                                <th id="rcv_bufferUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Total Bytes:</th>
+                                                <th id="total_bytesUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Prom Total Bytes:</th>
+                                                <th id="prom_tbytesUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Prom Bit por Seg:</th>
+                                                <th id="prom_bitUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Jitter:</th>
+                                                <th id="jitterUDPClient" class="parameterUDP"> <span id="ms">mS</span></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Paquetes:</th>
+                                                <th id="paketsUDPClient" class="parameterUDP"></th>
+                                        </tr>
+                                </table>
+                        </div>
+                </div>
+
+                <!-- container server UP -->
+                <div id="containerFancyInfoGraphicUDPServer">
+
+                        <div id="containerTableInfoUDP">
+                                <div id="containerlabelInfoUDP">
+                                        <h2 id="labelparameterMeterUDP">MÉTRICAS DE DESEMPEÑO</h2>
+                                </div>
+                                <table id="tableInfoUDP">
+                                        <tr>
+                                                <th class="labelparameterUDP">Modo de Operación:</th>
+                                                <th id="modo_opUDPServer" class="parameterUDP"> </th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Protocolo:</th>
+                                                <th id="protocolUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Duración:</th>
+                                                <th id="durationUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Tamaño Bloque:</th>
+                                                <th id="size_blockUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Bloques:</th>
+                                                <th id="bloqueUDPServer" class="parameterUDP"></th>
+                                        </tr>
+
+                                        <tr>
+                                                <!--snd_buffer-->
+                                                <th class="labelparameterUDP">Buffer de Envío:</th>
+                                                <th id="snd_bufferUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <!--rcv_buffer-->
+                                                <th class="labelparameterUDP">Buffer de Recepción:</th>
+                                                <th id="rcv_bufferUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Total Bytes:</th>
+                                                <th id="total_bytesUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Prom Total Bytes:</th>
+                                                <th id="prom_tbytesUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Prom Bit por Seg:</th>
+                                                <th id="prom_bitUDPServer" class="parameterUDP"></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Jitter:</th>
+                                                <th id="jitterUDPServer" class="parameterUDP"> <span id="ms">mS</span></th>
+                                        </tr>
+                                        <tr>
+                                                <th class="labelparameterUDP">Paquetes:</th>
+                                                <th id="paketsUDPServer" class="parameterUDP"></th>
                                         </tr>
                                 </table>
                         </div>
                 </div>
         </div>
-
-
-
-
-
-
 </div>
 
 <!-- Fancy Analizador Especifico -->
 <div class="divTrafficHost" style="display: none;">
 
         <div id="containerTrafficHost">
-                <div id="infoIcon">
+                <div id="divInfoIcon">
                         <input type="image" id="inputInfo" title="Información" src="{% static 'img/informacion.png' %}">
                         <h2 id="tittleHostTraffic">ANALIZADOR DE TRAFICO ESPECIFICO</h2>
                 </div>
+
                 <div id="divLabelTrafficHostSpecific">
-
-
-                        <div>
-                                <div class="divLabelHostGeneral">
-                                        <h3 class="info_host" id="idenHost">HOST </h3>
-                                        <h3 class="info_host" id='id_host'></h3>
-                                </div>
-                                <div class="divLabelHostGeneral">
-                                        <label id="labelLink"> Enlace: </label>
-                                        <select id="optionLink" data-default="opL1">
-                                                <!-- <option value="opL1" selected="selected"></option> -->
-                                        </select>
-                                </div>
-                                <div class="divLabelHostGeneral" id="botonSelectClientServerHSpecific">
-                                        <label id="labelSelectServerClientHSpecific"> Desde: </label>
-                                        <select id="optionSelectServerClientHSpecific" data-default="opLSC">
-                                                <option id="serverHSpecific" selected="selected">Servidor</option>
-                                                <option id="clientHSpecific">Cliente</option>
-                                        </select>
-
-                                </div>
-                                <div class="divLabelHostGeneral">
-                                        <input type="button" id="inputSelectorLink" value="Generar">
-                                </div>
+                        <div class="divLabelHostGeneral">
+                                <h3 class="info_host" id="idenHost">HOST </h3>
+                                <h3 class="info_host" id='id_host'></h3>
+                        </div>
+                        <div class="divLabelHostGeneral">
+                                <label id="labelLink"> Enlace: </label>
+                                <select id="optionLink" data-default="opL1">
+                                </select>
+                        </div>
+                        <div class="divLabelHostGeneral" id="botonSelectClientServerHSpecific">
+                                <label id="labelSelectServerClientHSpecific"> Desde: </label>
+                                <select id="optionSelectServerClientHSpecific" data-default="opLSC">
+                                        <option id="serverHSpecific" selected="selected">Servidor</option>
+                                        <option id="clientHSpecific">Cliente</option>
+                                </select>
 
                         </div>
-
+                        <div class="divLabelHostGeneral">
+                                <input type="button" id="inputSelectorLink" value="Generar">
+                        </div>
                 </div>
 
                 <div id="divTableHostGeneral">
                         <table id="tableInfoHG">
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterMeterHG" colspan="4">Datos Generales</th>
                                 </tr>
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Host Local:</th>
                                         <th id="local_host" class="parameterHG"> </th>
                                         <th class="labelparameterHG">Host Remoto:</th>
                                         <th id="remote_host" class="parameterHG"></th>
                                 </tr>
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Puerto Local:</th>
                                         <th id="local_port" class="parameterHG"></th>
                                         <th class="labelparameterHG">Puerto Remoto:</th>
@@ -949,35 +1056,35 @@
                                 </tr>
 
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Omitido:</th>
                                         <th id="omit" class="parameterHG"></th>
                                         <th class="labelparameterHG">Protocolo:</th>
                                         <th id="protocolHG" class="parameterHG"></th>
                                 </tr>
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Buffer Envío:</th>
                                         <th id="buff_snd" class="parameterHG"></th>
                                         <th class="labelparameterHG">Buffer Recepción:</th>
                                         <th id="buff_rcv" class="parameterHG"></th>
                                 </tr>
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Bytes Especificados Tx:</th>
                                         <th id="bytesHG" class="parameterHG"></th>
                                         <th class="labelparameterHG">Ventana Deslizante:</th>
                                         <th id="windowHG" class="parameterHG"></th>
                                 </tr>
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">Duración:</th>
                                         <th id="timeHG" class="parameterHG"></th>
                                         <th class="labelparameterHG">Bloques:</th>
                                         <th id="blockHG" class="parameterHG"></th>
                                 </tr>
 
-                                <tr>
+                                <tr class="trTableHG">
                                         <th class="labelparameterHG">TCP MSS:</th>
                                         <th id="tcp_mssHG" class="parameterHG"></th>
                                         <th class="labelparameterHG">Tanaño Bloque:</th>
@@ -990,8 +1097,8 @@
                 <div class="containerHostSpecific">
 
                         <table class="table" id="tableHostSpecific">
-                                <thead id="th_tableHostHG" class="thead-dark">
-                                        <tr>
+                                <thead id="th_tableHostHG">
+                                        <tr class="trTableHS">
 
                                                 <th id="generalHostSpecific">Tiempo I</th>
                                                 <th id="generalHostSpecific">Tiempo F</th>
@@ -1037,7 +1144,6 @@
 
 </div>
 
-<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 <script src="{% static 'js/alambric_emulator.js' %}"></script>
 <script src="{% static 'js/jquery.fancybox.js'%}"></script>
 <script src="{% static 'js/Chart.js' %}"></script>
@@ -1064,5 +1170,20 @@
                 close($('.menujq'));
         });
 </script>
+
+
+<!-- Fancy Prueba Tabla Dinamica -->
+<div class="divFancyTableDinamica" style="display: none;">
+
+        <div id="buttonCreate">
+    
+                <h2>CARGANDO DATOS DINAMICAMENTE</h2>
+                <input type="button" id="createTable" value="Click Aquí">
+
+        </div>
+
+        <div id="tableDm"></div>
+
+</div>
 
 {% endblock content %}

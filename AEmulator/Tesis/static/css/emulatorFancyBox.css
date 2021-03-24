@@ -1622,43 +1622,51 @@
     height: 460px;
 }
 
-#containerCanvaGraphic {
-    width: 590px;
-    height: 450px;
-    border: 0px;
-    float: left;
-    margin-top: 20px;
+#containerTittleFancyGraphic {
+    width: 880px;
+    height: 30px;
+    margin-bottom: 10px;
 }
 
-#containerCanvaGraphic,  #botonSelectClientServerTCP{
+#inputInfoGraphic {
+    margin-left: 3px;
+}
+
+#labelFancyGraphic {
+    margin-left: 250px;
+}
+
+#containerCanvaGraphic, #continerSelectClientServer {
     display: inline-block;
 }
 
-#containerFancyInfoGraphicTCP, #containerFancyInfoGraphicUDP {
+#containerCanvaGraphic {
+    width: 590px;
+    height: 420px;
+    border: 0px;
     float: left;
-    width: 270px;
-    height: 450px;
-    margin-top: 10px;
-    padding: 5px;
+    
 }
 
-#containerFancyInfoGraphicTCP {
-    /* display: visible; */
+#graphic, #graphic2 {
+    border: 5px;
+    width: 580px;
+    height: 410px;
+    
+}
+
+#graphic2, #graphic {
     display: none;
+    
 }
 
-#containerFancyInfoGraphicUDP {
-    display: none;
-    /* display: visible; */
-}
-
-#containerlabelInfo, #containerTableInfoUDP {
-    width: auto;
+#continerSelectClientServer {
+    width: 286px;
     height: 30px;
+    margin: 2px;
 }
 
-#labelSelectServerClientTCP{
-    margin-left: 1px;
+#labelSelectServerClientTCP {
     color: #0d5d88;
     font-size: 14px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -1673,74 +1681,77 @@
     text-align: right;
     outline: none;
     width: 75px;
-    margin-left: 0px;
 }
 
-#inputSelectorSeverClient{
+#inputSelectorSeverClient {
     border: #96b1e6 solid 2px;
     outline: none;
-    height: 25px;
+    height: 20px;
     width: 80px;
     border-radius: 15px;
     margin-left: 1px;
 }
 
-#inputSelectorSeverClient:hover{
-    border: #2cb3fc solid 2px;
-    background-color: #0e8bce;
-    color: blanchedalmond;
-}
-
-#inputSelectorSeverClient:focus{
+#inputSelectorSeverClient:focus {
     border: #2c71fc solid 2px;
-    background-color: blanchedalmond;
     color: #0e8bce;
 }
 
+#inputSelectorSeverClient:hover {
+    border: #00507b solid 2px;
+    color: #ffffff;
+}
+
+#containerFancyInfoGraphicTCP, #containerFancyInfoGraphicUDP, #containerFancyInfoGraphicTCPServer, #containerFancyInfoGraphicUDPServer {
+    float: left;
+    width: 280px;
+    height: 380px;
+    margin: 5px;
+}
+
+#containerFancyInfoGraphicTCP {
+    display: none;
+}
+
+#containerFancyInfoGraphicTCPServer {
+    display: none;
+}
+
+#containerFancyInfoGraphicUDP {
+    display: none;
+}
+
+#containerFancyInfoGraphicUDPServer {
+    display: none;
+}
+
+#containerlabelInfo, #containerTableInfoUDP {
+    margin-top: -8px;
+    width: auto;
+    height: 20px;
+}
+
 #labelparameterMeter, #labelparameterMeterUDP {
-    margin-left: 30px;
+    text-align: center;
     color: #2088c0;
-    font-size: 13px;
+    font-size: 14px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
 }
 
-#graphic, #graphic2 {
-    width: 590px;
-    height: 450px;
-    /* display: none; */
-}
-
-#containerTableInfo, #containerTableInfoUDP {
-    width: 270px;
-    height: 410px;
-}
-
-#inputInfoGraphic {
-    margin-left: 3px;
-}
-
-#labelFancyGraphic {
-    margin-left: 250px;
-}
-
-#botonSelectClientServerTCP {
-    width: 270px;
-    height: 30px;
-    
-    margin-top: 20px;
-}
-
-/* Tabla */
-
 #tableInfo, #tableInfoUDP {
-    margin-top: 10px;
+    margin: 3px;
     font-size: 11px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-spacing: 1px;
     height: 85%;
     border-collapse: separate;
-    border-spacing: 7px 1px;
+    border-spacing: 7px 5px;
+}
+
+#tableInfoUDP {
+    border-collapse: separate;
+    border-spacing: 7px 10px;
 }
 
 .labelparameter {
@@ -1759,47 +1770,24 @@
     color: #81a7f1;
 }
 
-/* Contenedor de los Botones del Fancy Graphic */
-
-#containerFancyButtonGraphic {
-    margin-top: 20px;
-    font-size: 15px;
-    font-family: 'Quicksand', sans-serif;
-    margin-left: 70px;
+.labelparameterUDP {
+    text-align: left;
+    color: #20b0c0;
 }
 
-#CancelarButtonFancyGraphic {
-    border: #b8b9bb solid 2px;
+.parameterUDP {
+    width: auto;
+    border-bottom: #2AC176 solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
     outline: none;
-    height: 22px;
-    width: 40%;
-    border-radius: 15px;
-    background-color: white;
-    color: #2AC176;
+    color: #81a7f1;
 }
 
-#CancelarButtonFancyGraphic:focus {
-    border: #2AC176 solid 2px;
-    outline: none;
-    background-color: #2AC176;
-    color: white;
-}
-
-#GuardarButtonFancyGraphic {
-    border: #b8b9bb solid 2px;
-    outline: none;
-    height: 22px;
-    width: 40%;
-    border-radius: 15px;
-    background-color: white;
-    color: #2AC176;
-}
-
-#GuardarButtonFancyGraphic:focus {
-    border: #2AC176 solid 2px;
-    outline: none;
-    background-color: #2AC176;
-    color: white;
+#ms {
+    font-size: 8px;
 }
 
 /* Fancy HOST Traffic Specific*/
@@ -1809,44 +1797,53 @@
     font-family: 'Quicksand', sans-serif;
 }
 
-.containerHostSpecific {
-    height: 200px;
-    width: 805px;
+#containerTrafficHost {
+    width: 810px;
+    height: 450px;
 }
 
-#tableHostSpecific, #generalHostSpecific {
-    border: #b8b9bb solid 2px;
-    text-align: center;
-    width: 800px;
+#divInfoIcon {
+    width: 806px;
+    height: 40px;
+    margin: 2px;
+}
+
+#inputInfo, #tittleHostTraffic {
+    display: inline-block;
+    margin-top: 1px;
+}
+
+#inputInfo {
+    width: 28px;
+    height: 28px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    padding-left: 5px;
+    padding-top: 8px;
+}
+
+#tittleHostTraffic {
+    margin-left: 150px;
+}
+
+#divLabelTrafficHostSpecific {
+    margin: 2px;
+    width: 806px;
+    height: 26px;
 }
 
 .divLabelHostGeneral {
     display: inline-block;
 }
 
-#labelSelectServerClientHSpecific {
-    margin-left: 5px;
-    font-size: 14px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-#optionSelectServerClientHSpecific {
-    border-bottom: #2AC176 solid 1px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-align: right;
-    outline: none;
-    width: 75px;
-    margin-left: 0px;
-}
-
-#tittleHostTraffic {
-    text-align: center;
+.info_host {
+    display: inline;
 }
 
 #idenHost {
-    /*text-align: center;*/
     background-image: url(../img/host.png);
     background-repeat: no-repeat;
     background-size: 20px;
@@ -1869,6 +1866,23 @@
     margin-left: 10px;
 }
 
+#labelSelectServerClientHSpecific {
+    margin-left: 5px;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#optionSelectServerClientHSpecific {
+    border-bottom: #2AC176 solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
+    outline: none;
+    width: 75px;
+    margin-left: 0px;
+}
+
 #inputSelectorLink {
     border: #b8b9bb solid 2px;
     outline: none;
@@ -1880,7 +1894,6 @@
 
 #inputSelectorLink:focus {
     border: #55e66d solid 2px;
-    background-color: #55e66d73;
     outline: none;
     color: white;
 }
@@ -1888,6 +1901,11 @@
 #inputSelectorLink:hover {
     border: #55e66d solid 2px;
     outline: none;
+}
+
+#divTableHostGeneral {
+    margin: 2px;
+    width: 806px;
 }
 
 #tableInfoHG {
@@ -1898,14 +1916,14 @@
     border-spacing: 10px 0px;
 }
 
-.labelparameterHG {
-    width: 200px;
-}
-
 .labelparameterMeterHG {
     text-align: left;
     color: #2088c0;
     font-size: 13px;
+}
+
+.labelparameterHG {
+    width: 200px;
 }
 
 .parameterHG {
@@ -1919,48 +1937,49 @@
     color: #81a7f1;
 }
 
-#divTableHostGeneral {
-    margin-bottom: 25px;
-}
-
-.info_host {
-    display: inline;
-}
-
-#tb_tableHostHG, #th_tableHostHG {
-    display: block;
-}
-
-#inputInfo {
-    /*     background-image: url(../img/informacion.png);
-    background-repeat: no-repeat;
-    background-size: 30px;
-    background-position: 3px 3px; */
-    width: 28px;
-    height: 28px;
-    border-bottom: none;
+.parameterHG {
+    width: 150px;
+    border-bottom: #2AC176 solid 1px;
     border-top: none;
     border-left: none;
     border-right: none;
+    text-align: right;
     outline: none;
-    padding-top: 10px;
-    padding-left: 5px;
+    color: #81a7f1;
 }
 
-#infoIcon {
-    width: auto;
-    height: 40px;
-    padding-top: -2px;
-    margin-bottom: 25px;
+.containerHostSpecific {
+    margin: 7px;
+    height: 238px;
+    width: 797px;
 }
 
-#inputInfo, #tittleHostTraffic {
+
+#tableHostSpecific, #generalHostSpecific {
+    border: #b8b9bb solid 2px;
+    text-align: center;
+    width: 800px;
+    border-collapse: separate;
+    border-spacing: 7px 2px;
+}
+
+/* #th_tableHostHG  tr td  {
     display: inline-block;
-}
+ }
+
+#tb_tableHostHG{ 
+    display: inline-block;
+    border-collapse: separate;
+    border-spacing: 7px 2px;
+    text-align: center;
+    width: 800px;
+} */
 
 #tittleHostTraffic {
-    margin-left: 150px;
+    text-align: center;
 }
+
+
 
 /*Fancy Text Area Info*/
 
