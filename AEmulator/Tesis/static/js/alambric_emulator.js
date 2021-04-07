@@ -3897,7 +3897,8 @@ $('#generateBtn').on('click', function () {
     //Formato de Petición AJAX
     $.ajax({
         type: "post", //get- consutla post- se actualiza
-        url: "http://127.0.0.1:8000/alambric_emulator/",
+        // url: "http://127.0.0.1:8000/alambric_emulator/",
+        url: "http://10.55.6.186:8000/alambric_emulator/",
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
         data: json,
