@@ -8,7 +8,7 @@ import struct
 class Connection():
     def __init__(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__server_adress = ('192.168.56.102', 10000)
+        self.__server_adress = ('10.55.6.188', 10000)
         #self.__cache = 999000000    
         self.__cache = 65000    
 

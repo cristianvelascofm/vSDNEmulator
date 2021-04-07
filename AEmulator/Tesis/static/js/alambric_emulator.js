@@ -2122,7 +2122,7 @@ canvas.on("mouse:dblclick", function (options) {
 canvas.observe('mouse:over', function (options) {
     var pointer = canvas.getPointer(options.e);
     x0 = pointer.x; //Obtiene la Posición Inicial de x respecto al Mouse
-    y0 = pointer.y; //Obtiene la Posición Inicial de y respecto al Mouse
+    y0 = z
 
     switch (tool) {
 
@@ -5133,6 +5133,7 @@ $('#saveIP_xclient').on('click', function () {
     //Formato de Petición AJAX
     $.ajax({
         type: "post", //get- consutla post- se actualiza
+        //url: "http://192.168.56.102:5000/",
         url: "http://127.0.0.1:8000/alambric_emulator/",
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
