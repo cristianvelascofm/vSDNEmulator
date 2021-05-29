@@ -2493,8 +2493,8 @@ canvas.observe('mouse:down', function (options) {
 //Opciones Cuando El Objeto se Mueve y sus Componentes
 canvas.observe('object:moving', function (e) {
     var p = e.target;
+    
     switch (tool) {
-
         case 'cursor':
             if (p.id.charAt(0) != "e") {
                 for (var i = 0; i < p.connection.length; i++) {
@@ -4990,7 +4990,8 @@ $('#inputSelectorSeverClient').on('click', function () {
 
 
 
-    } else if (seleccion == 'Cliente') {
+    } 
+    else if (seleccion == 'Cliente') {
 
 
         
@@ -5204,6 +5205,7 @@ $("#inputHostTemplate").keypress(function (e) {
     var code = (e.keyCode ? e.keyCode : e.which);
 
     if (code == 13) {
+        
 
         e.preventDefault();
 
